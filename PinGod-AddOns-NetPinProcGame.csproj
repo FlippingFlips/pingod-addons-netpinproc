@@ -14,6 +14,7 @@
 		<None Include="autoload\Machine.tscn" />
 		<None Include="autoload\MemoryMap.tscn" />
 		<None Include="autoload\PinGodGame.tscn" />
+		<None Include="export_presets.cfg.BAK" />
 		<None Include="netpinproc-game\MainScene.tscn" />
 		<None Include="netpinproc-game\scenes\AttractMode\AttractProc.tscn" />
 		<None Include="netpinproc-game\scenes\ServiceMode\README.md" />

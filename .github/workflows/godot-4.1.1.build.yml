@@ -72,12 +72,16 @@ jobs:
             /home/runner/.local/share/godot/builds/win/win.exe
           args: -fq
 
-    #  # This release action has worked well for me. However, you can most likely use any release action of your choosing.
-    #  # https://github.com/ncipollo/release-action
-    #- name: create release
-    #  uses: ncipollo/release-action@v1.12.0
-    #  with:
-    #    token: ${{ secrets.GITHUB_TOKEN }}        
-    #    generateReleaseNotes: false
-    #    tag: ${{ github.ref_name }}
-    #    artifacts: ${{ steps.export.outputs.archive_directory }}/*, pingod-addons-(${{ github.ref_name }}).zip
+    - name: Zip
+      run: 7z a -tzip "pingod-netpinproc-win.zip" "/home/runner/.local/share/godot/builds/win/"
+    
+    - name: create release
+      uses: ncipollo/release-action@v1.12.0
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}        
+        generateReleaseNotes: false
+        prerelease: true
+        allowUpdates: true
+        tag: ${{ github.ref_name }}
+        #artifacts: ${{ steps.export.outputs.archive_directory }}/*.zip
+        artifacts: pingod-netpinproc-win.zip

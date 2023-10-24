@@ -36,7 +36,7 @@ jobs:
       run: dotnet nuget add source --username USERNAME --password ${GITHUB_TOKEN} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/FlippingFlips/index.json"
 
     - name: dotnet build
-      run: dotnet build -c Release
+      run: dotnet build
 
     # Copy readme and zip addons directory to release
     - name: zip addons and addons-netpinproc

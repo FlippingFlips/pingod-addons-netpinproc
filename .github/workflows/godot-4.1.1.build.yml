@@ -60,7 +60,17 @@ jobs:
 
     - name: check built files
       run: |
-        dir
+        #dir /home/runner/.local/share/godot/builds/win/win.exe
+        dir /home/runner/.local/share/godot/builds
+        dir /home/runner/.local/share/godot/builds/win
+
+    - name: Run UPX Pack Exe
+      uses: crazy-max/ghaction-upx@v3
+      with:
+          version: latest
+          files: |
+            /home/runner/.local/share/godot/builds/win/win.exe
+          args: -fq
 
     #  # This release action has worked well for me. However, you can most likely use any release action of your choosing.
     #  # https://github.com/ncipollo/release-action

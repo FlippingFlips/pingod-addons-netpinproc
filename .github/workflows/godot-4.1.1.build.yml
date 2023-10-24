@@ -44,6 +44,12 @@ jobs:
       run: |        
         7z a -tzip "pingod-addons-netpinproc.zip" "addons"
         7z a -tzip "pingod-addons-netpinproc.zip" "addons-netpinproc"
+
+    - name: install wine
+      id: wine_install
+      run: |
+        sudo apt install wine64
+        echo "WINE_PATH=$(which wine64)" >> $GITHUB_OUTPUT
       
     - name: godot-export
       id: export
@@ -56,7 +62,8 @@ jobs:
         godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.1.1/mono/Godot_v4.1.1-stable_mono_linux_x86_64.zip
         godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.1.1/mono/Godot_v4.1.1-stable_mono_export_templates.tpz
         relative_project_path: ./
-        archive_output: false
+        wine_path: ${{ steps.wine_install.outputs.WINE_PATH }}
+        archive_output: true
 
     - name: check built files
       run: |
@@ -64,16 +71,16 @@ jobs:
         dir /home/runner/.local/share/godot/builds
         dir /home/runner/.local/share/godot/builds/win
 
-    - name: Run UPX Pack Exe
-      uses: crazy-max/ghaction-upx@v3
-      with:
-          version: latest
-          files: |
-            /home/runner/.local/share/godot/builds/win/win.exe
-          args: -fq
+    #- name: Run UPX Pack Exe
+    #  uses: crazy-max/ghaction-upx@v3
+    #  with:
+    #      version: latest
+    #      files: |
+    #        /home/runner/.local/share/godot/builds/win/win.exe
+    #      args: -fq
 
-    - name: Zip
-      run: 7z a -tzip "pingod-netpinproc-win.zip" "/home/runner/.local/share/godot/builds/win/"
+    #- name: Zip
+    #  run: 7z a -tzip "pingod-netpinproc-win.zip" "/home/runner/.local/share/godot/builds/win/"
     
     - name: create release
       uses: ncipollo/release-action@v1.12.0
@@ -84,4 +91,4 @@ jobs:
         allowUpdates: true
         tag: ${{ github.ref_name }}
         #artifacts: ${{ steps.export.outputs.archive_directory }}/*.zip
-        artifacts: pingod-netpinproc-win.zip
+        artifacts: ${{ steps.export.outputs.archive_directory }}/* 

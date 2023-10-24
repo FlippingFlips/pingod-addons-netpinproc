@@ -9,7 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     # Add permission for release creation.
     permissions: write-all
-
+    env:
+        VERSION: 0.99
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NUGETAPIKEY: --api-key ${{ secrets.GITHUB_TOKEN }} --source github
     name: build repository
     steps:
     - name: checkout
@@ -20,14 +23,19 @@ jobs:
       with:
         dotnet-version: 7.0.x
 
-    - name: clone pingod-addons, copy addons
+    - name: clone pingod-addons
+      run: git clone https://github.com/FlippingFlips/pingod-addons
+
+    - name: copy pingod-addons
       run: |
-          git clone https://github.com/FlippingFlips/pingod-addons
-          cp /pingod-addons/addons /addons
+          dir
+          cp ./pingod-addons/addons /addons          
+
+    - name: NUGET - FlippingFlips
+      run: dotnet nuget add source --username USERNAME --password ${GITHUB_TOKEN} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/FlippingFlips/index.json"
 
     - name: dotnet build
-      run: |
-          dotnet build -c Release
+      run: dotnet build -c Release
 
     # Copy readme and zip addons directory to release
     - name: zip addons and addons-netpinproc

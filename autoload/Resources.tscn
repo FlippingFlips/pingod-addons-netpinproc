@@ -1,0 +1,66 @@
+[gd_scene load_steps=9 format=3 uid="uid://bgebye7f7nmvn"]
+
+[ext_resource type="Script" path="res://addons/pingod-resources/Resources.cs" id="1_ybovl"]
+[ext_resource type="PackedScene" uid="uid://cm3hf1m8bn1nl" path="res://addons/pingod-modes/bonus/Bonus.tscn" id="2_dk1g3"]
+[ext_resource type="PackedScene" path="res://addons/pingod-modes/multiball/Multiball.tscn" id="3_u87hv"]
+[ext_resource type="PackedScene" uid="uid://cukmt8esxykqv" path="res://addons/pingod-modes/tilt/Tilt.tscn" id="4_e6dvi"]
+[ext_resource type="PackedScene" uid="uid://b46rdcwxkw0gu" path="res://addons/pingod-modes/scoreentry/ScoreEntry.tscn" id="5_b3755"]
+[ext_resource type="PackedScene" uid="uid://48qny4snll62" path="res://netpinproc-game/scenes/AttractMode/AttractProc.tscn" id="6_7tvoc"]
+[ext_resource type="PackedScene" uid="uid://bu5y83nxqe02i" path="res://addons-netpinproc/netpinproc-servicemode/ServiceModePROC.tscn" id="7_hy6by"]
+[ext_resource type="PackedScene" uid="uid://bkkshxp0osqj6" path="res://netpinproc-game/scenes/ScoreMode/ScoreModePROC.tscn" id="8_0wkit"]
+
+[node name="Resources" type="ResourcePreloader"]
+script = ExtResource("1_ybovl")
+_packScenes = [ExtResource("2_dk1g3"), ExtResource("3_u87hv"), ExtResource("4_e6dvi"), ExtResource("5_b3755"), ExtResource("6_7tvoc"), ExtResource("7_hy6by"), ExtResource("8_0wkit")]
+
+[node name="LoadingControl" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="LoadingControl"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0.0117647, 0, 1)
+
+[node name="Label" type="Label" parent="LoadingControl"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.5
+offset_top = -67.5
+offset_right = 256.5
+offset_bottom = 67.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.713726, 0.713726, 0.713726, 1)
+theme_override_font_sizes/font_size = 96
+text = "LOADING..."
+
+[node name="Label2" type="Label" parent="LoadingControl"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -149.5
+offset_top = 26.0
+offset_right = 149.5
+offset_bottom = 106.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.713726, 0.713726, 0.713726, 1)
+theme_override_font_sizes/font_size = 56
+text = "LOADING..."

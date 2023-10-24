@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4p3mfajw07kf"]
+
+[ext_resource type="Script" path="res://addons/pingod-game/Node/MainScene.cs" id="1_tvjxa"]
+[ext_resource type="PackedScene" uid="uid://d314cxixgd6su" path="res://addons/pingod-modes/pause-settings/PauseSetting.tscn" id="2_ncjnv"]
+
+[node name="MainScene" type="Node"]
+process_mode = 3
+script = ExtResource("1_tvjxa")
+_game_scene_path = "res://addons/pingod-game/Node/Game.tscn"
+_service_menu_scene_path = "res://addons/pingod-modes/servicemenu/ServiceMenu.tscn"
+
+[node name="Modes" type="CanvasLayer" parent="."]
+process_mode = 1
+editor_description = "Modes = Add `PinGodProcMode` types, see attract for example. AddModeScene"
+
+[node name="PauseAndSettings" parent="." instance=ExtResource("2_ncjnv")]
+editor_description = ""

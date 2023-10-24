@@ -18,10 +18,10 @@ jobs:
     - name: checkout
       uses: actions/checkout@v3.3.0
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 7.0.x
+    #- name: Setup .NET
+    #  uses: actions/setup-dotnet@v3
+    #  with:
+    #    dotnet-version: 7.0.x
 
     - name: clone pingod-addons
       run: git clone https://github.com/FlippingFlips/pingod-addons
@@ -36,8 +36,8 @@ jobs:
     - name: NUGET - FlippingFlips
       run: dotnet nuget add source --username USERNAME --password ${GITHUB_TOKEN} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/FlippingFlips/index.json"
 
-    - name: dotnet build
-      run: dotnet build
+    #- name: dotnet build
+    #  run: dotnet build
 
     # Copy readme and zip addons directory to release
     - name: zip addons and addons-netpinproc

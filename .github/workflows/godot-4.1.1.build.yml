@@ -29,7 +29,7 @@ jobs:
     - name: copy pingod-addons
       run: |
           dir
-          cp ./pingod-addons/addons /addons          
+          cp -R ./pingod-addons/addons /addons          
 
     - name: NUGET - FlippingFlips
       run: dotnet nuget add source --username USERNAME --password ${GITHUB_TOKEN} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/FlippingFlips/index.json"

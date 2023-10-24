@@ -39,31 +39,33 @@ jobs:
     #- name: dotnet build
     #  run: dotnet build
 
-    # Copy readme and zip addons directory to release
+    # Zip both addons
     - name: zip addons and addons-netpinproc
       run: |        
         7z a -tzip "pingod-addons-netpinproc.zip" "addons"
+        7z a -tzip "pingod-addons-netpinproc.zip" "autoload"
+        7z a -tzip "pingod-addons-netpinproc.zip" "PinGod-AddOns-NetPinProcGame.csproj"        
         7z a -tzip "pingod-addons-netpinproc.zip" "addons-netpinproc"
+        7z a -tzip "pingod-addons-netpinproc.zip" "sql"
 
-    - name: install wine
-      id: wine_install
-      run: |
-        sudo apt install wine64
-        echo "WINE_PATH=$(which wine64)" >> $GITHUB_OUTPUT
+    #- name: install wine  # Icons work without using wine - Dave
+    #  id: wine_install
+    #  run: |
+    #    sudo apt install wine64
+    #    echo "WINE_PATH=$(which wine64)" >> $GITHUB_OUTPUT
       
     - name: godot-export
       id: export
       # Use latest version (see releases for all versions)
       uses: firebelley/godot-export@v5.2.0
-      with:
-        # cache the Godot export templates and Godot executable
-        cache: true
+      with:        
+        cache: true # cache the Godot export templates and Godot executable
         # Defining all the required inputs
         godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.1.1/mono/Godot_v4.1.1-stable_mono_linux_x86_64.zip
         godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.1.1/mono/Godot_v4.1.1-stable_mono_export_templates.tpz
-        relative_project_path: ./
-        wine_path: ${{ steps.wine_install.outputs.WINE_PATH }}
-        archive_output: true
+        relative_project_path: ./        
+        archive_output: false # don't archive output, we take care of it
+        #wine_path: ${{ steps.wine_install.outputs.WINE_PATH }} # Icons work without using wine - Dave
 
     - name: check built files
       run: |
@@ -71,16 +73,22 @@ jobs:
         dir /home/runner/.local/share/godot/builds
         dir /home/runner/.local/share/godot/builds/win
 
-    #- name: Run UPX Pack Exe
-    #  uses: crazy-max/ghaction-upx@v3
-    #  with:
-    #      version: latest
-    #      files: |
-    #        /home/runner/.local/share/godot/builds/win/win.exe
-    #      args: -fq
+    # pack the executable, 70mb without
+    - name: Run UPX Pack Exe
+      uses: crazy-max/ghaction-upx@v3
+      with:
+          version: latest
+          files: |
+            /home/runner/.local/share/godot/builds/win/win.exe
+          args: -fq
 
-    #- name: Zip
-    #  run: 7z a -tzip "pingod-netpinproc-win.zip" "/home/runner/.local/share/godot/builds/win/"
+    # zip all needed files to run the game out of the box
+    - name: Zip
+      run: | 
+          # zip windows files, this should include a mono directory as well as .exe .pck
+          7z a -tzip "pingod-netpinproc-win.zip" "/home/runner/.local/share/godot/builds/win/"
+          # add sql init files for NetPinproc.Game.Sqlite
+          7z a -tzip "pingod-netpinproc-win.zip" "sql"
     
     - name: create release
       uses: ncipollo/release-action@v1.12.0
@@ -91,4 +99,5 @@ jobs:
         allowUpdates: true
         tag: ${{ github.ref_name }}
         #artifacts: ${{ steps.export.outputs.archive_directory }}/*.zip
-        artifacts: ${{ steps.export.outputs.archive_directory }}/* 
+        # artifacts: ${{ steps.export.outputs.archive_directory }}/* 
+        artifacts: pingod-netpinproc-game-win.zip, pingod-addons-netpinproc.zip

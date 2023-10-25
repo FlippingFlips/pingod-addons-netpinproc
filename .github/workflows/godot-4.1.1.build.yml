@@ -30,7 +30,6 @@ jobs:
       run: |
           mkdir addons          
           cp -R ./pingod-addons/addons .          
-          cp -R ./pingod-addons/sql .   
           dir
           rm -r ./pingod-addons
 
@@ -89,7 +88,7 @@ jobs:
           # zip windows files, this should include a mono directory as well as .exe .pck
           7z a -tzip "pingod-netpinproc-game-win.zip" "/home/runner/.local/share/godot/builds/win/"
           # add sql init files for NetPinproc.Game.Sqlite
-          7z a -tzip "pingod-netpinproc-win.zip" "sql"
+          7z a -tzip "pingod-netpinproc-game-win.zip" "sql"
     
     - name: create release
       uses: ncipollo/release-action@v1.12.0

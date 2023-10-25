@@ -86,7 +86,7 @@ jobs:
     - name: Zip
       run: | 
           # zip windows files, this should include a mono directory as well as .exe .pck
-          7z a -tzip "pingod-netpinproc-game-win.zip" "/home/runner/.local/share/godot/builds/win/"
+          7z a -tzip "pingod-netpinproc-game-win.zip" "/home/runner/.local/share/godot/builds/win/*"
           # add sql init files for NetPinproc.Game.Sqlite
           7z a -tzip "pingod-netpinproc-game-win.zip" "sql"
     

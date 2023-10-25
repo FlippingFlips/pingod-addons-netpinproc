@@ -30,6 +30,7 @@ jobs:
       run: |
           mkdir addons          
           cp -R ./pingod-addons/addons .          
+          cp -R ./pingod-addons/sql .   
           dir
           rm -r ./pingod-addons
 

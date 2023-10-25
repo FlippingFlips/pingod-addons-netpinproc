@@ -1,9 +1,7 @@
 using NetPinProc.Domain;
 using System.Linq;
 
-/// <summary>
-/// P-ROC Mode that handles all the door switches and coins in the machine.
-/// </summary>
+/// <summary> P-ROC Mode that handles all the door switches and coins in the machine.</summary>
 public class MachineSwitchHandlerMode : PinGodProcMode
 {
     private string[] _doorSwitches;

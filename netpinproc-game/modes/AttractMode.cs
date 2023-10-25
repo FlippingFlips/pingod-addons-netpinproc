@@ -14,7 +14,6 @@ public class AttractMode : PinGodProcMode
     /// </summary>
     const string ATTRACT_SCENE = "res://netpinproc-game/scenes/AttractMode/AttractProc.tscn";
 
-    private PackedScene _attractScene;
     private Node _attractInstance;
     private PinGodGameProc _pingod;
 

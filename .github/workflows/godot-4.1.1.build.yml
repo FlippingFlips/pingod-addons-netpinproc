@@ -24,7 +24,11 @@ jobs:
     #    dotnet-version: 7.0.x
 
     - name: clone pingod-addons
-      run: git clone https://github.com/FlippingFlips/pingod-addons
+      run: | 
+          git clone https://github.com/FlippingFlips/pingod-addons
+          cd pingod-addons
+          git checkout dev
+          cd ..
 
     - name: copy pingod-addons
       run: |

@@ -14,7 +14,6 @@ public partial class MatrixSwitchesGridContainer : GridContainer
 		var scene = ResourceLoader
 			.Load<PackedScene>("res://addons-netpinproc/netpinproc-servicemode/Shared/MatrixItemPanel.tscn");
 
-		byte boardNum = 0;
 		int switchCount = _pinGodProcGame.PinGodProcGame.Switches.Count;
 
 		//draw top column rows

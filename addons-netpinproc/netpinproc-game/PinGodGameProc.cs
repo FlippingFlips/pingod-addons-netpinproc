@@ -22,8 +22,9 @@ public partial class PinGodGameProc : PinGodGame
     private Task _procGameLoop;
     /// <summary>To cancel the PROC loop</summary>
     private CancellationTokenSource tokenSource;
+
 	/// <summary>Developer config</summary>
-	public static PinGodGameProcConfig PinGodProcConfig { get; private set; } = new();
+	public static PinGodGameConfigOverride PinGodProcConfig { get; private set; } = new();
 
 	public bool GameReady { get; private set; }
 
@@ -216,7 +217,7 @@ public partial class PinGodGameProc : PinGodGame
 
     /// <summary>
     /// Must set solution / project to x86 if running real p-roc board. <para/>
-    /// Use the <see cref="PinGodGameProcConfig.Simulated"/> flag from the PROC.cfg in game directory
+    /// Use the <see cref="PinGodGameConfigOverride.Simulated"/> flag from the PROC.cfg in game directory
     /// </summary>
     /// <param name="machineConfig"></param>
     private void CreateProcGame()
@@ -231,8 +232,9 @@ public partial class PinGodGameProc : PinGodGame
     /// </summary>
     private void LoadLocalProcConfig()
     {
+        var cfgPath = $"res://{ProjectSettings.GetSetting("application/config/name")}.cfg";
         var config = new ConfigFile();
-        Error err = config.Load("res://proc.cfg");
+        Error err = config.Load(cfgPath);
         if (err != Error.Ok)
         {
             //create config
@@ -246,7 +248,7 @@ public partial class PinGodGameProc : PinGodGame
             config.SetValue("MEMORYMAP", "write", PinGodProcConfig.MemoryMapWriteDelay);
             config.SetValue("MEMORYMAP", "read", PinGodProcConfig.MemoryMapReadDelay);
 
-            config.Save("res://proc.cfg");
+            config.Save(cfgPath);
         }
         else
         {

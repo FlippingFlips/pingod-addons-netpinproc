@@ -11,7 +11,7 @@ public partial class MatrixItemPanel : Panel
 	private ColorRect _wireL;
 	private ColorRect _wireR;
 
-	[Export] public string Name { get; set; }
+	[Export] public string _Name { get; set; }
 	[Export] public int Number { get; set; } = -1;
 	[Export] public Color WireColorL { get; set; }
 	[Export] public string WireNameL { get; set; }
@@ -33,8 +33,8 @@ public partial class MatrixItemPanel : Panel
 		_wireL = GetNode<ColorRect>("%WireLColorRect");
 		_wireR = GetNode<ColorRect>("%WireRColorRect");
 
-		if (!string.IsNullOrWhiteSpace(Name))
-			SetName(Name);
+		if (!string.IsNullOrWhiteSpace(_Name))
+			SetName(_Name);
 
 		if (Number > -1)
 			SetNum(Number);

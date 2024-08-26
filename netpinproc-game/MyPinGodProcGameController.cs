@@ -29,7 +29,7 @@ namespace PinGodAddOns.netpinproc_game
         private ServiceMode _serviceMode;
         #endregion
 
-        /// <summary>Ovverides to add a <see cref="MyProcPlayer"/></summary>
+        /// <summary>Overrides to add a <see cref="MyProcPlayer"/></summary>
         /// <returns></returns>
         public override IPlayer AddPlayer()
         {
@@ -40,7 +40,7 @@ namespace PinGodAddOns.netpinproc_game
             return p;
         }
 
-        /// <summary>Use the Godot call deffered to use this method</summary>
+        /// <summary>Use the Godot call deferred to use this method</summary>
         /// <param name="modeName"></param>
         public override void AddMode(string modeName)
         {
@@ -119,7 +119,7 @@ namespace PinGodAddOns.netpinproc_game
 
         }
 
-        /// <summary>Use the godot call deffered to use this if invoking from Godot</summary>
+        /// <summary>Use the godot call deferred to use this if invoking from Godot</summary>
         /// <param name="modeName"></param>
         public override void RemoveMode(string modeName)
         {
@@ -137,7 +137,7 @@ namespace PinGodAddOns.netpinproc_game
         }
 
         /// <summary>Resets ball saves and adds our base modes to the queue<para/>
-        /// Calls the base implemenation to create to a trough and to reset</summary>
+        /// Calls the base implementation to create to a trough and to reset</summary>
         public override void Reset()
         {
             base.Reset();

@@ -3,8 +3,9 @@ using NetPinProc.Domain;
 using PinGod.Core;
 using System.Linq;
 
-/// <summary>This is a P-ROC Mode that runs the godot service mode scenes. Service mode scenes are in `netpinproc-servicemode`<para/>
-/// This handles the door switches (switches tagged with door) and pushes this onto the scenes script with "OnServiceButtonPressed" <para/></summary>
+/// <summary>This is a P-ROC Mode that runs the godot service mode scenes. Service mode scene files are in `netpinproc-servicemode`<para/>
+/// This handles the door switches (switches tagged with door) and pushes this onto the scenes script with "OnServiceButtonPressed" <para/>
+/// Each time a door handle switch is open/closed the the `_serviceModePinGod.OnSwitchPressed` is called.<para/></summary>
 public class ServiceMode : PinGodProcMode
 {
     /// <summary>created from switches in the machine cofig tagged with door</summary>
@@ -74,7 +75,10 @@ public class ServiceMode : PinGodProcMode
 		else { Logger.WarningRich(nameof(AttractMode), nameof(ModeStarted), ": [color=yellow]no resources found, can't create attract scene[/color]"); }
 	}
 
-    bool HandleSwitches(NetPinProc.Domain.Switch sw)
+    /// <summary>Invokes OnSwitchPressed on the Godot user interface through _serviceModePinGod</summary>
+    /// <param name="sw"></param>
+    /// <returns></returns>
+    public virtual bool HandleSwitches(NetPinProc.Domain.Switch sw)
 	{
         _serviceModePinGod?.CallDeferred("OnSwitchPressed", sw.Name, sw.Number, sw.IsClosed());
         return SWITCH_CONTINUE;

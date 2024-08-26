@@ -1,11 +1,12 @@
 [gd_scene load_steps=10 format=3 uid="uid://bu5y83nxqe02i"]
 
 [ext_resource type="Script" path="res://addons-netpinproc/netpinproc-servicemode/ServiceModePinGod.cs" id="1_b2k0a"]
-[ext_resource type="Theme" uid="uid://cu6tqdbsw05ts" path="res://netpinproc-game/themes/service/ServiceMenuTheme.tres" id="2_58s5f"]
-[ext_resource type="Theme" uid="uid://i8ycokmeeysd" path="res://netpinproc-game/themes/service/ServiceMenuBarsTheme.tres" id="3_vytno"]
+[ext_resource type="Theme" uid="uid://cu6tqdbsw05ts" path="res://addons-netpinproc/themes/service/ServiceMenuTheme.tres" id="2_58s5f"]
+[ext_resource type="Theme" uid="uid://i8ycokmeeysd" path="res://addons-netpinproc/themes/service/ServiceMenuBarsTheme.tres" id="3_vytno"]
 [ext_resource type="Texture2D" uid="uid://cmykdd1cjihij" path="res://addons/pingod-assets/img/pinball.svg" id="4_dvn6r"]
 [ext_resource type="FontFile" uid="uid://cma858wxwc3df" path="res://addons/pingod-assets/fonts/dejavu-sans-mono/DejaVuSansMono.ttf" id="5_w5oyk"]
 [ext_resource type="Texture2D" uid="uid://dex1ftbg8fsk1" path="res://netpinproc-game/assets/img/service_buttons.jpg" id="6_3iegk"]
+
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8js7n"]
 bg_color = Color(0, 0.207843, 0.345098, 1)

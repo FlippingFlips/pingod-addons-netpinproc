@@ -2,7 +2,8 @@
 
 [ext_resource type="Theme" uid="uid://cmi2c3y67jlsa" path="res://addons/pingod-assets/Themes/pingod_settings_theme.tres" id="1_4huhe"]
 [ext_resource type="FontFile" uid="uid://cma858wxwc3df" path="res://addons/pingod-assets/fonts/dejavu-sans-mono/DejaVuSansMono.ttf" id="1_xwl5d"]
-[ext_resource type="Theme" uid="uid://cu6tqdbsw05ts" path="res://netpinproc-game/themes/service/ServiceMenuTheme.tres" id="2_iltma"]
+[ext_resource type="Theme" uid="uid://cu6tqdbsw05ts" path="res://addons-netpinproc/themes/service/ServiceMenuTheme.tres" id="2_iltma"]
+
 
 [node name="CoilGridContainerItem" type="Control"]
 custom_minimum_size = Vector2(1700, 20)

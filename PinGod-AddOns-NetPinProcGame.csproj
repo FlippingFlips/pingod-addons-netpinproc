@@ -19,6 +19,10 @@
     <None Include="addons-netpinproc\netpinproc-servicemode\Tests\Switches\SwitchMatrixView.tscn" />
     <None Include="addons-netpinproc\netpinproc-servicemode\Tests\TestsMenuGridContainer.tscn" />
     <None Include="addons-netpinproc\netpinproc-servicemode\_MainMenu\MainMenuGridContainer.tscn" />
+    <None Include="addons-netpinproc\themes\default_pingod_proc_theme.tres" />
+    <None Include="addons-netpinproc\themes\service\MatrixButtonPanel.tres" />
+    <None Include="addons-netpinproc\themes\service\ServiceMenuBarsTheme.tres" />
+    <None Include="addons-netpinproc\themes\service\ServiceMenuTheme.tres" />
     <None Include="autoload\Machine.tscn" />
     <None Include="autoload\MemoryMap.tscn" />
     <None Include="autoload\PinGodGame.tscn" />
@@ -36,10 +40,6 @@
     <None Include="netpinproc-game\scenes\playfield_texture_rect.tscn" />
     <None Include="netpinproc-game\scenes\ScoreMode\ScoreModePROC.tscn" />
     <None Include="netpinproc-game\scenes\Shared\Logos\PinGodLogoScene.tscn" />
-    <None Include="netpinproc-game\themes\default_pingod_proc_theme.tres" />
-    <None Include="netpinproc-game\themes\service\MatrixButtonPanel.tres" />
-    <None Include="netpinproc-game\themes\service\ServiceMenuBarsTheme.tres" />
-    <None Include="netpinproc-game\themes\service\ServiceMenuTheme.tres" />
     <None Include="PinGod-AddOns-NetPinProcGame.cfg" />
     <None Include="Properties\.gdignore" />
     <None Include="addons\pingod-audio\audio_bus_layout.tres" />
@@ -60,8 +60,10 @@
     <!--INCLUDE LOCALISATION-->
     <None Include="addons\pingod-assets\Localization\pingod_default_lang.csv" />
     <Compile Remove="netpinproc-game\scenes\ServiceMode\**" />
+    <Compile Remove="netpinproc-game\themes\**" />
     <Compile Remove="simulator\**" />
     <EmbeddedResource Remove="netpinproc-game\scenes\ServiceMode\**" />
+    <EmbeddedResource Remove="netpinproc-game\themes\**" />
     <EmbeddedResource Remove="simulator\**" />
     <None Remove="addons\PinGodGame.tscn" />
     <None Remove="addons\PinGodGame.tscn" />

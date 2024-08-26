@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://162qo7003siq"]
 
-[ext_resource type="Texture2D" uid="uid://4g6lhic8j83p" path="res://game_assets/img/mm-logo.png" id="1_i1f8j"]
+[ext_resource type="Texture2D" uid="uid://4g6lhic8j83p" path="res://addons-netpinproc/assets/img/mm-logo.png" id="1_i1f8j"]
+
 
 [node name="multimorphic_logo" type="TextureRect"]
 anchors_preset = 15

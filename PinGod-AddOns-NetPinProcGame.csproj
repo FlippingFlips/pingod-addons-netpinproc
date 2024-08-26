@@ -9,6 +9,12 @@
   <ItemGroup>
     <!--DEBUG GODOT LAUNCH SETTINGS-->
     <Content Include="Properties\launchSettings.json" />
+    <None Include="addons-netpinproc\assets\img\mm-logo.png.import" />
+    <None Include="addons-netpinproc\assets\img\service_buttons.jpg.import" />
+    <None Include="addons-netpinproc\netpinproc-scenes\Logos\multimorphic_logo.tscn" />
+    <None Include="addons-netpinproc\netpinproc-scenes\Logos\PinGodLogoScene.tscn" />
+    <None Include="addons-netpinproc\netpinproc-scenes\Playfield\playfield_texture_rect.tscn" />
+    <None Include="addons-netpinproc\netpinproc-scenes\playfield_texture_rect.tscn" />
     <None Include="addons-netpinproc\netpinproc-servicemode\README.md" />
     <None Include="addons-netpinproc\netpinproc-servicemode\ServiceModePROC.tscn" />
     <None Include="addons-netpinproc\netpinproc-servicemode\Shared\MatrixItemPanel.tscn" />
@@ -36,10 +42,7 @@
     <None Include="netpinproc-game\MainScene.tscn" />
     <None Include="netpinproc-game\procmodes\README.md" />
     <None Include="netpinproc-game\scenes\AttractMode\AttractProc.tscn" />
-    <None Include="netpinproc-game\scenes\Playfield\playfield_texture_rect.tscn" />
-    <None Include="netpinproc-game\scenes\playfield_texture_rect.tscn" />
     <None Include="netpinproc-game\scenes\ScoreMode\ScoreModePROC.tscn" />
-    <None Include="netpinproc-game\scenes\Shared\Logos\PinGodLogoScene.tscn" />
     <None Include="PinGod-AddOns-NetPinProcGame.cfg" />
     <None Include="Properties\.gdignore" />
     <None Include="addons\pingod-audio\audio_bus_layout.tres" />
@@ -59,10 +62,14 @@
     <None Include="addons\**\**\*.gd" />
     <!--INCLUDE LOCALISATION-->
     <None Include="addons\pingod-assets\Localization\pingod_default_lang.csv" />
+    <Compile Remove="netpinproc-game\scenes\Playfield\**" />
     <Compile Remove="netpinproc-game\scenes\ServiceMode\**" />
+    <Compile Remove="netpinproc-game\scenes\Shared\**" />
     <Compile Remove="netpinproc-game\themes\**" />
     <Compile Remove="simulator\**" />
+    <EmbeddedResource Remove="netpinproc-game\scenes\Playfield\**" />
     <EmbeddedResource Remove="netpinproc-game\scenes\ServiceMode\**" />
+    <EmbeddedResource Remove="netpinproc-game\scenes\Shared\**" />
     <EmbeddedResource Remove="netpinproc-game\themes\**" />
     <EmbeddedResource Remove="simulator\**" />
     <None Remove="addons\PinGodGame.tscn" />

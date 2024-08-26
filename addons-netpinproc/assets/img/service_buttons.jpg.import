@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dex1ftbg8fsk1"
-path="res://.godot/imported/service_buttons.jpg-27f06ee5563b1c50e4f71eec2052bc69.ctex"
+path="res://.godot/imported/service_buttons.jpg-a582ad8a2aec7b8a575be285d1671dc0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://netpinproc-game/assets/img/service_buttons.jpg"
-dest_files=["res://.godot/imported/service_buttons.jpg-27f06ee5563b1c50e4f71eec2052bc69.ctex"]
+source_file="res://addons-netpinproc/assets/img/service_buttons.jpg"
+dest_files=["res://.godot/imported/service_buttons.jpg-a582ad8a2aec7b8a575be285d1671dc0.ctex"]
 
 [params]
 

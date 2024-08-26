@@ -28,6 +28,7 @@
     <None Include="lib\x64\libpinproc.so" />
     <None Include="lib\x86\libpinproc.dll" />
     <None Include="lib\x86\libpinproc.so" />
+    <None Include="LICENSE.md" />
     <None Include="netpinproc-game\MainScene.tscn" />
     <None Include="netpinproc-game\procmodes\README.md" />
     <None Include="netpinproc-game\scenes\AttractMode\AttractProc.tscn" />

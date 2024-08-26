@@ -46,11 +46,11 @@ jobs:
     # Zip both addons
     - name: zip addons and addons-netpinproc
       run: |        
-        7z a -tzip "pingod-addons-netpinproc.zip" "addons"
-        7z a -tzip "pingod-addons-netpinproc.zip" "autoload"
-        7z a -tzip "pingod-addons-netpinproc.zip" "PinGod-AddOns-NetPinProcGame.csproj"        
-        7z a -tzip "pingod-addons-netpinproc.zip" "addons-netpinproc"
-        7z a -tzip "pingod-addons-netpinproc.zip" "sql"
+        7z a -tzip "pingod-addons-netpinproc-(dev).zip" "addons"
+        7z a -tzip "pingod-addons-netpinproc-(dev).zip" "autoload"
+        7z a -tzip "pingod-addons-netpinproc-(dev).zip" "PinGod-AddOns-NetPinProcGame.csproj"        
+        7z a -tzip "pingod-addons-netpinproc-(dev).zip" "addons-netpinproc"
+        7z a -tzip "pingod-addons-netpinproc-(dev).zip" "sql"
 
     #- name: install wine  # Icons work without using wine - Dave
     #  id: wine_install
@@ -63,7 +63,7 @@ jobs:
       # Use latest version (see releases for all versions)
       uses: firebelley/godot-export@v5.2.0
       with:        
-        cache: false # cache the Godot export templates and Godot executable
+        cache: true # cache the Godot export templates and Godot executable
         # Defining all the required inputs
         godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.3/mono/Godot_v4.3-stable_mono_linux_x86_64.zip
         godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.3/mono/Godot_v4.3-stable_mono_export_templates.tpz
@@ -90,18 +90,18 @@ jobs:
     - name: Zip
       run: | 
           # zip windows files, this should include a mono directory as well as .exe .pck
-          7z a -tzip "pingod-netpinproc-gamebuild-win.zip" "/home/runner/.local/share/godot/builds/win/*"
+          7z a -tzip "demo-pingodproc-win-(dev).zip" "/home/runner/.local/share/godot/builds/win/*"
 
           # add lib files for libpinproc
-          7z a -tzip "pingod-netpinproc-gamebuild-win.zip" "lib"
+          7z a -tzip "demo-pingodproc-win-(dev).zip" "lib"
 
           # add sql init files for NetPinproc.Game.Sqlite
-          7z a -tzip "pingod-netpinproc-gamebuild-win.zip" "sql"
+          7z a -tzip "demo-pingodproc-win-(dev).zip" "sql"
 
           # zip VP files
-          7z a -tzip "pingod-netpinproc-gamebuild-win.zip" "simulators/visual-pinball/pingodaddons-netpinproc.vpx"
-          7z a -tzip "pingod-netpinproc-gamebuild-win.zip" "simulators/visual-pinball/pingodaddons-netpinproc.vbs"
-          7z a -tzip "pingod-netpinproc-gamebuild-win.zip" "simulators/visual-pinball/README.md"
+          7z a -tzip "demo-pingodproc-win-(dev).zip" "simulators/visual-pinball/pingodaddons-netpinproc.vpx"
+          7z a -tzip "demo-pingodproc-win-(dev).zip" "simulators/visual-pinball/pingodaddons-netpinproc.vbs"
+          7z a -tzip "demo-pingodproc-win-(dev).zip" "simulators/visual-pinball/README.md"
     
     - name: create release
       uses: ncipollo/release-action@v1.12.0
@@ -110,6 +110,6 @@ jobs:
         generateReleaseNotes: false        
         prerelease: true # Pre release dev flag
         allowUpdates: true # allow the release files to be updated and not create a new release everytime
-        tag: ${{ github.ref_name }}
+        tag: ${{ github.ref_name }} #Branch name?
         # include exported windows game zip and source project zip
         artifacts: demo-pingodproc-win-(dev).zip, pingod-addons-netpinproc-(dev).zip

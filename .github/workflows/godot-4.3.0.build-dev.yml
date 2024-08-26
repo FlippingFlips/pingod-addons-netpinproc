@@ -1,8 +1,7 @@
 on: 
   push:
-   branches: [dev]
-   #tags:
-   #   - "v*"
+   tags:
+      - "dev-*"
 jobs:
   # job id, can be anything
   export_game:
@@ -107,9 +106,10 @@ jobs:
       uses: ncipollo/release-action@v1.12.0
       with:
         token: ${{ secrets.GITHUB_TOKEN }}        
-        generateReleaseNotes: false        
+        generateReleaseNotes: false    
+        replacesArtifacts: true
         prerelease: true # Pre release dev flag
-        allowUpdates: true # allow the release files to be updated and not create a new release everytime
+        allowUpdates: true # allow the release files to be updated and not create a new release every time
         tag: ${{ github.ref_name }} #Branch name?
         # include exported windows game zip and source project zip
         artifacts: demo-pingodproc-win-(dev).zip, pingod-addons-netpinproc-(dev).zip

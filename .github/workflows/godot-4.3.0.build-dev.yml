@@ -27,7 +27,7 @@ jobs:
       run: | 
           git clone https://github.com/FlippingFlips/pingod-addons
           cd pingod-addons
-          git checkout dev
+          git checkout
           cd ..
 
     - name: copy pingod-addons

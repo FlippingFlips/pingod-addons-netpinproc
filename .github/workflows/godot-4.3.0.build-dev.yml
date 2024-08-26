@@ -1,0 +1,115 @@
+on: 
+  push:
+   branches: [dev]
+   #tags:
+   #   - "v*"
+jobs:
+  # job id, can be anything
+  export_game:
+    runs-on: ubuntu-latest
+    # Add permission for release creation.
+    permissions: write-all
+    env:
+        VERSION: 0.99
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NUGETAPIKEY: --api-key ${{ secrets.GITHUB_TOKEN }} --source github
+    name: build repository
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3.3.0
+
+    #- name: Setup .NET
+    #  uses: actions/setup-dotnet@v3
+    #  with:
+    #    dotnet-version: 7.0.x
+
+    - name: clone pingod-addons
+      run: | 
+          git clone https://github.com/FlippingFlips/pingod-addons
+          cd pingod-addons
+          git checkout dev
+          cd ..
+
+    - name: copy pingod-addons
+      run: |
+          mkdir addons          
+          cp -R ./pingod-addons/addons .          
+          dir
+          rm -r ./pingod-addons
+
+    - name: NUGET - FlippingFlips
+      run: dotnet nuget add source --username USERNAME --password ${GITHUB_TOKEN} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/FlippingFlips/index.json"
+
+    #- name: dotnet build
+    #  run: dotnet build
+
+    # Zip both addons
+    - name: zip addons and addons-netpinproc
+      run: |        
+        7z a -tzip "pingod-addons-netpinproc.zip" "addons"
+        7z a -tzip "pingod-addons-netpinproc.zip" "autoload"
+        7z a -tzip "pingod-addons-netpinproc.zip" "PinGod-AddOns-NetPinProcGame.csproj"        
+        7z a -tzip "pingod-addons-netpinproc.zip" "addons-netpinproc"
+        7z a -tzip "pingod-addons-netpinproc.zip" "sql"
+
+    #- name: install wine  # Icons work without using wine - Dave
+    #  id: wine_install
+    #  run: |
+    #    sudo apt install wine64
+    #    echo "WINE_PATH=$(which wine64)" >> $GITHUB_OUTPUT
+      
+    - name: godot-export
+      id: export
+      # Use latest version (see releases for all versions)
+      uses: firebelley/godot-export@v5.2.0
+      with:        
+        cache: true # cache the Godot export templates and Godot executable
+        # Defining all the required inputs
+        godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.3/mono/Godot_v4.3-stable_mono_linux_x86_64.zip
+        godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.3/mono/Godot_v4.3-stable_mono_export_templates.tpz
+        relative_project_path: ./        
+        archive_output: false # don't archive output, we take care of it
+        #wine_path: ${{ steps.wine_install.outputs.WINE_PATH }} # Icons work without using wine - Dave
+
+    - name: check built files
+      run: |
+        #dir /home/runner/.local/share/godot/builds/win/win.exe
+        dir /home/runner/.local/share/godot/builds
+        dir /home/runner/.local/share/godot/builds/win
+
+    # pack the executable, 70mb without
+    - name: Run UPX Pack Exe
+      uses: crazy-max/ghaction-upx@v3
+      with:
+          version: latest
+          files: |
+            /home/runner/.local/share/godot/builds/win/win.exe
+          args: -fq
+
+    # zip all needed files to run the game out of the box
+    - name: Zip
+      run: | 
+          # zip windows files, this should include a mono directory as well as .exe .pck
+          7z a -tzip "pingod-netpinproc-gamebuild-win.zip" "/home/runner/.local/share/godot/builds/win/*"
+
+          # add lib files for libpinproc
+          7z a -tzip "pingod-netpinproc-gamebuild-win.zip" "lib"
+
+          # add sql init files for NetPinproc.Game.Sqlite
+          7z a -tzip "pingod-netpinproc-gamebuild-win.zip" "sql"
+
+          # zip VP files
+          7z a -tzip "pingod-netpinproc-gamebuild-win.zip" "simulators/visual-pinball/pingodaddons-netpinproc.vpx"
+          7z a -tzip "pingod-netpinproc-gamebuild-win.zip" "simulators/visual-pinball/pingodaddons-netpinproc.vbs"
+          7z a -tzip "pingod-netpinproc-gamebuild-win.zip" "simulators/visual-pinball/README.md"
+    
+    - name: create release
+      uses: ncipollo/release-action@v1.12.0
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}        
+        generateReleaseNotes: false        
+        prerelease: true # Pre release dev flag
+        allowUpdates: true # allow the release files to be updated and not create a new release everytime
+        tag: ${{ github.ref_name }}
+        # include exported windows game zip and source project zip
+        artifacts: demo-pingodproc-win-(dev).zip, pingod-addons-netpinproc-(dev).zip

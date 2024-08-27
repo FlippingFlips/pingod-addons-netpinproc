@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dao4scwqknnub"]
+
+[ext_resource type="Script" path="res://addons-netpinproc/netpinproc-machine/MachinePROC.cs" id="1_5trfv"]
+
+[node name="Machine" type="Node"]
+editor_description = "** USE MACHINE ITEMS IN NETPINPROC DATABASE **
+Add to SQL file then generate database on game launch"
+script = ExtResource("1_5trfv")
+_ball_search_enabled = false

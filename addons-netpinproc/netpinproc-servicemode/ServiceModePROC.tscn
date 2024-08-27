@@ -1,0 +1,262 @@
+[gd_scene load_steps=10 format=3 uid="uid://bu5y83nxqe02i"]
+
+[ext_resource type="Script" path="res://addons-netpinproc/netpinproc-servicemode/ServiceModePinGod.cs" id="1_b2k0a"]
+[ext_resource type="Theme" uid="uid://cu6tqdbsw05ts" path="res://addons-netpinproc/themes/service/ServiceMenuTheme.tres" id="2_58s5f"]
+[ext_resource type="Theme" uid="uid://i8ycokmeeysd" path="res://addons-netpinproc/themes/service/ServiceMenuBarsTheme.tres" id="3_vytno"]
+[ext_resource type="Texture2D" uid="uid://cmykdd1cjihij" path="res://addons/pingod-assets/img/pinball.svg" id="4_dvn6r"]
+[ext_resource type="FontFile" uid="uid://cma858wxwc3df" path="res://addons/pingod-assets/fonts/dejavu-sans-mono/DejaVuSansMono.ttf" id="5_w5oyk"]
+[ext_resource type="Texture2D" uid="uid://dex1ftbg8fsk1" path="res://addons-netpinproc/assets/img/service_buttons.jpg" id="6_3iegk"]
+
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8js7n"]
+bg_color = Color(0, 0.207843, 0.345098, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e6kvt"]
+bg_color = Color(0.258824, 0.321569, 0.396078, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.803922, 0.831373, 0.486275, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6n0w0"]
+bg_color = Color(0.00392157, 0.12549, 0.203922, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+shadow_color = Color(0.184314, 0.513726, 0.917647, 0.6)
+shadow_size = 2
+
+[node name="ServiceModePROC" type="Node"]
+editor_description = "The base ServiceMode starting scene. 
+
+How this currently works is injecting scenes into the \"ServiceModeCenterContainer\".
+
+Scenes can be added into the _menuScenes in the inspector, key and path. So for the tests menu: \"tests\", \"res://netpinproc-game/scenes/ServiceMode/Tests/TestsMenuGridContainer.tscn\"
+
+The MainMenu contains a test button. When this menu is entered it will be posted back to this view to act on it. Usually to add the next menu or a view.
+
+These views will be created as and when, so each new view is created on entry leaving it all free aside from this."
+script = ExtResource("1_b2k0a")
+_menuScenes = {
+"MainMenu": "res://addons-netpinproc/netpinproc-servicemode/_MainMenu/MainMenuGridContainer.tscn",
+"coils": "res://addons-netpinproc/netpinproc-servicemode/Tests/Coils/CoilsTestView.tscn",
+"switches": "res://addons-netpinproc/netpinproc-servicemode/Tests/Switches/SwitchMatrixView.tscn",
+"tests": "res://addons-netpinproc/netpinproc-servicemode/Tests/TestsMenuGridContainer.tscn"
+}
+
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(1920, 1080)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Control"]
+custom_minimum_size = Vector2(1920, 1080)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_58s5f")
+
+[node name="TopPanel" type="Panel" parent="Control/Panel"]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 145.0
+theme = ExtResource("3_vytno")
+
+[node name="Panel" type="Panel" parent="Control/Panel/TopPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -875.0
+offset_right = 875.0
+offset_bottom = 60.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8js7n")
+metadata/_edit_lock_ = true
+
+[node name="TitleLabel" type="Label" parent="Control/Panel/TopPanel/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -329.5
+offset_right = 329.5
+offset_bottom = 91.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 48
+text = "pingod service mode"
+
+[node name="IconPanel" type="Panel" parent="Control/Panel/TopPanel"]
+visible = false
+z_index = 2
+layout_mode = 0
+offset_left = 9.0
+offset_top = 2.0
+offset_right = 159.0
+offset_bottom = 142.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_e6kvt")
+metadata/_edit_lock_ = true
+
+[node name="CenterContainer" type="CenterContainer" parent="Control/Panel/TopPanel/IconPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel/TopPanel/IconPanel/CenterContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/Panel/TopPanel/IconPanel/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(110, 100)
+layout_mode = 2
+texture = ExtResource("4_dvn6r")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="Control/Panel/TopPanel/IconPanel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "HOME"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="BottomPanel" type="Panel" parent="Control/Panel"]
+custom_minimum_size = Vector2(1920, 75)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -75.0
+offset_right = 960.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("3_vytno")
+
+[node name="InfoPanel" type="Panel" parent="Control/Panel/BottomPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 279.0
+offset_top = 5.0
+offset_right = 1879.0
+offset_bottom = 70.0
+theme = ExtResource("2_58s5f")
+theme_override_styles/panel = SubResource("StyleBoxFlat_6n0w0")
+
+[node name="DateLabel" type="Label" parent="Control/Panel/BottomPanel/InfoPanel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -161.0
+offset_bottom = 44.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 31
+text = "DATE-TIME"
+horizontal_alignment = 2
+
+[node name="TitleLabel" type="Label" parent="Control/Panel/BottomPanel/InfoPanel"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -443.0
+offset_top = -45.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "Game Name - Version 1.0.0.0"
+horizontal_alignment = 3
+
+[node name="EnterLabel" type="Label" parent="Control/Panel/BottomPanel/InfoPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -328.5
+offset_top = -61.0
+offset_right = 328.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("5_w5oyk")
+theme_override_font_sizes/font_size = 42
+text = "Press ENTER to select item"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ServiceButtons" type="TextureRect" parent="Control/Panel/BottomPanel"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 0.35
+offset_top = -111.92
+offset_right = 895.35
+offset_bottom = 0.0800018
+grow_vertical = 0
+scale = Vector2(0.34, 0.34)
+texture = ExtResource("6_3iegk")
+
+[node name="LeftPanel" type="Panel" parent="Control/Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 1080.0
+theme = ExtResource("3_vytno")
+metadata/_edit_lock_ = true
+
+[node name="RightPanel" type="Panel" parent="Control/Panel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -540.0
+offset_bottom = 540.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("3_vytno")
+metadata/_edit_lock_ = true
+
+[node name="PanelShadowBottom" type="ColorRect" parent="Control/Panel"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 999.0
+offset_right = 1880.0
+offset_bottom = 1005.0
+color = Color(0.00390625, 0.09375, 0.140625, 1)
+
+[node name="PanelShadowTop" type="ColorRect" parent="Control/Panel"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 145.0
+offset_right = 1880.0
+offset_bottom = 151.0
+color = Color(0.00390625, 0.09375, 0.140625, 1)
+
+[node name="ServiceModeCenterContainer" type="CenterContainer" parent="Control/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

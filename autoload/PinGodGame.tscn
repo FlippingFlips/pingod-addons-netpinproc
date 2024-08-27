@@ -4,5 +4,5 @@
 
 [node name="PinGodGame" type="Node"]
 process_priority = -1
-editor_description = "Override autoload with a new base game class. PinGodGameProc.cs"
+editor_description = "Override autoload with a new base game class. MyPinGodProcGame.cs"
 script = ExtResource("1_c64a7")

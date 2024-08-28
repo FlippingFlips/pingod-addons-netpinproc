@@ -1,5 +1,6 @@
 on: 
   push:
+   branches-ignore: [main]
    tags:
       - "dev-*"
 jobs:

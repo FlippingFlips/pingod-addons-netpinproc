@@ -1,8 +1,7 @@
 on: 
-  push:
-     tags:
-      - "dev-*"
-     branches-ignore: [main]
+  push:     
+     branches: [dev]
+     tags: ["dev-*"]
 jobs:
   # job id, can be anything
   export_game:
@@ -55,7 +54,6 @@ jobs:
         7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "sql"
         7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "README.md"
         7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "project.godot"
-        7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "NetPinProc.Game.Sqlite.targets"
         7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "License.md"
         7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "export_presets.cfg"
 

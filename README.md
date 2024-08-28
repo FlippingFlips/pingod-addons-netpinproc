@@ -3,19 +3,25 @@
 
 Addons for extending the `pingod-addons` and adding `NetPinProc Libraries` for using P-ROC with PinGod.
 
-This project uses the [NetPinProc.Game.Sqlite](NetPinProc.Game.Sqlite) package which includes `NetPinProc.Game` and `NetPinProc`.
-This project also relies on the `pingod-addons` being in an `addons` folder for the Godot project.
+## Quick Start - Demo Test
+- Run the windows game demo in releases with the switch window and a fake PROC
 
-- `addons-netpinproc` contains base implementations for PROC and PinGod with PROC with `pingod-addon` overrides.
-- `autoload` contains scenes which can override the addons scenes.
-- `netpinproc-game` contains custom game classes and files with scenes and example modes.
-- `simulators` files for simulator like Visual Pinball and PinGod controller
-- `sql` shipped with library, change to add your own machine configuration.
+## About
+This project uses the [NetPinProc.Game.Sqlite](NetPinProc.Game.Sqlite) package which includes `NetPinProc.Game` and `NetPinProc`. 
+This project also relies on the `pingod-addons` being in an `addons` folder for this Godot project as the files here build on from those.
+
+### Directories Overview
+- [addons/netpinproc*](addons) contains base implementations for PROC and PinGod with PROC with [pingod-addons](`https://github.com/FlippingFlips/pingod-addons`) overrides.
+- [autoload](autoload) contains scenes which can override the addons scenes.
+- [netpinproc-game](netpinproc-game) contains custom game classes and files with scenes and example modes.
+
+### Other directories
+- [lib](lib) these files are only required when running real P-ROC controller boards
+- [simulators](simulators/visual-pinball) files for simulator like Visual Pinball and PinGod controller
+- [sql](sql) shipped with library, change to add your own machine configuration.
 Set the `.cfg` file to delete on launch if you need to.
 
-
-
-## Quick Start
+## Quick Dev Start
 1. Download the repo or clone
 2. Download the addons folder from `pingod-addons`
 3. Load project with Godot from this directory running `godot -e`

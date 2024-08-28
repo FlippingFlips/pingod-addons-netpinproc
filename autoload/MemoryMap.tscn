@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://b4mvs3f3cmb8x"]
 
-[ext_resource type="Script" path="res://addons-netpinproc/netpinproc-memorymap/MemoryMapPROCNode.cs" id="1_xe3ca"]
+[ext_resource type="Script" path="res://addons/netpinproc-memorymap/MemoryMapPROCNode.cs" id="1_xe3ca"]
+
 
 [node name="MemoryMap" type="Node"]
 editor_description = "Memory map file for communication with simulators etc."

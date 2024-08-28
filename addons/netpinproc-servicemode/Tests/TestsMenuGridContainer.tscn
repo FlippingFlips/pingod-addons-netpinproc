@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=3 uid="uid://cfha5mt2oqvww"]
 
-[ext_resource type="Script" path="res://addons-netpinproc/netpinproc-servicemode/Tests/TestsMenuGridContainer.cs" id="1_u7u8h"]
-[ext_resource type="PackedScene" uid="uid://srx7l013vpl4" path="res://addons-netpinproc/netpinproc-servicemode/Shared/PgMenuButton.tscn" id="2_g55vn"]
+[ext_resource type="Script" path="res://addons/netpinproc-servicemode/Tests/TestsMenuGridContainer.cs" id="1_u7u8h"]
+[ext_resource type="PackedScene" uid="uid://srx7l013vpl4" path="res://addons/netpinproc-servicemode/Shared/PgMenuButton.tscn" id="2_g55vn"]
+
 
 [node name="TestsMenuGridContainer" type="GridContainer"]
 theme_override_constants/h_separation = 60

@@ -2,8 +2,7 @@
 using NetPinProc.Domain;
 using PinGod.Core;
 
-/// <summary>
-/// A P-ROC (PinGodProcMode) but reusing the default PinGod Attract.tscn. <para/>
+/// <summary>A P-ROC (PinGodProcMode) but reusing the default PinGod Attract.tscn. <para/>
 /// When the mode starts, the <see cref="ATTRACT_SCENE"/> is loaded into the tree. <para/> 
 /// This mode handles start button to remove this mode, and then start the game if the P-ROC trough is full.
 /// </summary>
@@ -16,59 +15,52 @@ public class AttractMode : PinGodProcMode
     private Node _attractInstance;
     private PinGodGameProc _pingod;
 
-    public AttractMode(IGameController game, int priority, IPinGodGame pinGod, string name = nameof(AttractMode)) : base(game, name, priority, pinGod)
-    {
-        _pingod = pinGod as PinGodGameProc;
-    }
+    public AttractMode(IGameController game,
+        int priority,
+        IPinGodGame pinGod,
+        string name = nameof(AttractMode)) : base(game, name, priority, pinGod) =>
+            _pingod = pinGod as PinGodGameProc;
 
+    /// <summary>adds the attract scene to this modes canvas layer</summary>
     public override void ModeStarted()
     {
-        base.ModeStarted();
+        //base.ModeStarted(); //base implementation does nothing
 
-        _pingod.NetProcGame.Logger.Log(nameof(AttractMode), " mode started");
+        //Log from NetProcGame
+        _pingod.NetProcGame.Logger.Log(nameof(AttractMode), " " + nameof(ModeStarted));
 
+        //tell Godot to load our scene
         _pingod.CallDeferred("AddModeScene", ATTRACT_SCENE);
-
-        //_game.LEDS["start"].Script(
-        //    new NetPinProc.Domain.Pdb.LEDScript[]{
-        //        new NetPinProc.Domain.Pdb.LEDScript { Colour = new uint[] { 0xFF, 0x00, 0x00 }, Duration = 500},
-        //        new NetPinProc.Domain.Pdb.LEDScript { Colour = new uint[] { 0x00, 0x00, 0x00 }, Duration = 500}});
     }
 
-    /// <summary>
-    /// removes the attract layer from modes canvas and frees it
-    /// </summary>
+    /// <summary>removes the attract layer from modes canvas and frees it</summary>
     public override void ModeStopped()
     {
-        base.ModeStopped();
+        //Log from Godot
         Logger.Debug(nameof(AttractMode), nameof(ModeStopped));
 
         //remove the scene from the modes canvas layer
         _pingod.CallDeferred("RemoveModeScene", "Attract");
 
-        //if (_attractInstance != null)
-        //{
-        //    RemoveChildSceneFromCanvasLayer(_attractInstance);
-        //    _attractInstance?.Free();
-        //    _attractInstance = null;
-        //}
+        //removes this mode scene
+        base.ModeStopped();
     }
 
-    /// <summary>
-    /// Start button, starts game and adds a player if the trough is full. //TODO: BallSearch if no balls when push start
-    /// </summary>
+    /// <summary>Start button closed event<para/>
+    /// Checks for enough credits and if enough balls on the trough the game will be started.<para/>
+    /// <see cref="PinGodGameProc.StartProcGame"/> will be used to start the game<para/>
+    /// A PROC ball search will be activated if not enough balls are in the trough</summary>
     /// <param name="sw"></param>
-    /// <returns></returns>
+    /// <returns>true if switch can continue</returns>
     public bool sw_start_active(NetPinProc.Domain.Switch sw)
     {
+        Game.Logger?.Log("Attract: start button active credits: " + _pingod.Credits);
+
         //no credits
         if (_pingod.Credits <= 0) return SWITCH_CONTINUE;
-
-        Game.Logger?.Log("start button active");
-        if (_game.Trough?.IsFull() ?? false) //todo: credit check?
-        {
+        
+        if (_game.Trough?.IsFull() ?? false)
             _pingod.CallDeferred("StartProcGame");
-        }
         else
         {
             Game.Logger?.Log("attract start. trough balls=" + _game.Trough.NumBalls() + ", running ball search.", NetPinProc.Domain.PinProc.LogLevel.Debug);

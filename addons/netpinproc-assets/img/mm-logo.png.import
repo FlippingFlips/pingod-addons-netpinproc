@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://4g6lhic8j83p"
-path="res://.godot/imported/mm-logo.png-423294dac2d2b8aed61c59abc07282da.ctex"
+path="res://.godot/imported/mm-logo.png-4297847165fd3f37292863f140a88ef4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons-netpinproc/assets/img/mm-logo.png"
-dest_files=["res://.godot/imported/mm-logo.png-423294dac2d2b8aed61c59abc07282da.ctex"]
+source_file="res://addons/netpinproc-assets/img/mm-logo.png"
+dest_files=["res://.godot/imported/mm-logo.png-4297847165fd3f37292863f140a88ef4.ctex"]
 
 [params]
 

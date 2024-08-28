@@ -1,15 +1,15 @@
 on: 
-  push:
-   tags:
-      - "dev-*"
+  push:     
+     branches: [dev]
+     tags: ["dev-*"]
 jobs:
-  # job id, can be anything
   export_game:
     runs-on: ubuntu-latest
-    # Add permission for release creation.
-    permissions: write-all
+    permissions: write-all # Add permission for release creation.
     env:
-        VERSION: 0.99
+        SRCZIPNAME: netpinproc-and-pingod-addons-source-${{ github.ref_name }}.zip
+        GAMEZIPNAME: demo-pingod-netpinproc-win-${{ github.ref_name }}.zip
+        TAG: ${{ github.ref_name }} 
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NUGETAPIKEY: --api-key ${{ secrets.GITHUB_TOKEN }} --source github
     name: build repository
@@ -17,21 +17,15 @@ jobs:
     - name: checkout
       uses: actions/checkout@v3.3.0
 
-    #- name: Setup .NET
-    #  uses: actions/setup-dotnet@v3
-    #  with:
-    #    dotnet-version: 7.0.x
-
-    - name: clone pingod-addons
+    - name: Cloning `pingod-addons`...
       run: | 
           git clone https://github.com/FlippingFlips/pingod-addons
           cd pingod-addons
           git checkout
           cd ..
 
-    - name: copy pingod-addons
+    - name: Copying `pingod-addons` directory...
       run: |
-          mkdir addons          
           cp -R ./pingod-addons/addons .          
           dir
           rm -r ./pingod-addons
@@ -39,23 +33,19 @@ jobs:
     - name: NUGET - FlippingFlips
       run: dotnet nuget add source --username USERNAME --password ${GITHUB_TOKEN} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/FlippingFlips/index.json"
 
-    #- name: dotnet build
-    #  run: dotnet build
-
-    # Zip both addons
-    - name: zip addons and addons-netpinproc
+    - name: Zipping `PinGod-Addons`, `NetPinProc-Addons`, `LibPinProc` - All files needed for base game setup
       run: |        
-        7z a -tzip "pingod-addons-netpinproc-(dev).zip" "addons"
-        7z a -tzip "pingod-addons-netpinproc-(dev).zip" "autoload"
-        7z a -tzip "pingod-addons-netpinproc-(dev).zip" "PinGod-AddOns-NetPinProcGame.csproj"        
-        7z a -tzip "pingod-addons-netpinproc-(dev).zip" "addons-netpinproc"
-        7z a -tzip "pingod-addons-netpinproc-(dev).zip" "sql"
-
-    #- name: install wine  # Icons work without using wine - Dave
-    #  id: wine_install
-    #  run: |
-    #    sudo apt install wine64
-    #    echo "WINE_PATH=$(which wine64)" >> $GITHUB_OUTPUT
+        7z a -tzip "${SRCZIPNAME}" "addons" # add pingod addons
+        7z a -tzip "${SRCZIPNAME}" "autoload"
+        7z a -tzip "${SRCZIPNAME}" "PinGod-AddOns-NetPinProcGame.csproj"                
+        7z a -tzip "${SRCZIPNAME}" "netpinproc-game"
+        7z a -tzip "${SRCZIPNAME}" "lib"
+        7z a -tzip "${SRCZIPNAME}" "simulators"
+        7z a -tzip "${SRCZIPNAME}" "sql"
+        7z a -tzip "${SRCZIPNAME}" "README.md"
+        7z a -tzip "${SRCZIPNAME}" "project.godot"
+        7z a -tzip "${SRCZIPNAME}" "LICENSE.md"
+        7z a -tzip "${SRCZIPNAME}" "export_presets.cfg"
       
     - name: godot-export
       id: export
@@ -89,18 +79,18 @@ jobs:
     - name: Zip
       run: | 
           # zip windows files, this should include a mono directory as well as .exe .pck
-          7z a -tzip "demo-pingodproc-win-(dev).zip" "/home/runner/.local/share/godot/builds/win/*"
+          7z a -tzip "${GAMEZIPNAME}"  "/home/runner/.local/share/godot/builds/win/*"
 
           # add lib files for libpinproc
-          7z a -tzip "demo-pingodproc-win-(dev).zip" "lib"
+          7z a -tzip "${GAMEZIPNAME}"  "lib"
 
           # add sql init files for NetPinproc.Game.Sqlite
-          7z a -tzip "demo-pingodproc-win-(dev).zip" "sql"
+          7z a -tzip "${GAMEZIPNAME}"  "sql"
 
           # zip VP files
-          7z a -tzip "demo-pingodproc-win-(dev).zip" "simulators/visual-pinball/pingodaddons-netpinproc.vpx"
-          7z a -tzip "demo-pingodproc-win-(dev).zip" "simulators/visual-pinball/pingodaddons-netpinproc.vbs"
-          7z a -tzip "demo-pingodproc-win-(dev).zip" "simulators/visual-pinball/README.md"
+          7z a -tzip "${GAMEZIPNAME}" "simulators/visual-pinball/pingodaddons-netpinproc.vpx"
+          7z a -tzip "${GAMEZIPNAME}"  "simulators/visual-pinball/pingodaddons-netpinproc.vbs"
+          7z a -tzip "${GAMEZIPNAME}"  "simulators/visual-pinball/README.md"
     
     - name: create release
       uses: ncipollo/release-action@v1.12.0
@@ -112,4 +102,5 @@ jobs:
         allowUpdates: true # allow the release files to be updated and not create a new release every time
         tag: ${{ github.ref_name }} #Branch name?
         # include exported windows game zip and source project zip
-        artifacts: demo-pingodproc-win-(dev).zip, pingod-addons-netpinproc-(dev).zip
+        artifacts: "*.zip"
+

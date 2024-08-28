@@ -2,12 +2,13 @@
 
 [ext_resource type="Script" path="res://addons/pingod-resources/Resources.cs" id="1_ybovl"]
 [ext_resource type="PackedScene" uid="uid://cm3hf1m8bn1nl" path="res://addons/pingod-modes/bonus/Bonus.tscn" id="2_dk1g3"]
-[ext_resource type="PackedScene" path="res://addons/pingod-modes/multiball/Multiball.tscn" id="3_u87hv"]
+[ext_resource type="PackedScene" uid="uid://kx573b6w4i5k" path="res://addons/pingod-modes/multiball/Multiball.tscn" id="3_u87hv"]
 [ext_resource type="PackedScene" uid="uid://cukmt8esxykqv" path="res://addons/pingod-modes/tilt/Tilt.tscn" id="4_e6dvi"]
 [ext_resource type="PackedScene" uid="uid://b46rdcwxkw0gu" path="res://addons/pingod-modes/scoreentry/ScoreEntry.tscn" id="5_b3755"]
 [ext_resource type="PackedScene" uid="uid://48qny4snll62" path="res://netpinproc-game/scenes/AttractMode/AttractProc.tscn" id="6_7tvoc"]
-[ext_resource type="PackedScene" uid="uid://bu5y83nxqe02i" path="res://addons-netpinproc/netpinproc-servicemode/ServiceModePROC.tscn" id="7_hy6by"]
+[ext_resource type="PackedScene" uid="uid://bu5y83nxqe02i" path="res://addons/netpinproc-servicemode/ServiceModePROC.tscn" id="7_hy6by"]
 [ext_resource type="PackedScene" uid="uid://bkkshxp0osqj6" path="res://netpinproc-game/scenes/ScoreMode/ScoreModePROC.tscn" id="8_0wkit"]
+
 
 [node name="Resources" type="ResourcePreloader"]
 script = ExtResource("1_ybovl")

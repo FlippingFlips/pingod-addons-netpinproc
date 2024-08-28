@@ -17,19 +17,14 @@ jobs:
     - name: checkout
       uses: actions/checkout@v3.3.0
 
-    #- name: Setup .NET
-    #  uses: actions/setup-dotnet@v3
-    #  with:
-    #    dotnet-version: 7.0.x
-
-    - name: clone pingod-addons
+    - name: Cloning `pingod-addons`...
       run: | 
           git clone https://github.com/FlippingFlips/pingod-addons
           cd pingod-addons
           git checkout
           cd ..
 
-    - name: copy pingod-addons
+    - name: Copying `pingod-addons` directory...
       run: |
           mkdir addons          
           cp -R ./pingod-addons/addons .          
@@ -39,13 +34,9 @@ jobs:
     - name: NUGET - FlippingFlips
       run: dotnet nuget add source --username USERNAME --password ${GITHUB_TOKEN} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/FlippingFlips/index.json"
 
-    #- name: dotnet build
-    #  run: dotnet build
-
-    - name: Zip PinGod-Addons, NetPinProc-Addons, LibPinProc - All files needed for base game
+    - name: Zipping `PinGod-Addons`, `NetPinProc-Addons`, `LibPinProc` - All files needed for base game setup
       run: |        
         7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "addons" # add pingod addons
-        7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "addons-netpinproc" # netpinproc
         7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "autoload"
         7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "PinGod-AddOns-NetPinProcGame.csproj"                
         7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "netpinproc-game"
@@ -56,12 +47,6 @@ jobs:
         7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "project.godot"
         7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "LICENSE.md"
         7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "export_presets.cfg"
-
-    #- name: install wine  # Icons work without using wine - Dave
-    #  id: wine_install
-    #  run: |
-    #    sudo apt install wine64
-    #    echo "WINE_PATH=$(which wine64)" >> $GITHUB_OUTPUT
       
     - name: godot-export
       id: export

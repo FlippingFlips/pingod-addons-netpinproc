@@ -48,7 +48,6 @@ jobs:
         7z a -tzip "pingod-addons-netpinproc.zip" "addons"
         7z a -tzip "pingod-addons-netpinproc.zip" "autoload"
         7z a -tzip "pingod-addons-netpinproc.zip" "PinGod-AddOns-NetPinProcGame.csproj"        
-        7z a -tzip "pingod-addons-netpinproc.zip" "addons-netpinproc"
         7z a -tzip "pingod-addons-netpinproc.zip" "sql"
 
     #- name: install wine  # Icons work without using wine - Dave

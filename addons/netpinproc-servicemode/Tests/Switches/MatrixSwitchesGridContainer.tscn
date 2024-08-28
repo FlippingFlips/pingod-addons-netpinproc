@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://bhh1yxl0c6ofe"]
 
-[ext_resource type="Script" path="res://addons-netpinproc/netpinproc-servicemode/Tests/Switches/MatrixSwitchesGridContainer.cs" id="1_h6std"]
+[ext_resource type="Script" path="res://addons/netpinproc-servicemode/Tests/Switches/MatrixSwitchesGridContainer.cs" id="1_h6std"]
+
 
 [node name="MatrixSwitchesGridContainer" type="GridContainer" groups=["switch_views"]]
 clip_contents = true

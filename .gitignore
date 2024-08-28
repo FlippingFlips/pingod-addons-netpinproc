@@ -4,13 +4,22 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # PinGod - Godot
+/addons/pingod-assets/Localization/pingod_default_lang.fr.translation
+/addons/pingod-assets/Localization/pingod_default_lang.en.translation
+/netproc.db-wal
+/netproc.db-shm
+/netproc.db
+/_link_addons.bat
+/addons/pingod*
+/PinGod-AddOns-NetPinProcGame.cfg
+/.gitmodules
+
 # import files that are built, no need to be in source
-.import
 *.godot
 Exported
+/builds
 .mono
 temp
-
 
 # User-specific files
 *.rsuser
@@ -376,61 +385,3 @@ FodyWeavers.xsd
 /docs/public
 # PinGod: sub modules
 #/docs/themes/hugo-theme-techdoc
-/addons/pingod-machine/.godot
-/addons/pingod-memorymap/.godot
-/examples/pingod-basicgame/TODO/Build/data_BasicGameGodot/Mono/etc/mono
-/addons/pingod-audio/.godot
-/examples/pingod-basicgame/TODO
-/examples/pingod-basicgame-noscript/.godot
-/examples/pingod-basicgame/pingod_basicgame.xml
-/examples/pingod-basicgame/local/BasicGameLang.en.translation
-/addons/assets/Localization/pingod_default_lang.ja.translation
-/addons/assets/Localization/pingod_default_lang.fr.translation
-/addons/assets/Localization/pingod_default_lang.es.translation
-/addons/assets/Localization/pingod_default_lang.en.translation
-/examples/pingod-template - Copy/.godot
-/examples/pingod-game-pindar/.godot
-/examples/pingod-app-memorymap-window/.godot
-/examples/pingod-game-motu/.godot
-/examples/pingod-game-evildead/.godot
-/examples/pingod-game-evildead
-/examples/pingod-game-motu
-/examples/pingod-template-win-audit-adjust/.godot
-/examples/pingod-game-pindar
-/examples/pingod-basicgame-noscript
-/examples/pingod-game-scifi
-/examples/startergame
-/addons/pingod-proc
-/examples/pingod-proc
-/examples/pingod-playboy
-/examples/pingod-playfieldwindow
-/examples/!template - Copy
-/examples/pingod-netproc-pdb/addons
-!/examples/pingod-netproc-pdb/nuget
-/examples/pingod-netproc-pdb/visual_pinball/playfield.png
-/examples/pingod-netproc-pdb/visual_pinball/decals_lamp.png
-/examples/pingod-netproc-pdb/visual_pinball/decals_inserts.png
-/examples/pingod-netproc-pdb/visual_pinball/crash.txt
-/examples/pingod-netproc-pdb/netproc.db
-/examples/pingod-game-moonstation/assets/img
-/examples/pingod-game-moonstation/assets/audio
-/examples/pingod-game-moonstation/visual_pinball/vp-playfield.png
-/examples/pingod-game-moonstation/visual_pinball/vp-plastics.png
-/examples/pingod-game-moonstation/addons
-/examples/pingod-game-moonstation/local/ms_lang.en.translation
-/examples/pingod-netproc-pdb/netproc.db-wal
-/examples/pingod-netproc-pdb/netproc.db-shm
-/examples/pingod-netproc-pdb/builds/win
-/examples/pingod-netproc-pdb/proc.cfg
-/examples/pingod-netproc-pdb/visual_pinball/crash.dmp
-/builds
-/addons/pingod-assets/Localization/pingod_default_lang.fr.translation
-/addons/pingod-assets/Localization/pingod_default_lang.en.translation
-/netproc.db-wal
-/netproc.db-shm
-/netproc.db
-/proc.cfg
-/_link_addons.bat
-/addons
-/PinGod-AddOns-NetPinProcGame.cfg
-/.gitmodules

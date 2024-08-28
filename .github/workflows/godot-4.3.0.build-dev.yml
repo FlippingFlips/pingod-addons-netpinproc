@@ -102,5 +102,5 @@ jobs:
         allowUpdates: true # allow the release files to be updated and not create a new release every time
         tag: ${{ github.ref_name }} #Branch name?
         # include exported windows game zip and source project zip
-        artifacts: ${{GAMEZIPNAME}}, ${{SRCZIPNAME}}
+        artifacts: "${GAMEZIPNAME},${SRCZIPNAME}"
 

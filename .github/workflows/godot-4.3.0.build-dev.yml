@@ -43,14 +43,21 @@ jobs:
     #- name: dotnet build
     #  run: dotnet build
 
-    # Zip both addons
-    - name: zip addons and addons-netpinproc
+    - name: Zip PinGod-Addons, NetPinProc-Addons, LibPinProc - All files needed for base game
       run: |        
-        7z a -tzip "pingod-addons-netpinproc-(dev).zip" "addons"
-        7z a -tzip "pingod-addons-netpinproc-(dev).zip" "autoload"
-        7z a -tzip "pingod-addons-netpinproc-(dev).zip" "PinGod-AddOns-NetPinProcGame.csproj"        
-        7z a -tzip "pingod-addons-netpinproc-(dev).zip" "addons-netpinproc"
-        7z a -tzip "pingod-addons-netpinproc-(dev).zip" "sql"
+        7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "addons" # add pingod addons
+        7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "addons-netpinproc" # netpinproc
+        7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "autoload"
+        7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "PinGod-AddOns-NetPinProcGame.csproj"                
+        7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "netpinproc-game"
+        7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "lib"
+        7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "simulators"
+        7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "sql"
+        7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "README.MD"
+        7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "project.godot"
+        7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "NetPinProc.Game.Sqlite.targets"
+        7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "License.MD"
+        7z a -tzip "pingod-netpinproc-source+addons(dev).zip" "export_presets.cfg"
 
     #- name: install wine  # Icons work without using wine - Dave
     #  id: wine_install
@@ -113,4 +120,4 @@ jobs:
         allowUpdates: true # allow the release files to be updated and not create a new release every time
         tag: ${{ github.ref_name }} #Branch name?
         # include exported windows game zip and source project zip
-        artifacts: demo-pingodproc-win-(dev).zip, pingod-addons-netpinproc-(dev).zip
+        artifacts: demo-pingodproc-win-(dev).zip, pingod-netpinproc-source+addons(dev).zip

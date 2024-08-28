@@ -92,8 +92,7 @@ public abstract class PinGodProcMode : Mode //P-ROC Mode
 		else { Logger.Warning(nameof(PinGodGameMode), ": no Modes canvas found"); }
 	}
 
-	/// <summary>
-	/// Loads a packed scene and adds child
+	/// <summary>Loads a packed scene, instantiates it and adds it as a child to the canvas
 	/// </summary>
 	/// <param name="scenePath"></param>
 	public virtual void LoadDefaultSceneToCanvas(string scenePath)
@@ -107,9 +106,7 @@ public abstract class PinGodProcMode : Mode //P-ROC Mode
 		}
 	}
 
-	/// <summary>
-	/// Removes the <see cref="CanvasLayer"/> from the Modes
-	/// </summary>
+	/// <summary>Removes the <see cref="CanvasLayer"/> from the ModesCanvas</summary>
 	public override void ModeStopped()
 	{
 		if(CanvasLayer != null)

@@ -11,13 +11,13 @@ This project uses the [NetPinProc.Game.Sqlite](NetPinProc.Game.Sqlite) package w
 This project also relies on the `pingod-addons` being in an `addons` folder for this Godot project as the files here build on from those.
 
 ## Directories Overview
-- `addons` requires plugins from pingod-addons
-- `addons-netpinproc` contains base implementations for PROC and PinGod with PROC with `pingod-addon` overrides.
-- `autoload` contains scenes which can override the addons scenes.
-- `netpinproc-game` contains custom game classes and files with scenes and example modes.
-- `lib` these files are only required when running real P-ROC controller boards
-- `simulators` files for simulator like Visual Pinball and PinGod controller
-- `sql` shipped with library, change to add your own machine configuration.
+- [addons](https://github.com/FlippingFlips/pingod-addons) requires plugins / classes from pingod-addons
+- [addons-netpinproc](addons-netpinproc) contains base implementations for PROC and PinGod with PROC with `pingod-addon` overrides.
+- [autoload](autoload) contains scenes which can override the addons scenes.
+- [netpinproc-game](netpinproc-game/README.md) contains custom game classes and files with scenes and example modes.
+- [lib](lib) these files are only required when running real P-ROC controller boards
+- [simulators](simulators/visual-pinball) files for simulator like Visual Pinball and PinGod controller
+- [sql](sql) shipped with library, change to add your own machine configuration.
 Set the `.cfg` file to delete on launch if you need to.
 
 ## Quick Dev Start

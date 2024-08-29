@@ -1,6 +1,6 @@
+name: Godot Demo Build And All Source - Develop
 on: 
   push:     
-     branches: [dev]
      tags: ["dev-*"]
 jobs:
   export_game:
@@ -100,7 +100,7 @@ jobs:
         replacesArtifacts: true
         prerelease: true # Pre release dev flag
         allowUpdates: true # allow the release files to be updated and not create a new release every time
-        tag: ${{ github.ref_name }} #Branch name?
+        name: Release
         # include exported windows game zip and source project zip
         artifacts: "*.zip"
 

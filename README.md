@@ -22,6 +22,9 @@ This project also relies on the `pingod-addons` being in an `addons` folder for 
 Set the `.cfg` file to delete on launch if you need to.
 
 ## Quick Dev Start
+
+![](.content/launch-godot-screen.jpg)
+
 1. Download the repo or clone
 2. Download the addons folder from `pingod-addons`
 3. Load project with Godot from this directory running `godot -e`

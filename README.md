@@ -5,6 +5,7 @@ Addons for extending the `pingod-addons` and adding `NetPinProc Libraries` for u
 
 ## Quick Start - Demo Test
 - Run the windows game demo in releases with the switch window and a fake PROC
+- Keys: 5 = coin, 1 = start. Fill ball trough before starting
 
 ## About
 This project uses the [NetPinProc.Game.Sqlite](NetPinProc.Game.Sqlite) package which includes `NetPinProc.Game` and `NetPinProc`. 

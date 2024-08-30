@@ -14,13 +14,19 @@ public class ScoreDisplayProcMode : PinGodProcMode
     private PinGodGameProc _pingod;
     private Node _sceneInstance;
     private ScoreModePROC _scoreDisplay;
+
     /// <summary>Gets the score display scene from Resources and adds it to the Godot tree</summary>
     /// <param name="game"></param>
     /// <param name="priority"></param>
     /// <param name="pinGod"></param>
     /// <param name="defaultScene"></param>
     /// <param name="loadDefaultScene"></param>
-    public ScoreDisplayProcMode(IGameController game, PinGodGame pinGod, string name = nameof(ScoreDisplayProcMode), int priority = 1, string defaultScene = null, bool loadDefaultScene = true) 
+    public ScoreDisplayProcMode(IGameController game,
+        PinGodGame pinGod,
+        string name = nameof(ScoreDisplayProcMode),
+        int priority = 1,
+        string defaultScene = null,
+        bool loadDefaultScene = true) 
         : base(game, name, priority, pinGod, defaultScene, loadDefaultScene)
     {
         _pingod = pinGod as PinGodGameProc;
@@ -56,6 +62,6 @@ public class ScoreDisplayProcMode : PinGodProcMode
         //clear up layers from ModesCanvas
         base.ModeStopped();        
     }
-    /// <summary>Emits a Godot signal ScoresUpdated for scenes to pick up on</summary>
+    /// <summary>invokes Godot's `emit_signal` with `ScoresUpdated`</summary>
     internal void UpdateScores() => _pingod.CallDeferred("emit_signal", "ScoresUpdated");
 }

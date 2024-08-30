@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace PinGodAddOns.netpinproc_game
 {
-    /// <summary>Custom PROC Game controller using the implementation from `addons-netpinproc`</summary>
+    /// <summary>Custom PROC Game controller using the implementation from `addons/netpinproc`</summary>
     public class MyPinGodProcGameController : PinGodNetProcDataGameController
     {
         public MyPinGodProcGameController(
@@ -103,7 +103,7 @@ namespace PinGodAddOns.netpinproc_game
             base.GodotResourcesReady();
 
             _AttractMode = new AttractMode(this, 12, PinGodProcGame);
-            _serviceMode = new ServiceMode(this, PinGodProcGame, priority: 10, defaultScene: "res://addons-netpinproc/netpinproc-servicemode/ServiceModePROC.tscn".GetBaseName());
+            _serviceMode = new ServiceMode(this, PinGodProcGame, priority: 10, defaultScene: "res://addons/netpinproc-servicemode/ServiceModePROC.tscn".GetBaseName());
             _scoreDisplay = new ScoreDisplayProcMode(this, (PinGodGameProc)PinGodProcGame, priority: 2);
             _machineSwitchHandlerMode = new MachineSwitchHandlerMode(this, (PinGodGameProc)PinGodProcGame);
             _ballSave = new BallSave(this, "shootAgain", "plungerLane") { AllowMultipleSaves = false, Priority = 25 };

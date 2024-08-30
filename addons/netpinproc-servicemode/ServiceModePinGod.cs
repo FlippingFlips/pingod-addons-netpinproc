@@ -79,9 +79,7 @@ public partial class ServiceModePinGod : Node
 		}	
 	}
 
-	/// <summary>
-	/// Switch pressed from the PROC
-	/// </summary>
+	/// <summary>Switch pressed from the PROC</summary>
 	/// <param name="swName"></param>
 	public void OnSwitchPressed(string swName, ushort swNum, bool isClosed)
 	{

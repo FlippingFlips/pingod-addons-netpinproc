@@ -1,71 +1,78 @@
 ﻿<Project Sdk="Godot.NET.Sdk/4.3.0">
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <EnableDynamicLoading>true</EnableDynamicLoading>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
-    <RootNamespace>PinGodAddOns</RootNamespace>
-  </PropertyGroup>
-  <ItemGroup>
-    <!--DEBUG GODOT LAUNCH SETTINGS-->
-    <Content Include="Properties\launchSettings.json" />
-    <None Include="autoload\Machine.tscn" />
-    <None Include="autoload\MemoryMap.tscn" />
-    <None Include="autoload\PinGodGame.tscn" />
-    <None Include="lib\x64\libpinproc.dll" />
-    <None Include="lib\x64\libpinproc.dylib" />
-    <None Include="lib\x64\libpinproc.so" />
-    <None Include="lib\x86\libpinproc.dll" />
-    <None Include="lib\x86\libpinproc.so" />
-    <None Include="LICENSE.md" />
-    <None Include="netpinproc-game\MainScene.tscn" />
-    <None Include="netpinproc-game\README.md" />
-    <None Include="netpinproc-game\scenes\AttractMode\AttractProc.tscn" />
-    <None Include="netpinproc-game\scenes\ScoreMode\ScoreModePROC.tscn" />
-    <None Include="PinGod-AddOns-NetPinProcGame.cfg" />
-    <None Include="Properties\.gdignore" />
-    <None Include="addons\pingod-audio\audio_bus_layout.tres" />
-    <None Include="README.md" />
-    <!--DEBUG GODOT LAUNCH SETTINGS-->
-    <Content Include="Properties\launchSettings.json" />
-    <None Include="Properties\.gdignore" />
-    <!--INCLUDE SCENE FILES. DEMO PURPOSES-->
-    <None Include="addons\**\*.tscn" />
-    <None Include="addons\**\**\*.tscn" />
-    <!--INCLUDE PLUGIN CFG FILES. DEMO PURPOSES-->
-    <None Include="addons\**\*.cfg" />
-    <!--INCLUDE PLUGIN README FILES. DEMO PURPOSES-->
-    <None Include="addons\**\*.md" />
-    <!--INCLUDE GD SCRIPT FILES. DEMO PURPOSES-->
-    <None Include="addons\**\*.gd" />
-    <None Include="addons\**\**\*.gd" />
-    <!--INCLUDE LOCALISATION-->
-    <None Include="addons\pingod-assets\Localization\pingod_default_lang.csv" />
-    <Compile Remove="addons-netpinproc\**" />
-    <Compile Remove="netpinproc-game\scenes\Playfield\**" />
-    <Compile Remove="netpinproc-game\scenes\ServiceMode\**" />
-    <Compile Remove="netpinproc-game\scenes\Shared\**" />
-    <Compile Remove="netpinproc-game\themes\**" />
-    <Compile Remove="simulator\**" />
-    <EmbeddedResource Remove="addons-netpinproc\**" />
-    <EmbeddedResource Remove="netpinproc-game\scenes\Playfield\**" />
-    <EmbeddedResource Remove="netpinproc-game\scenes\ServiceMode\**" />
-    <EmbeddedResource Remove="netpinproc-game\scenes\Shared\**" />
-    <EmbeddedResource Remove="netpinproc-game\themes\**" />
-    <EmbeddedResource Remove="simulator\**" />
-    <None Remove="addons\PinGodGame.tscn" />
-    <None Remove="addons\PinGodGame.tscn" />
-    <!--PROJECT, EXPORT PRESETS, DEMO SCENE-->
-    <None Include="export_presets.cfg" />
-    <None Include="project.godot" />
-    <None Include="simulators\visual-pinball\pingodaddons-netpinproc.vbs" />
-    <None Include="simulators\visual-pinball\pingodaddons-netpinproc.vpx" />
-    <None Include="simulators\visual-pinball\README.md" />
-    <None Include="sql\init_p3roc.sql" />
-    <None Include="sql\init_proc.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="NetPinProc" Version="1.0.0.9" IncludeAssets="All" />
-    <PackageReference Include="NetPinProc.Game.Sqlite" Version="1.0.0.9" IncludeAssets="All" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<EnableDynamicLoading>true</EnableDynamicLoading>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+		<RootNamespace>PinGodAddOns</RootNamespace>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="NetPinProc" Version="1.0.0.9" IncludeAssets="All" />
+		<PackageReference Include="NetPinProc.Game.Sqlite" Version="1.0.0.9" IncludeAssets="All" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!--DEBUG GODOT LAUNCH SETTINGS-->
+		<Content Include="Properties\launchSettings.json" />
+		<None Include="addons\netpinproc-themes\default_pingod_proc_theme.tres" />
+		<None Include="addons\netpinproc-themes\service\MatrixButtonPanel.tres" />
+		<None Include="addons\netpinproc-themes\service\ServiceMenuBarsTheme.tres" />
+		<None Include="addons\netpinproc-themes\service\ServiceMenuTheme.tres" />
+		<None Include="autoload\Machine.tscn" />
+		<None Include="autoload\MemoryMap.tscn" />
+		<None Include="autoload\PinGodGame.tscn" />
+		<None Include="autoload\Resources.tscn" />
+		<None Include="autoload\WindowActions.tscn" />
+		<None Include="lib\x64\libpinproc.dll" />
+		<None Include="lib\x64\libpinproc.dylib" />
+		<None Include="lib\x64\libpinproc.so" />
+		<None Include="lib\x86\libpinproc.dll" />
+		<None Include="lib\x86\libpinproc.so" />
+		<None Include="LICENSE.md" />
+		<None Include="netpinproc-game\MainScene.tscn" />
+		<None Include="netpinproc-game\README.md" />
+		<None Include="netpinproc-game\scenes\AttractMode\AttractProc.tscn" />
+		<None Include="netpinproc-game\scenes\ScoreMode\ScoreModePROC.tscn" />
+		<None Include="PinGod-AddOns-NetPinProcGame.cfg" />
+		<None Include="Properties\.gdignore" />
+		<None Include="addons\pingod-audio\audio_bus_layout.tres" />
+		<None Include="README.md" />
+		<!--DEBUG GODOT LAUNCH SETTINGS-->
+		<Content Include="Properties\launchSettings.json" />
+		<None Include="Properties\.gdignore" />
+		<!--INCLUDE SCENE FILES. DEMO PURPOSES-->
+		<None Include="addons\**\*.tscn" />
+		<None Include="addons\**\**\*.tscn" />
+		<!--INCLUDE PLUGIN CFG FILES. DEMO PURPOSES-->
+		<None Include="addons\**\*.cfg" />
+		<!--INCLUDE PLUGIN README FILES. DEMO PURPOSES-->
+		<None Include="addons\**\*.md" />
+		<!--INCLUDE GD SCRIPT FILES. DEMO PURPOSES-->
+		<None Include="addons\**\*.gd" />
+		<None Include="addons\**\**\*.gd" />
+		<!--INCLUDE LOCALISATION-->
+		<None Include="addons\pingod-assets\Localization\pingod_default_lang.csv" />
+		<Compile Remove="addons-netpinproc\**" />
+		<Compile Remove="netpinproc-game\scenes\Playfield\**" />
+		<Compile Remove="netpinproc-game\scenes\ServiceMode\**" />
+		<Compile Remove="netpinproc-game\scenes\Shared\**" />
+		<Compile Remove="netpinproc-game\themes\**" />
+		<Compile Remove="simulator\**" />
+		<EmbeddedResource Remove="netpinproc-game\scenes\Playfield\**" />
+		<EmbeddedResource Remove="netpinproc-game\scenes\ServiceMode\**" />
+		<EmbeddedResource Remove="netpinproc-game\scenes\Shared\**" />
+		<EmbeddedResource Remove="netpinproc-game\themes\**" />
+		<EmbeddedResource Remove="simulator\**" />
+		<None Remove="addons\PinGodGame.tscn" />
+		<None Remove="addons\PinGodGame.tscn" />
+		<!--PROJECT, EXPORT PRESETS, DEMO SCENE-->
+		<None Include="export_presets.cfg" />
+		<None Include="project.godot" />
+		<None Include="simulators\visual-pinball\pingodaddons-netpinproc.vbs" />
+		<None Include="simulators\visual-pinball\pingodaddons-netpinproc.vpx" />
+		<None Include="simulators\visual-pinball\README.md" />
+		<None Include="sql\init_p3roc.sql" />
+		<None Include="sql\init_proc.sql" />
+	</ItemGroup>
 </Project>

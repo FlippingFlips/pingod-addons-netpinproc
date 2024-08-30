@@ -12,7 +12,7 @@ public partial class MatrixSwitchesGridContainer : GridContainer
 		_pinGodProcGame = GetNodeOrNull<PinGodGameProc>("/root/PinGodGame");
 		
 		var scene = ResourceLoader
-			.Load<PackedScene>("res://addons-netpinproc/netpinproc-servicemode/Shared/MatrixItemPanel.tscn");
+			.Load<PackedScene>("res://addons/netpinproc-servicemode/Shared/MatrixItemPanel.tscn");
 
 		int switchCount = _pinGodProcGame.NetProcGame.Switches.Count;
 
@@ -96,7 +96,7 @@ public partial class MatrixSwitchesGridContainer : GridContainer
 		{
 			//get the game switch for it's state
 			var gameSw = _pinGodProcGame.NetProcGame.Switches[sw.Name];
-
+			
 			//find the item in the grid
 			var item = this.GetChild(gameSw.Number) as MatrixItemPanel;
 

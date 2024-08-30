@@ -7,8 +7,6 @@
 [ext_resource type="FontFile" uid="uid://cma858wxwc3df" path="res://addons/pingod-assets/fonts/dejavu-sans-mono/DejaVuSansMono.ttf" id="5_w5oyk"]
 [ext_resource type="Texture2D" uid="uid://dex1ftbg8fsk1" path="res://addons/netpinproc-assets/img/service_buttons.jpg" id="6_3iegk"]
 
-
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8js7n"]
 bg_color = Color(0, 0.207843, 0.345098, 1)
 
@@ -41,10 +39,10 @@ The MainMenu contains a test button. When this menu is entered it will be posted
 These views will be created as and when, so each new view is created on entry leaving it all free aside from this."
 script = ExtResource("1_b2k0a")
 _menuScenes = {
-"MainMenu": "res://addons-netpinproc/netpinproc-servicemode/_MainMenu/MainMenuGridContainer.tscn",
-"coils": "res://addons-netpinproc/netpinproc-servicemode/Tests/Coils/CoilsTestView.tscn",
-"switches": "res://addons-netpinproc/netpinproc-servicemode/Tests/Switches/SwitchMatrixView.tscn",
-"tests": "res://addons-netpinproc/netpinproc-servicemode/Tests/TestsMenuGridContainer.tscn"
+"MainMenu": "res://addons/netpinproc-servicemode/_MainMenu/MainMenuGridContainer.tscn",
+"coils": "res://addons/netpinproc-servicemode/Tests/Coils/CoilsTestView.tscn",
+"switches": "res://addons/netpinproc-servicemode/Tests/Switches/SwitchMatrixView.tscn",
+"tests": "res://addons/netpinproc-servicemode/Tests/TestsMenuGridContainer.tscn"
 }
 
 [node name="Control" type="Control" parent="."]

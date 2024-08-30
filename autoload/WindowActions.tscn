@@ -1,11 +1,22 @@
 [gd_scene load_steps=3 format=3 uid="uid://dsfet22ct0nf2"]
 
-[ext_resource type="Script" path="res://addons/pingod-windows/WindowActionsNode.cs" id="1_jpyau"]
+[ext_resource type="Script" path="res://autoload/WindowActionsPROC.cs" id="1_kwrm3"]
 [ext_resource type="PackedScene" uid="uid://c1i3xe5c0i1n0" path="res://addons/pingod-windows/playfield/PlayfieldWindow.tscn" id="2_48fop"]
 
 [node name="WindowActions" type="Node"]
 editor_description = "Game Window switches can be in any order, it just uses the name. Actions must be name sw0, sw1 etc"
-script = ExtResource("1_jpyau")
-_gameWindowSwitches = PackedStringArray("coin1", "coin2", "coin3", "coinDoor", "enter", "down", "up", "exit", "start", "tilt", "slamTilt", "trough0", "trough1", "trough2", "trough3", "plungerLane", "mballSaucer", "inlaneL", "flipperLwL", "flipperLwR")
+script = ExtResource("1_kwrm3")
+keyboardToPROCswitches = {
+49: "start",
+53: "coin1",
+191: "flipperLwR",
+90: "flipperLwL",
+48: "enter",
+55: "exit",
+56: "down",
+57: "up",
+36: "coinDoor"
+}
+_gameWindowSwitches = PackedStringArray("sw0", "sw1", "sw3")
 _switchWindowEnabled = true
 _switchWindow = ExtResource("2_48fop")

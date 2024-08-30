@@ -7,8 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all # Add permission for release creation.
     env:
-        SRCZIPNAME: netpinproc-and-pingod-addons-source-${{ github.ref_name }}.zip
-        GAMEZIPNAME: demo-pingod-netpinproc-win-${{ github.ref_name }}.zip
+        SRCZIPNAME: netpinproc-and-pingod-addons-source-dev-${{ github.ref_name }}.zip
+        GAMEZIPNAME: demo-pingod-netpinproc-dev-win-${{ github.ref_name }}.zip
         TAG: ${{ github.ref_name }} 
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NUGETAPIKEY: --api-key ${{ secrets.GITHUB_TOKEN }} --source github
@@ -100,7 +100,7 @@ jobs:
         replacesArtifacts: true
         prerelease: true # Pre release dev flag
         allowUpdates: true # allow the release files to be updated and not create a new release every time
-        name: pingod-addons-netpinprocgame-release
+        name: pingod-addons-netpinprocgame-develop
         # include exported windows game zip and source project zip
         artifacts: "*.zip"
 

@@ -4,8 +4,11 @@
 Addons for extending the `pingod-addons` and adding `NetPinProc Libraries` for using P-ROC with PinGod.
 
 ## Quick Start - Demo Test
-- Run the windows game demo in releases with the switch window and a fake PROC
+- Run the windows game demo in releases with the switch window with a fake PROC (simulated)
 - Keys: 5 = coin, 1 = start. Fill ball trough before starting
+- Keys: 0 = enter (vol or service mode, depending on coin door)
+- Keys: 7 = exit. 8 = down, 9 = up
+- Keys: ESC to exit window
 
 ## About
 This project uses the [NetPinProc.Game.Sqlite](NetPinProc.Game.Sqlite) package which includes `NetPinProc.Game` and `NetPinProc`. 
@@ -37,3 +40,7 @@ Set the `.cfg` file to delete on launch if you need to.
 6. Change simulated in the `cfg` in Godots editor to run a fake P-ROC.
 
   **A Sqlite Database is generated when a game is launched. `netproc.db` = Edit .sql file and add machine items. The sql provided matches the same cabinet configuration as `pingod-addons`.**
+
+## Screens
+![](.content/service/tests-switches.jpg)
+![](.content/service/tests-drivers.jpg)

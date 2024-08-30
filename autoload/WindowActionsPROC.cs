@@ -31,6 +31,12 @@ public partial class WindowActionsPROC : WindowActionsNode
             throw new NullReferenceException("No PROC machine node found");
     }
 
+    public override void _Input(InputEvent @event)
+    {        
+        this.SetProcessInput(false);
+        GD.Print("in proc");
+    }
+
     public override void _UnhandledKeyInput(InputEvent @event)
     {
         base._UnhandledKeyInput(@event);

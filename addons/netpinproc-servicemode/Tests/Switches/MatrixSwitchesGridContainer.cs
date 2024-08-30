@@ -1,8 +1,12 @@
 using Godot;
+using NetPinProc.Domain;
 using NetPinProc.Domain.MachineConfig;
-using System;
 using System.Linq;
 
+/// <summary>This will go through all NetProcGame.Switches set in the game and generate a <see cref="MatrixItemPanel"/> <para/>
+/// This scene is assigned to a group named: switch_views<para/>
+/// OnSwitch is hooked up to this event and will UpdateSwitch for status in the UI<para />
+/// TODO: move some properties from SwitchFileConfig onto the actual switch in NetPinProcGame. ItemType for example to tell opto switches</summary>
 public partial class MatrixSwitchesGridContainer : GridContainer
 {
 	private PinGodGameProc _pinGodProcGame;
@@ -20,18 +24,17 @@ public partial class MatrixSwitchesGridContainer : GridContainer
 		for (int i = 0; i < (8 * 16); i++)
 		{
 			var newScene = scene.Instantiate() as MatrixItemPanel;
-
 			//newScene.ChangePanelBackgroundColour(PinballMatrixConstants.BackgroundColours["column"]);
-
 			var switchNum = i;
-
-			this.AddChild(newScene);
 
 			if (i < switchCount && (_pinGodProcGame?.NetProcGame.Switches.ContainsKey((ushort)switchNum) ?? false))
 			{				
 				//game switch and set the MatrixPanel name
 				var sw = _pinGodProcGame.NetProcGame.Switches[(ushort)switchNum];
-				newScene.SetName(sw.Name);
+                newScene.Name = sw.Name;
+                this.AddChild(newScene);
+
+                newScene.SetNameFromLabel(sw.Name);
 
 				//config switch with more values
 				var cfgSwitch = _pinGodProcGame.NetProcGame.Config
@@ -46,38 +49,20 @@ public partial class MatrixSwitchesGridContainer : GridContainer
 
                     newScene.SetWireL(inputWireColours);
                     newScene.SetWireR(groundWireColours);
-                }				
+                }
 
-                //set switch state depending on the type. TODO: opto switches
-                if (sw.Type == NetPinProc.Domain.PinProc.SwitchType.NO)
-				{
-					if(sw.IsClosed())
-						newScene.ChangePanelBackgroundColour(PinballMatrixConstants.BackgroundColours["active"]);
-					else
-					{
-						if (cfgSwitch.ItemType == "opto") newScene.ChangePanelBackgroundColour(PinballMatrixConstants.BackgroundColours["opto_no"]);
-						else newScene.ChangePanelBackgroundColour(PinballMatrixConstants.BackgroundColours["switch_no"]);
-					}                        
-				}
-				else if (sw.Type == NetPinProc.Domain.PinProc.SwitchType.NC)
-				{
-					if (sw.IsOpen())
-						newScene.ChangePanelBackgroundColour(PinballMatrixConstants.BackgroundColours["active"]);
-					else
-					{
-                        if (cfgSwitch.ItemType == "opto") newScene.ChangePanelBackgroundColour(PinballMatrixConstants.BackgroundColours["opto_nc"]);
-						else newScene.ChangePanelBackgroundColour(PinballMatrixConstants.BackgroundColours["switch_nc"]);
-					}                        
-				}
+				//set switch state depending on the type. TODO: opto switches
+				SetSwitchColor(cfgSwitch, sw, newScene);                
 
-				//TODO: set wire colour. wire colour isn't in database it is 3 charachter colour names like. BLK, BRN, BLU. 
-				//newScene.SetWireL(cfgSwitch.WireLColour, cfgSwitch.WireLColourName);
-				//newScene.SetWireR(cfgSwitch.WireRColour, cfgSwitch.WireRColourName);
-			}
+                //TODO: set wire colour. wire colour isn't in database it is 3 charachter colour names like. BLK, BRN, BLU. 
+                //newScene.SetWireL(cfgSwitch.WireLColour, cfgSwitch.WireLColourName);
+                //newScene.SetWireR(cfgSwitch.WireRColour, cfgSwitch.WireRColourName);
+            }
 			else
 			{
 				newScene.SetName("UNUSED");
-			}
+                this.AddChild(newScene);
+            }
 
 			newScene.SetNum(switchNum);
 			
@@ -93,33 +78,38 @@ public partial class MatrixSwitchesGridContainer : GridContainer
 	private void UpdateSwitch(SwitchConfigFileEntry sw)
 	{
 		if (sw != null)
-		{
-			//get the game switch for it's state
-			var gameSw = _pinGodProcGame.NetProcGame.Switches[sw.Name];
-			
-			//find the item in the grid
-			var item = this.GetChild(gameSw.Number) as MatrixItemPanel;
+        {
+            //get the game switch for it's state
+            var gameSw = _pinGodProcGame.NetProcGame.Switches[sw.Name];
 
-			if (sw.Type == NetPinProc.Domain.PinProc.SwitchType.NO)
-			{
-				if (gameSw.IsClosed())
-					item.ChangePanelBackgroundColour(PinballMatrixConstants.BackgroundColours["active"]);
-				else
-				{
-                    if (sw.ItemType == "opto") item.ChangePanelBackgroundColour(PinballMatrixConstants.BackgroundColours["opto_no"]);
-					else item.ChangePanelBackgroundColour(PinballMatrixConstants.BackgroundColours["switch_no"]);
-				}
-			}
-			else if (sw.Type == NetPinProc.Domain.PinProc.SwitchType.NC)
-			{
-				if (gameSw.IsOpen())
-					item.ChangePanelBackgroundColour(PinballMatrixConstants.BackgroundColours["active"]);
-				else
-				{
-                    if (sw.ItemType == "opto") item.ChangePanelBackgroundColour(PinballMatrixConstants.BackgroundColours["opto_nc"]);
-					else item.ChangePanelBackgroundColour(PinballMatrixConstants.BackgroundColours["switch_nc"]);
-				}
-			}
-		}                
-	}
+            //find the item in the grid
+            var item = this.GetChild(gameSw.Number) as MatrixItemPanel;
+
+            SetSwitchColor(sw, gameSw, item);
+        }
+    }
+
+    private static void SetSwitchColor(SwitchConfigFileEntry sw, Switch gameSw, MatrixItemPanel item)
+    {
+        if (sw.Type == NetPinProc.Domain.PinProc.SwitchType.NO)
+        {
+            if (gameSw.IsClosed())
+                item.ChangePanelBackgroundColour(PinballMatrixConstants.BackgroundColours["active"]);
+            else
+            {
+                if (sw.ItemType == "opto") item.ChangePanelBackgroundColour(PinballMatrixConstants.BackgroundColours["opto_no"]);
+                else item.ChangePanelBackgroundColour(PinballMatrixConstants.BackgroundColours["switch_no"]);
+            }
+        }
+        else if (sw.Type == NetPinProc.Domain.PinProc.SwitchType.NC)
+        {
+            if (gameSw.IsOpen())
+                item.ChangePanelBackgroundColour(PinballMatrixConstants.BackgroundColours["active"]);
+            else
+            {
+                if (sw.ItemType == "opto") item.ChangePanelBackgroundColour(PinballMatrixConstants.BackgroundColours["opto_nc"]);
+                else item.ChangePanelBackgroundColour(PinballMatrixConstants.BackgroundColours["switch_nc"]);
+            }
+        }
+    }
 }

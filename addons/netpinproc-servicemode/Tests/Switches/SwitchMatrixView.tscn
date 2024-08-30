@@ -65,9 +65,9 @@ vertical_alignment = 2
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
-offset_left = 200.0
+offset_left = 219.0
 offset_top = 69.0
-offset_right = 1900.0
+offset_right = 1879.0
 offset_bottom = 139.0
 
 [node name="multimorphic_logo" parent="Panel" instance=ExtResource("2_btbv7")]
@@ -318,121 +318,86 @@ columns = 17
 [node name="MatrixItemPanel" parent="MarginContainer/GridContainer" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mb2x5")
-Number = null
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel2" parent="MarginContainer/GridContainer" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mb2x5")
 Number = 1
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel3" parent="MarginContainer/GridContainer" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mb2x5")
 Number = 2
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel4" parent="MarginContainer/GridContainer" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mb2x5")
 Number = 3
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel5" parent="MarginContainer/GridContainer" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mb2x5")
 Number = 4
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel6" parent="MarginContainer/GridContainer" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mb2x5")
 Number = 5
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel7" parent="MarginContainer/GridContainer" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mb2x5")
 Number = 6
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel8" parent="MarginContainer/GridContainer" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mb2x5")
 Number = 7
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel9" parent="MarginContainer/GridContainer" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mb2x5")
 Number = 8
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel10" parent="MarginContainer/GridContainer" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mb2x5")
 Number = 1
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel11" parent="MarginContainer/GridContainer" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mb2x5")
 Number = 2
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel12" parent="MarginContainer/GridContainer" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mb2x5")
 Number = 3
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel13" parent="MarginContainer/GridContainer" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mb2x5")
 Number = 4
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel14" parent="MarginContainer/GridContainer" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mb2x5")
 Number = 5
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel15" parent="MarginContainer/GridContainer" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mb2x5")
 Number = 6
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel16" parent="MarginContainer/GridContainer" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mb2x5")
 Number = 7
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel17" parent="MarginContainer/GridContainer" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mb2x5")
 Number = 8
-WireNameL = null
-WireNameR = null
 
 [node name="GridContainer2" type="GridContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -441,73 +406,54 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_ry5pr")
-Number = null
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel2" parent="MarginContainer/GridContainer2" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_ry5pr")
 Number = 1
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel3" parent="MarginContainer/GridContainer2" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_ry5pr")
 Number = 2
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel4" parent="MarginContainer/GridContainer2" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_ry5pr")
 Number = 3
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel5" parent="MarginContainer/GridContainer2" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_ry5pr")
 Number = 4
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel6" parent="MarginContainer/GridContainer2" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_ry5pr")
 Number = 5
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel7" parent="MarginContainer/GridContainer2" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_ry5pr")
 Number = 6
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel8" parent="MarginContainer/GridContainer2" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_ry5pr")
 Number = 7
-WireNameL = null
-WireNameR = null
 
 [node name="MatrixItemPanel9" parent="MarginContainer/GridContainer2" instance=ExtResource("1_1a0d7")]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_ry5pr")
 Number = 8
-WireNameL = null
-WireNameR = null
 
 [node name="MarginContainer2" type="MarginContainer" parent="."]
 layout_mode = 1

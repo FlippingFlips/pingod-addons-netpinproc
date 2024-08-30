@@ -3,7 +3,7 @@ using Godot.Collections;
 using NetPinProc.Domain;
 using NetPinProc.Domain.PinProc;
 using PinGod.Core;
-using PinGod.Core.Service;
+using System;
 
 /// <summary>
 /// This script is loaded with the `res://autoload/Machine.tscn` which inherits a PinGod-MachineNode. <para/>
@@ -12,12 +12,19 @@ using PinGod.Core.Service;
 /// </summary>
 public partial class MachinePROC : MachineNode
 {           
-	private PinGodGameProc _pinGodGameProc;
+	public PinGodGameProc _pinGodGameProc;
 
-	#region Godot overrides
+    public IGameController NetProcGame => _pinGodGameProc?.NetProcGame;
 
-	/// <summary><see cref="MachineNode._EnterTree"/></summary>
-	public override void _EnterTree() => base._EnterTree();
+    #region Godot overrides
+
+    /// <summary><see cref="MachineNode._EnterTree"/></summary>
+    public override void _EnterTree()
+    {
+        _pinGodGameProc = GetNodeOrNull<PinGodGameProc>(Paths.ROOT_PINGODGAME);
+
+        base._EnterTree();
+    }
 
     /// <summary>Base saves the database and Dispose of the connection <see cref="MachineNode._ExitTree"/></summary>
     public override void _ExitTree()
@@ -66,8 +73,6 @@ public partial class MachinePROC : MachineNode
     /// </summary>
     public override void _Ready()
 	{
-		_pinGodGameProc = GetNodeOrNull<PinGodGameProc>(Paths.ROOT_PINGODGAME);
-		
 		base._Ready();		
 	}
 	#endregion
@@ -111,6 +116,21 @@ public partial class MachinePROC : MachineNode
         base.SetSwitch(@switch, value, fromAction);
     }
 
+    public virtual void SetSwitch(IGameController gc, NetPinProc.Domain.Switch @switch, bool state, bool fromAction = true)
+    {
+        if (_pinGodGameProc != null && PinGodGameProc.PinGodProcConfig.Simulated)
+        {            
+            var proc = gc?.PROC as IFakeProcDevice;
+            
+            if (!@switch.IsState(state))
+            {
+                var evtT = state ? EventType.SwitchClosedDebounced : EventType.SwitchOpenDebounced;
+                proc.AddSwitchEvent(@switch.Number, evtT);
+                RecordSwitch(@switch.Name, @switch);
+            }
+        }
+    }
+
     /// <summary>Sets a Fake PROC device switch</summary>
     /// <param name="name"></param>
     /// <param name="value"></param>
@@ -146,23 +166,25 @@ public partial class MachinePROC : MachineNode
     /// <param name="gc">game controller with reference to a PROCDevice</param>
     /// <param name="name">switch name</param>
     /// <param name="enabled">open or closed</param>
-    internal void SetSwitchFakeProc(
+    internal bool SetSwitchFakeProc(
         IGameController gc,
         string name,
         bool enabled)
     {
-        if (_pinGodGameProc != null)
+        if (_pinGodGameProc != null && PinGodGameProc.PinGodProcConfig.Simulated)
         {
-            if (PinGodGameProc.PinGodProcConfig.Simulated)
+            var proc = gc?.PROC as IFakeProcDevice;
+            var sw = gc.Switches[name];
+            if (!sw.IsState(enabled))
             {
-                var proc = gc?.PROC as IFakeProcDevice;
-                var sw = gc.Switches[name];
                 var evtT = enabled ? EventType.SwitchClosedDebounced : EventType.SwitchOpenDebounced;
                 proc.AddSwitchEvent(sw.Number, evtT);
-
                 RecordSwitch(name, sw);
+                return true;
             }
         }
+
+        return false;
     }
 
     /// <summary>Calls AddSwitchEvent on the IFakePinProcDevice</summary>
@@ -176,6 +198,7 @@ public partial class MachinePROC : MachineNode
         {
             var sw = gc.Switches[number];
             var evtT = enabled ? EventType.SwitchClosedDebounced : EventType.SwitchOpenDebounced;
+
             proc.AddSwitchEvent(sw.Number, evtT);
 
             RecordSwitch(sw.Name, sw);

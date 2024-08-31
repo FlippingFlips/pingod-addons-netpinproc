@@ -73,10 +73,16 @@ public partial class WindowActionsPROC : WindowActionsNode
         }
     }
 
-    /// <summary>just make sure the base is called on ready to setup</summary>
+    /// <summary>SHOULD BE USED AFTER A MACHINE IS </summary>
     public override void _Ready()
     {
         base._Ready();
+
+        if(_machineNodePROC?.NetProcGame == null)
+        {
+            Logger.Warning($"[{nameof(WindowActionsPROC)}]: no NetProcGame found. use this plugin after machine / game. no keyboard to switches will be used");
+            return;
+        }
 
         //setup a dictionary of PROC switches
         if (keyboardToPROCswitches?.Any() ?? false)
@@ -85,8 +91,15 @@ public partial class WindowActionsPROC : WindowActionsNode
             foreach (var item in keyboardToPROCswitches)
             {
                 var swName = item.Value;
-                var sw = _machineNodePROC.NetProcGame.Switches[swName];
-                _procKeySwitches.Add(item.Key, sw);
+                if (_machineNodePROC.NetProcGame.Switches.ContainsKey(swName))
+                {
+                    var sw = _machineNodePROC.NetProcGame.Switches[swName];
+                    _procKeySwitches.Add(item.Key, sw);
+                }
+                else
+                {
+                    Logger.Warning($"[{nameof(WindowActionsPROC)}]: no switch name found: {swName}");
+                }
             }
         }
         else { Logger.Warning($"[{nameof(WindowActionsPROC)}]: no keyboard keycodes added for windowActions"); }

@@ -20,7 +20,7 @@ public abstract class PinGodNetProcDataGameController : NetProcDataGameControlle
         MachineType machineType,
         IPinGodGame pinGodGame = null,
         bool deleteOnInit = false,
-        ILogger logger = null,
+        ILoggerPROC logger = null,
         bool simulated = false,
         MachineConfiguration configuration = null) :
         base(machineType, deleteOnInit, logger, simulated, configuration)

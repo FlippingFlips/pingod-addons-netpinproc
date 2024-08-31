@@ -22,8 +22,6 @@ public abstract class PinGodProcMode : Mode //P-ROC Mode
     protected readonly PinGodNetProcDataGameController _game;
     protected readonly bool loadDefaultScene;
     [Export(PropertyHint.File)] protected string defaultScene = "res://addons/netpinproc-scenes/Logos/PinGodLogoScene.tscn";
-    /// <summary>The node where we have our CanvasLayer</summary>
-    [Export] string modesRootPath = "/root/ProcScene/Modes";
 
     /// <summary>Initializes a base P-ROC mode for PinGod. <para/> <see cref="CreateCanvasLayer"/></summary>
     /// <param name="game"></param>

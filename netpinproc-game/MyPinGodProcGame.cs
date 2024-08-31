@@ -1,6 +1,5 @@
 ﻿using NetPinProc.Domain.PinProc;
 using PinGod.Core;
-using PinGodAddOns.netpinproc_game;
 
 public partial class MyPinGodProcGame : PinGodGameProc
 {

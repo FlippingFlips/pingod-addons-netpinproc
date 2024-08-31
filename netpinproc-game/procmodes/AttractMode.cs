@@ -12,7 +12,6 @@ public class AttractMode : PinGodProcMode
     /// The scene is already loaded in the resources, it just gets instantiated and added to the tree.</summary>
     const string ATTRACT_SCENE = "res://netpinproc-game/scenes/AttractMode/AttractProc.tscn";
 
-    private Node _attractInstance;
     private PinGodGameProc _pingod;
 
     public AttractMode(IGameController game,

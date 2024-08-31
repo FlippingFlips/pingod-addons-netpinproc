@@ -9,8 +9,8 @@ public partial class CoilsTestView : Control
 	private PinGodGameProc _pinGodProcGame;
 	private GridContainer _coilsList;
 
-	[Export(PropertyHint.File)] string GridContainerItemScene 
-		= "res://netpinproc-game/scenes/ServiceMode/Tests/Coils/CoilGridContainerItem.tscn";
+	[Export(PropertyHint.File)] string GridContainerItemScene = "res://addons/netpinproc-servicemode/Tests/Coils/CoilGridContainerItem.tscn";
+
 	private PackedScene _gridItem;
 	private CoilTestItem[] _coilItems;
 	

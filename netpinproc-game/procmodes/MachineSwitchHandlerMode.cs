@@ -7,12 +7,11 @@ using System.Linq;
 /// - Handles the coin slots and sends event to Godot with AddCredits
 /// - TODO: volume from coin door, send events door open</summary>
 public class MachineSwitchHandlerMode : PinGodProcMode
-{
-    private Godot.Label _creditsLabel;
+{    
     private string[] _doorSwitches;
     private PinGodGameProc _pinGodProc;
     /// <summary>Mode to run if coin door opened and enter pushed for service</summary>
-    private ServiceMode _serviceMode;
+    private ServiceMode _serviceMode = null;
 
     public MachineSwitchHandlerMode(IGameController game,
         IPinGodGame pinGod,

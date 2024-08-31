@@ -4,9 +4,11 @@ using NetPinProc.Domain.PinProc;
 using PinGod.Core;
 
 /// <summary> Wraps Godot.Print logging which is used when a PROC game is created</summary>
-internal class PinGodProcLogger : ILogger
+internal class PinGodProcLogger : ILoggerPROC
 {
     public LogLevel LogLevel { get; set; }
+    public string LogPrefix { get; set; } = "[PG-PROC]";
+    public bool TimeStamp { get; set; } = true;
 
     public void Log(string text)
     {

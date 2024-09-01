@@ -24,6 +24,7 @@ buses/default_bus_layout="res://addons/pingod-audio/audio_bus_layout.tres"
 
 PinGodGame="*res://autoload/PinGodGame.tscn"
 Machine="*res://autoload/Machine.tscn"
+AudioManager="*res://addons/pingod-audio/Node/AudioManager.tscn"
 WindowActions="*res://autoload/WindowActions.tscn"
 Resources="*res://autoload/Resources.tscn"
 
@@ -41,7 +42,7 @@ project/assembly_name="PinGod-AddOns-NetPinProcGame"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/pingod-game/plugin.cfg", "res://addons/pingod-machine/plugin.cfg", "res://addons/pingod-resources/plugin.cfg", "res://addons/pingod-windows/plugin.cfg")
+enabled=PackedStringArray("res://addons/pingod-audio/plugin.cfg", "res://addons/pingod-game/plugin.cfg", "res://addons/pingod-machine/plugin.cfg", "res://addons/pingod-resources/plugin.cfg", "res://addons/pingod-windows/plugin.cfg")
 
 [input]
 

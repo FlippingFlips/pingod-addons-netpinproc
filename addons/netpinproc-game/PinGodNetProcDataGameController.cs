@@ -39,8 +39,8 @@ public abstract class PinGodNetProcDataGameController : NetProcDataGameControlle
     #endregion
 
     #region Modes
-    protected BallSave _ballSave;
-    protected BallSearch _ballSearch;
+    public BallSave _ballSave;
+    public BallSearch _ballSearch;
     #endregion
 
     public readonly PinGodGameProc PinGodProcGame;
@@ -64,7 +64,7 @@ public abstract class PinGodNetProcDataGameController : NetProcDataGameControlle
     }
 
     /// <summary>Runs perform search on the PROC <see cref="_ballSearch"/> mode</summary>
-    public virtual void BallSearch() => _ballSearch?.PerformSearch();
+    public virtual void BallSearch() => _ballSearch?.Enable();
 
     public override void BallStarting()
     {

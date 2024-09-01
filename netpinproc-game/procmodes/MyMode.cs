@@ -17,7 +17,8 @@ public partial class MyMode : PinGodProcMode
     public MyMode(IGameController game,
         int priority,
         IPinGodGame pinGod,
-        string name = nameof(MyMode)) : base(game, name, priority, pinGod) 
+        string name = nameof(MyMode),
+        bool loadDefaultScene = false) : base(game, name, priority, pinGod, null, loadDefaultScene)
     {
         //add switch handler for all bumpers
         for (int i = 0; i < 3; i++) { AddSwitchHandler($"bumper{i}", SwitchHandleType.active, 0, new SwitchAcceptedHandler(OnBumperHit)); }
@@ -30,7 +31,7 @@ public partial class MyMode : PinGodProcMode
     public override void ModeStarted()
     {
         Game.Logger.Log(GetType().Name+":"+nameof(ModeStarted), LogLevel.Debug);
-        _game.Trough.LaunchBalls(1, null, false);
+        NetProcDataGame.Trough.LaunchBalls(1, null, false);
     }
 
     public override void ModeStopped()
@@ -134,13 +135,13 @@ public partial class MyMode : PinGodProcMode
     public bool sw_start_active(Switch sw)
     {
         //no credits
-        if (PinGod.Credits <= 0) return SWITCH_CONTINUE;
+        if (PinGodGameProc.Credits <= 0) return SWITCH_CONTINUE;
 
         //TODO: change max players to database
         if (Game.Ball == 1 && Game.Players.Count < 4)
         {
-            _game.IncrementAudit("CREDITS_TOTAL", 1);
-            _game.IncrementAudit("CREDITS", 1);
+            NetProcDataGame.IncrementAudit("CREDITS_TOTAL", 1);
+            NetProcDataGame.IncrementAudit("CREDITS", 1);
             Game.AddPlayer();
             Game.Logger?.Log(nameof(MyMode) + ": player added");
         }
@@ -150,7 +151,7 @@ public partial class MyMode : PinGodProcMode
 
     public override void UpdateLamps() => Game.Logger.Log(GetType().Name + ":" + nameof(UpdateLamps), LogLevel.Debug);
 
-    void AddPoints(int amt) => _game.AddPoints(amt);
+    void AddPoints(int amt) => NetProcDataGame.AddPoints(amt);
 
     /// <summary>Any bumper adds 150 points</summary>
     /// <param name="sw"></param>

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bgebye7f7nmvn"]
+[gd_scene load_steps=10 format=3 uid="uid://bgebye7f7nmvn"]
 
 [ext_resource type="Script" path="res://addons/pingod-resources/Resources.cs" id="1_ybovl"]
 [ext_resource type="PackedScene" uid="uid://cm3hf1m8bn1nl" path="res://addons/pingod-modes/bonus/Bonus.tscn" id="2_dk1g3"]
@@ -8,10 +8,11 @@
 [ext_resource type="PackedScene" uid="uid://48qny4snll62" path="res://netpinproc-game/scenes/AttractMode/AttractProc.tscn" id="6_7tvoc"]
 [ext_resource type="PackedScene" uid="uid://bu5y83nxqe02i" path="res://addons/netpinproc-servicemode/ServiceModePROC.tscn" id="7_hy6by"]
 [ext_resource type="PackedScene" uid="uid://bkkshxp0osqj6" path="res://netpinproc-game/scenes/ScoreMode/ScoreModePROC.tscn" id="8_0wkit"]
+[ext_resource type="PackedScene" uid="uid://qr0feoeg1mb1" path="res://netpinproc-game/scenes/!Shared/Messages/DisplayMessageControl.tscn" id="9_gvqxm"]
 
 [node name="Resources" type="ResourcePreloader"]
 script = ExtResource("1_ybovl")
-_packScenes = [ExtResource("2_dk1g3"), ExtResource("3_u87hv"), ExtResource("4_e6dvi"), ExtResource("5_b3755"), ExtResource("6_7tvoc"), ExtResource("7_hy6by"), ExtResource("8_0wkit")]
+_packScenes = [ExtResource("2_dk1g3"), ExtResource("3_u87hv"), ExtResource("4_e6dvi"), ExtResource("5_b3755"), ExtResource("6_7tvoc"), ExtResource("7_hy6by"), ExtResource("8_0wkit"), ExtResource("9_gvqxm")]
 
 [node name="LoadingControl" type="Control" parent="."]
 layout_mode = 3

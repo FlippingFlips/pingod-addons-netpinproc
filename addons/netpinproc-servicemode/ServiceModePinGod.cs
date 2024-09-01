@@ -1,5 +1,6 @@
 using Godot;
 using NetPinProc.Game.Sqlite;
+using PinGod.Core;
 using PinGodNetProcPDB.scenes.ServiceMode.Shared;
 using System.Linq;
 
@@ -60,36 +61,32 @@ public partial class ServiceModePinGod : Node
 	private void _on_pg_menu_button_pressed()
 	{
 		// Replace with function body.
-		GD.Print("service button menu enter");
+		Logger.Verbose("service button menu enter");
 	}
 
     /// <summary>Loads a menu scene if it exists in <see cref="_menuScenes"/></summary>
     /// <param name="name"></param>
     private void OnMenuItemSelected(string name)
 	{
-		GD.Print("menu item selected: " + name);
+		Logger.Debug("menu item selected: " + name);
 
 		if(!_menuScenes.ContainsKey(name))
-		{
-			GD.PushError("no scene found for: " + name);
-		}
-		else
-		{
-			LoadMenu(name);			
-		}	
-	}
+            Logger.Warning("no scene found for: " + name);
+        else
+            LoadMenu(name);
+    }
 
-	/// <summary>Switch pressed from the PROC</summary>
-	/// <param name="swName"></param>
-	public void OnSwitchPressed(string swName, ushort swNum, bool isClosed)
+    /// <summary>This makes a call to all scenes assigned to the `switch_views` group<para/>
+	/// The scenes script must have a `OnSwitch` method.<para/></summary>
+    /// <param name="swName"></param>
+    public void OnSwitchPressed(string swName, ushort swNum, bool isClosed)
 	{
+		Logger.Verbose($"{swName} state: {isClosed}");
 		if(!this.IsQueuedForDeletion())
 			GetTree().CallGroup("switch_views", "OnSwitch", swName, swNum, isClosed);        
 	}
 
-	/// <summary>
-	/// Switches sent from the P-ROC. This controls the UI input events
-	/// </summary>
+	/// <summary>Switches sent from the P-ROC. This controls the UI input events</summary>
 	/// <param name="swName"></param>
 	public void OnServiceButtonPressed(string swName)
 	{		
@@ -100,8 +97,11 @@ public partial class ServiceModePinGod : Node
 			case "exit":
 				if (_currentMenu == "MainMenu")
 				{
+					//these two calls are actually used in MyPinGodProcGameController
+					//the base methods these point to do nothing
 					_pinGodProcGame.RemoveMode("service");
 					_pinGodProcGame.AddMode("attract");
+
 					this.QueueFree();
 				}
 				else
@@ -124,11 +124,10 @@ public partial class ServiceModePinGod : Node
 		Input.ParseInputEvent(evt);
 	}
 
-	/// <summary>
-	/// Removes the current loaded scene from the MainContentNode and adds a scene from the <see cref="_menuScenes"/> dictionary
-	/// </summary>
-	/// <param name="sceneName"></param>
-	private void LoadMenu(string sceneName)
+    /// <summary>Removes the current loaded service menu scene from the MainContentNode.<para/>
+    /// A scene is looked for in the <see cref="_menuScenes"/> dictionary and instantiated if found<para/></summary>
+    /// <param name="sceneName"></param>
+    private void LoadMenu(string sceneName)
 	{
 		//remove previous menu
 		var child = _mainContentNode.GetChildOrNull<Node>(0);
@@ -147,8 +146,7 @@ public partial class ServiceModePinGod : Node
 
 		if (menuGridContainer as ButtonGridGontainer != null)
 		{
-			menuGridContainer.Connect("MenuItemSelected", Callable.From<string>(OnMenuItemSelected));
-			
+			menuGridContainer.Connect("MenuItemSelected", Callable.From<string>(OnMenuItemSelected));			
 			_previousMenu = _currentMenu;
 			_currentMenu = sceneName;
 		}

@@ -167,6 +167,8 @@ public class MyPinGodProcGameController : PinGodNetProcDataGameController
         Modes.Add(_ballSave);
         Modes.Add(_ballSearch);
 
+        _ballSearch.Enable();
+
         Logger.Log(LogLevel.Info, $"MODES RUNNING:" + Modes.Modes.Count);
     }
 
@@ -179,7 +181,7 @@ public class MyPinGodProcGameController : PinGodNetProcDataGameController
 
         var resetDict = new Dictionary<string, string>();
         var resetSw = Config.PRSwitches
-            .Where(x => string.IsNullOrWhiteSpace(x.SearchReset));
+            .Where(x => !string.IsNullOrWhiteSpace(x.SearchReset));
         foreach (var sw in resetSw)
         {
             resetDict.Add(sw.Name, sw.SearchReset);
@@ -187,12 +189,12 @@ public class MyPinGodProcGameController : PinGodNetProcDataGameController
 
         var stopDict = new Dictionary<string, string>();
         var stopSw = Config.PRSwitches
-            .Where(x => string.IsNullOrWhiteSpace(x.SearchStop));
+            .Where(x => !string.IsNullOrWhiteSpace(x.SearchStop));
         foreach (var sw in stopSw)
         {
             stopDict.Add(sw.Name, sw.SearchStop);
         }
 
-        _ballSearch = new BallSearch(this, 12, coils, resetDict, stopDict, null);
+        _ballSearch = new BallSearch(this, 8, coils, resetDict, stopDict, null);
     }
 }

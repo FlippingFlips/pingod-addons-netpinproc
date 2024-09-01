@@ -25,9 +25,7 @@ They can get access to the PROC game through `PinGodGameProc`.
 This is served as a singleton from a running game at `/root/PinGodGame`. Cast the `PinGodGame` to `PinGodGameProc`.
 The scene you send to the mode should be the full asset path.
 For the attract it is placed at `"res://scenes/AttractMode/AttractProc.tscn"` with the script for the scene.
+
 #### Adding / Removing Scenes in PROC Modes
-To add a scene on UI thread:
-`_pingod.CallDeferred("AddModeScene", ATTRACT_SCENE);`
 
 To remove a scene on UI thread:
-`_pingod.CallDeferred("RemoveModeScene", ATTRACT_SCENE);`

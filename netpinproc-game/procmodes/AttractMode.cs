@@ -1,6 +1,7 @@
 ﻿using Godot;
 using NetPinProc.Domain;
 using PinGod.Core;
+using System.Linq;
 
 /// <summary>A P-ROC (PinGodProcMode) but reusing the default PinGod Attract.tscn. <para/>
 /// When the mode starts, the <see cref="ATTRACT_SCENE"/> is loaded into the tree. <para/> 
@@ -11,36 +12,32 @@ public class AttractMode : PinGodProcMode
     /// <summary>attract scene to load when mode starts.<para/>
     /// The scene is already loaded in the resources, it just gets instantiated and added to the tree.</summary>
     const string ATTRACT_SCENE = "res://netpinproc-game/scenes/AttractMode/AttractProc.tscn";
+    const string DISPLAY_MSG_SCENE = "res://netpinproc-game/scenes/!Shared/Messages/DisplayMessageControl.tscn";
 
-    private PinGodGameProc _pingod;
+    /// <summary>Just a small message to overlay over the top of the attract as and when</summary>
+    private PackedScene _messageScene;
 
     public AttractMode(IGameController game,
         int priority,
         IPinGodGame pinGod,
-        string name = nameof(AttractMode)) : base(game, name, priority, pinGod) =>
-            _pingod = pinGod as PinGodGameProc;
+        string name = nameof(AttractMode),
+        string defaultScene = ATTRACT_SCENE,
+        bool loadDefaultScene = true) :
+        base(game, name, priority, pinGod, defaultScene, loadDefaultScene) 
+    {
+        _messageScene = PinGodGameProc._resources.GetPackedSceneFromResource(DISPLAY_MSG_SCENE);
+    }            
 
     /// <summary>adds the attract scene to this modes canvas layer</summary>
     public override void ModeStarted()
     {
-        //base.ModeStarted(); //base implementation does nothing
-
-        //Log from NetProcGame
-        _pingod.NetProcGame.Logger.Log(nameof(AttractMode), " " + nameof(ModeStarted));
-
-        //tell Godot to load our scene
-        _pingod.CallDeferred("AddModeScene", ATTRACT_SCENE);
+        //use this to create the scene
+        base.ModeStarted();
     }
 
     /// <summary>removes the attract layer from modes canvas and frees it</summary>
     public override void ModeStopped()
     {
-        //Log from Godot
-        Logger.Debug(nameof(AttractMode), nameof(ModeStopped));
-
-        //remove the scene from the modes canvas layer
-        _pingod.CallDeferred("RemoveModeScene", "Attract");
-
         //removes this mode scene
         base.ModeStopped();
     }
@@ -53,19 +50,44 @@ public class AttractMode : PinGodProcMode
     /// <returns>true if switch can continue</returns>
     public bool sw_start_active(NetPinProc.Domain.Switch sw)
     {
-        Game.Logger?.Log("Attract: start button active credits: " + _pingod.Credits);
+        if (sw.IsState(true))
+        {
+            Game.Logger?.Log(NetPinProc.Domain.PinProc.LogLevel.Info, "Attract: start button active credits: " + PinGodGameProc.Credits);
 
-        //no credits
-        if (_pingod.Credits <= 0) return SWITCH_CONTINUE;
-        
-        if (_game.Trough?.IsFull() ?? false)
-            _pingod.CallDeferred("StartProcGame");
+            //no credits
+            if (PinGodGameProc.Credits <= 0) return SWITCH_CONTINUE;
+
+            if (NetProcDataGame.Trough?.IsFull() ?? false)
+                ///_pingod is on the Godot UI game thread
+                PinGodGameProc.CallDeferred(nameof(PinGodGameProc.StartProcGame));
+            else
+            {                
+                var tBalls = NetProcDataGame.Trough.NumBalls();
+                Game.Logger?.Log(
+                    NetPinProc.Domain.PinProc.LogLevel.Debug,
+                        "attract start. trough balls=" + tBalls +
+                        ", running ball search.", NetPinProc.Domain.PinProc.LogLevel.Debug);
+
+                //create a message scene instance from the packed scene
+                //set the text to display for 2 seconds
+                var instance = _messageScene.Instantiate() as DisplayMessageControl;
+                instance.SetText($"ball search active\nballs int trough\n{tBalls}");
+                instance.SetTime(2f);
+
+                //this will call deferred on the game thread
+                LoadChildSceneIntoCanvas(instance);
+
+                //trigger ball search, trough isn't full                
+                
+                NetProcDataGame._ballSearch.Disable();
+                NetProcDataGame._ballSearch.Enable();
+            }
+        }
         else
         {
-            Game.Logger?.Log("attract start. trough balls=" + _game.Trough.NumBalls() + ", running ball search.", NetPinProc.Domain.PinProc.LogLevel.Debug);
-            _pingod.NetProcGame.BallSearch();
 
         }
+        
         return SWITCH_CONTINUE;
     }
 }

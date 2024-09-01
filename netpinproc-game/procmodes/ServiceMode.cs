@@ -17,13 +17,12 @@ public class ServiceMode : PinGodProcMode
 
     private PinGodGameProc _pinGodProc;
 
-    private Node _serviceModeInstance;
-
     /// <summary>The script attached to the service mode scene  <para/>
     /// React to PROC events here then shift onto the UI through this</summary>
     private ServiceModePinGod _serviceModePinGod;
 
-    private PackedScene _serviceModeScene;
+    const string SERVICE_SCENE = "res://addons/netpinproc-servicemode/ServiceModePROC.tscn";
+
     /// <summary>Sets up handlers for all switches and door switches.</summary>
     /// <param name="game"></param>
     /// <param name="pinGod"></param>
@@ -31,12 +30,15 @@ public class ServiceMode : PinGodProcMode
     /// <param name="priority"></param>
     /// <param name="defaultScene"></param>
     /// <param name="loadDefaultScene"></param>
-    public ServiceMode(IGameController game, IPinGodGame pinGod, string name = nameof(ServiceMode),
-		int priority = 80, string defaultScene = null, bool loadDefaultScene = true) :
+    public ServiceMode(
+        IGameController game,
+        IPinGodGame pinGod,
+        string name = nameof(ServiceMode),
+		int priority = 80,
+        string defaultScene = SERVICE_SCENE,
+        bool loadDefaultScene = true) :
 		base(game, name, priority, pinGod, defaultScene, loadDefaultScene)
 	{
-        _pinGodProc = pinGod as PinGodGameProc;
-
         //get all switches tagged as 'door' and add a AddSwitchHandler to invoke HandleDoorSwitch
         _doorSwitches = Game.Config.GetNamesFromTag("door", MachineItemType.Switch);		
 		if (_doorSwitches?.Length > 0)
@@ -58,28 +60,27 @@ public class ServiceMode : PinGodProcMode
 		}		
 	}
 
-    /// <summary>Invokes the <see cref="ServiceModePinGod.OnSwitchPressed(string, ushort, bool)"/> on the Godot script: ServiceModePinGod</summary>
+    /// <summary>Handles switches coming from the PROC board or fake <para/>
+    /// Posts switches onto the game thread<para/>
+    /// Invokes the <see cref="ServiceModePinGod.OnSwitchPressed(string, ushort, bool)"/> on the Godot script: ServiceModePinGod</summary>
     /// <param name="sw"></param>
     /// <returns></returns>
     public virtual bool HandleSwitches(NetPinProc.Domain.Switch sw)
     {
-        _serviceModePinGod?.CallDeferred("OnSwitchPressed", sw.Name, sw.Number, sw.IsClosed());
+        _serviceModePinGod?.CallDeferred(("OnSwitchPressed"),sw.Name, sw.Number, sw.IsClosed());
+
         return SWITCH_CONTINUE;
     }
-
-    /// <summary>Finds the service mode from the pre loaded resources<para/>
-    /// If found the service mode is added to this modes Godot CanvasLayer</summary>
+        
     public override void ModeStarted()
     {
-		if (_resources != null)
-		{			
-			_serviceModeScene = _resources?.GetResource(defaultScene) as PackedScene;
-			_serviceModeInstance = _serviceModeScene.Instantiate();
-            _serviceModePinGod = _serviceModeInstance as ServiceModePinGod;
-            AddChildSceneToCanvasLayer(_serviceModeInstance);
-		}
-		else { Logger.WarningRich(nameof(AttractMode), nameof(ModeStarted), ": [color=yellow]no resources found, can't create attract scene[/color]"); }
-	}
+        //invoke this to create the scene and add it to the tree
+        base.ModeStarted();
+
+        //cast the instance loaded from the default scene
+        //we can call deferred on this instance and onto the game thread if we need to interact with the scene directly
+        _serviceModePinGod = ModeSceneInstance as ServiceModePinGod;
+    }
 
     /// <summary>P-ROC Service mode buttons are handed off to <see cref="ServiceModePinGod.OnServiceButtonPressed(string)"/></summary>
     /// <param name="sw"></param>

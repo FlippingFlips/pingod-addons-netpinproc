@@ -8,7 +8,10 @@ using System;
 /// <summary>This game is a GODOT PinGodGame from the pingod-addons with a PinGodProcGameController and MachinePROC<para/></summary>
 public abstract partial class PinGodGameProc : PinGodGame
 {
-    public CanvasLayer _modesCanvas;
+    /// <summary>A reference to the Modes (CanvasLayer) in the MainScene<para/>
+    /// This is where a parent scene for a PROC goes if it has one<para/>
+    /// eg: ModesLayer/Attract, ModesLayer/ScoreMode</summary>
+    public CanvasLayer ModesCanvasLayer;
 
     /// <summary>P-ROC version of the <see cref="MachineNode"/>. Get to the database through this</summary>
     public MachinePROC MachinePROC;
@@ -78,8 +81,8 @@ public abstract partial class PinGodGameProc : PinGodGame
     {
         base._Ready();
 
-        _modesCanvas = GetNodeOrNull<CanvasLayer>(Paths.ROOT_MAINSCENE+"/Modes");
-        if (_modesCanvas == null) Logger.WarningRich("[color=red]", nameof(PinGodGameProc), $": No modes canvas found in Main Scene", "[/color]");
+        ModesCanvasLayer = GetNodeOrNull<CanvasLayer>(Paths.ROOT_MODES_CANVAS);
+        if (ModesCanvasLayer == null) Logger.WarningRich("[color=red]", nameof(PinGodGameProc), $": No modes canvas found in Main Scene", "[/color]");
 
         MachinePROC = this.MachineNode as MachinePROC;
         if (MachinePROC != null)
@@ -90,10 +93,6 @@ public abstract partial class PinGodGameProc : PinGodGame
                 CreateProcGame();
 
                 Logger.Info(nameof(PinGodGameProc), ": ProcGame created. Setting up MachineNode from ProcGame.");
-
-                //PinGodProcGame.Logger. = NetProc.Domain.PinProc.LogLevel.Verbose;
-                var lvl = (int)LogLevel;
-                Logger.LogLevel = (PinGod.Base.LogLevel)lvl;
 
                 if (NetProcGame == null)
                 {
@@ -132,44 +131,20 @@ public abstract partial class PinGodGameProc : PinGodGame
     /// <param name="mode"></param>
     public virtual void AddMode(PinGodProcMode mode) => NetProcGame.Modes.Add(mode);
 
-    /// <summary> Adds a mode by name </summary>
+    /// <summary> Does nothing, override and use a switch statement to load one by name</summary>
     /// <param name="mode"></param>
     public virtual void AddMode(string mode) => NetProcGame.AddMode(mode);
-
-    public virtual Node AddModeScene(string scenePath)
-    {
-        if (_resources != null)
-        {
-            //get the pre loaded resource, create instance and add to base mode canvas
-            try
-            {
-                var scene = _resources?.GetResource(scenePath.GetBaseName()) as PackedScene;
-                var instance = scene.Instantiate();
-
-                NetProcGame.Logger.Log($"instance null: " + instance == null);
-
-                if(_modesCanvas == null)
-                    NetProcGame.Logger.Log($" modes canvas not available for this mode: " + scenePath);
-                else _modesCanvas.AddChild(instance);
-
-                return instance;
-            }
-            catch (Exception ex)
-            {
-                Logger.WarningRich(nameof(PinGodGameProc), nameof(AddModeScene), $": [color=red] mode scene {scenePath} couldn't be created. {ex.Message} [/color]");
-                return null;
-            }
-        }
-        else
-        {
-            Logger.WarningRich(nameof(PinGodGameProc), nameof(AddModeScene), ": [color=yellow]no resources found, can't create attract scene[/color]");
-            return null;
-        }
-    }
 
     /// <summary>Use the <see cref="PinGodGameConfigOverride.Simulated"/> flag from the PROC.cfg in game directory for settings</summary>
     /// <param name="machineConfig"></param>
     public virtual void CreateProcGame() { }
+
+    /// <summary>Finds a child node of the Modes Canvas.<para/>
+    /// Use this from a PROC mode via pingodGame to get a scene instance from the tree</summary>
+    /// <param name="name"></param>
+    /// <returns>returns null if not found</returns>
+    public virtual Node GetSceneFromModesCanvas(string name) =>
+        ModesCanvasLayer.GetNodeOrNull(name);
 
     /// <summary>The Resources node has loaded all resources. Now we can get any packed scenes and use in modes <para/>
     /// The MainScene must exist<para/>
@@ -198,11 +173,15 @@ public abstract partial class PinGodGameProc : PinGodGame
     /// <param name="mode"></param>
     public virtual void RemoveMode(PinGodProcMode mode) => NetProcGame.Modes.Remove(mode);
 
+    /// <summary>Removes a PROC mode by name</summary>
+    /// <param name="mode"></param>
     public virtual void RemoveMode(string mode) => NetProcGame.RemoveMode(mode);
 
     /// <summary>Override the default window setup to do nothing</summary>
     public override void SetupWindow() { }
 
+    /// <summary>Calls NetProcDataGame methods to start a netprocgame<para/>
+    /// The attract mode is removed</summary>
     public void StartProcGame()
     {
         NetProcGame.Logger.Log("start button, trough full");
@@ -216,16 +195,19 @@ public abstract partial class PinGodGameProc : PinGodGame
         NetProcGame.RemoveMode("attract");
     }
 
-    /// <summary>Remove the mode scene from the _modesCanvas and QueueFreed</summary>
-    /// <param name="sceneName"></param>
-    internal void RemoveModeScene(string sceneName)
+    /// <summary>Remove the mode scene from the ModesCanvasLayer and call QueueFree</summary>
+    /// <param name="sceneName">This just requires the name of the mode to find in the canvas</param>
+    public virtual void RemoveModeScene(string sceneName)
     {
-        var node = _modesCanvas?.GetNodeOrNull(sceneName);
+        Logger.Verbose($"attempting to {nameof(RemoveModeScene)}: {sceneName}");
+        var node = ModesCanvasLayer?.GetNodeOrNull(sceneName);
         if (node != null)
         {
-            _modesCanvas?.RemoveChild(node);
+            ModesCanvasLayer?.RemoveChild(node);
             node.QueueFree();
+            Logger.Verbose($"{sceneName} removed.");
         }
+        else { Logger.Warning($"{sceneName} wasn't found in the tree to remove"); }
     }
 
     /// <summary>Create a P-ROC config file for config that cannot be in the database. <para/>
@@ -296,7 +278,7 @@ public abstract partial class PinGodGameProc : PinGodGame
 		if (_procGameLoop?.Status == TaskStatus.Running) { return; }
 
         //Setup simulated memory mapping?
-		if (PinGodProcConfig.Simulated)
+		if (PinGodProcConfig.MemoryMapEnabled && PinGodProcConfig.Simulated)
 		{
 			NetProcGame._memMap = GetNodeOrNull<MemoryMapPROCNode>("/root/MemoryMap");			
 
@@ -307,9 +289,11 @@ public abstract partial class PinGodGameProc : PinGodGame
 
 			NetProcGame._memMap?.WriteStates();
 		}
+        else
+            Logger.Debug(nameof(PinGodGameProc), $": simulator memory mapping is disabled, enable for simulator memory mappings");
 
         //run game loop
-		tokenSource = new CancellationTokenSource();
+        tokenSource = new CancellationTokenSource();
 		_procGameLoop = Task.Run(() =>
 		{
 			Logger.Info(nameof(PinGodGameProc), ":running game loop");

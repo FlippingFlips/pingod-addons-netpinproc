@@ -11,7 +11,7 @@ _service_menu_scene_path = "res://addons/pingod-modes/servicemenu/ServiceMenu.ts
 
 [node name="Modes" type="CanvasLayer" parent="."]
 process_mode = 1
-editor_description = "Modes = Add `PinGodProcMode` types, see attract for example. AddModeScene"
+editor_description = "Modes = Add `PinGodProcMode` types, see attract for example."
 
 [node name="PauseAndSettings" parent="." instance=ExtResource("2_ncjnv")]
 editor_description = ""

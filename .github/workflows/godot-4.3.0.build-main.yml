@@ -100,6 +100,6 @@ jobs:
         replacesArtifacts: true
         prerelease: false # Pre release dev flag
         allowUpdates: true # allow the release files to be updated and not create a new release every time
-        name: pingod-addons-netpinprocgame-release
+        name: pg-addons-netprocgame-main
         # include exported windows game zip and source project zip
         artifacts: "*.zip"

@@ -7,15 +7,15 @@
 editor_description = "Game Window switches can be in any order, it just uses the name. Actions must be name sw0, sw1 etc"
 script = ExtResource("1_kwrm3")
 keyboardToPROCswitches = {
+36: "coinDoor",
+48: "enter",
 49: "start",
 53: "coin1",
-191: "flipperLwR",
-90: "flipperLwL",
-48: "enter",
 55: "exit",
 56: "down",
 57: "up",
-36: "coinDoor"
+90: "flipperLwL",
+191: "flipperLwR"
 }
 _gameWindowSwitches = PackedStringArray("sw0", "sw1", "sw3")
 _switchWindowEnabled = true

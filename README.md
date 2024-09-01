@@ -1,4 +1,4 @@
-﻿# PinGod-AddOns-NetPinProc-Game
+# PinGod-AddOns-NetPinProc-Game
 ![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white) ![.Net](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white) ![Godot Engine](https://img.shields.io/badge/GODOT-%23FFFFFF.svg?style=for-the-badge&logo=godot-engine) 
 
 Godot Addons for extending the 🔗[pingod-addons](https://github.com/FlippingFlips/pingod-addons) and using the 
@@ -46,10 +46,15 @@ Set the `.cfg` file to delete on launch if you need to.
 5. A database has been generated and a `PinGod-AddOns-NetPinProcGame.cfg`
 6. You can change the config for `Simulated` boards and how the database is generated / removed
   
-  **A `{projectname}.cfg` is generated when the game is launched. This makes it simpler to override settings like simulated and memory mapping by editing this file in the root directory.**
-6. Change simulated in the `cfg` in Godots editor to run a fake P-ROC.
+  **`{projectname}.cfg` is generated when the game is launched. This makes it simpler to override settings like simulated and memory mapping by editing this file in the root directory.**
 
-  **A Sqlite Database is generated when a game is launched. `netproc.db` = Edit .sql file and add machine items. The sql provided matches the same cabinet configuration as `pingod-addons`.**
+7. Change simulated in the `cfg` in Godots editor to run a fake P-ROC.
+
+  **A Sqlite Database is generated when a game is launched. `netproc.db` = Edit .sql file and add machine items.
+  The sql provided matches the same cabinet configuration as `pingod-addons`.**
+
+8. Develop scenes without any pingod plugins by turning them all off in the `Project Settings > Plugins`.
+**When renabling plugins make sure `WindowsActions` is last in order loaded in `Godot > PS > Globals`, or behind the machine / game.**
 
 ## Screens
 ![](.content/service/tests-switches.jpg)

@@ -10,7 +10,7 @@ public partial class MyPinGodProcGame : PinGodGameProc
     {
         if (NetProcGame == null)
         {
-            var pinGodLogger = new PinGodProcLogger() { LogLevel = (LogLevel)PinGodProcConfig.LogLevel };
+            var pinGodLogger = new PinGodProcLogger() { LogLevel = (LogLevel)PinGodProcConfig.LogLevel, LogPrefix = "[PROC]", TimeStamp = true};
             NetProcGame = new MyPinGodProcGameController(
                 MachineType.PDB, this,
                 PinGodProcConfig.DeleteDbOnInit,

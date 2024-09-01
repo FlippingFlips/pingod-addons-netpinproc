@@ -11,7 +11,7 @@ public partial class ScoreModePROC : ScoreMode
 	{
 		base._Ready();
 		_pinGodProc = pinGod as PinGodGameProc;
-		if (_pinGodProc != null) _procGame = _pinGodProc.NetProcGame;
+		if (_pinGodProc != null) _procGame = _pinGodProc.NetProcGame;		
 	}
 
 	/// <summary>

@@ -39,8 +39,8 @@ public abstract class PinGodNetProcDataGameController : NetProcDataGameControlle
     #endregion
 
     #region Modes
-    protected BallSave _ballSave;
-    protected BallSearch _ballSearch;
+    public BallSave _ballSave;
+    public BallSearch _ballSearch;
     #endregion
 
     public readonly PinGodGameProc PinGodProcGame;
@@ -64,13 +64,15 @@ public abstract class PinGodNetProcDataGameController : NetProcDataGameControlle
     }
 
     /// <summary>Runs perform search on the PROC <see cref="_ballSearch"/> mode</summary>
-    public virtual void BallSearch() => _ballSearch?.PerformSearch();
+    public virtual void BallSearch() => _ballSearch?.Enable();
 
     public override void BallStarting()
     {
         base.BallStarting();
         //TODO: add modes on ball starting, these modes start when a new ball does
+
         EnableFlippers(true);
+
         if (_isSimulated) Coils["flippersRelay"].Enable();
     }
 
@@ -109,8 +111,9 @@ public abstract class PinGodNetProcDataGameController : NetProcDataGameControlle
         return arr;
     }
 
-    /// <summary>Should be invoked by Godot when initially booted and all resources have been loaded</summary>
-    public virtual void GodotResourcesReady() { }
+    /// <summary>Should be invoked by Godot when initially booted and all resources have been loaded<para/>
+    /// This implementation does nothing and should be used</summary>
+    public abstract void GodotResourcesReady();
 
     /// <summary>Simulated use: Gets PROC driver coil states and creates array read to be sent to memory map</summary>
     /// <param name="drivers"></param>
@@ -144,7 +147,7 @@ public abstract class PinGodNetProcDataGameController : NetProcDataGameControlle
         var endTime = Godot.Time.GetTicksMsec();
         var total = (endTime - initTime) / 1000;
 
-        Logger.Log(nameof(PinGodNetProcDataGameController) + $": database initialized in {total} secs.");
+        Logger.Log(LogLevel.Info, nameof(PinGodNetProcDataGameController) + $": database initialized in {total} secs.");
     }
 
     /// <summary>Simulated use: gets states, coils, leds, lamps</summary>

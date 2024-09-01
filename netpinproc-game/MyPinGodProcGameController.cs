@@ -5,7 +5,11 @@ using NetPinProc.Domain.PinProc;
 using System.Collections.Generic;
 using System.Linq;
 
-/// <summary>Custom PROC Game controller using the implementation from `addons/netpinproc`</summary>
+/// <summary>Custom PROC Game controller using the implementation from `addons/netpinproc-game` which uses sqlite PinProc IGameControlller <para/>
+/// This controller can run real or fake proc with simulated flag. The base implementation runs the main PROC game loop<para/>
+/// The main game loop handles events from a PROC and flushes the PROC data <para/>
+/// The controller here is a good place to hold most modes and this demo game does that with all PROC modes<para/>
+/// </summary>
 public class MyPinGodProcGameController : PinGodNetProcDataGameController
 {
     public MyPinGodProcGameController(
@@ -44,12 +48,12 @@ public class MyPinGodProcGameController : PinGodNetProcDataGameController
     {
         switch (modeName)
         {
-            case "service":
-                Modes.Add(_serviceMode);
-                break;
             case "attract":
                 GodotResourcesReady();
                 break;
+            case "service":
+                Modes.Add(_serviceMode);
+                break;            
             default:
                 break;
         }
@@ -84,6 +88,11 @@ public class MyPinGodProcGameController : PinGodNetProcDataGameController
         _ballSave.Start(now: false);
     }
 
+    public override void ShootAgain()
+    {
+        base.ShootAgain();
+    }
+
     /// <summary>Game ended, invoke Godot ready to reset game</summary>
     public override void GameEnded()
     {
@@ -94,18 +103,25 @@ public class MyPinGodProcGameController : PinGodNetProcDataGameController
         this.GodotResourcesReady();
     }
 
-    /// <summary>Should be called when Godot is ready or on a reset.<para/>
-    /// This calls reset on the PROC game controller</summary>
+    /// <summary>Should be called when Godot is ready or on a reset of the game.<para/>
+    /// Modes and scenes are instantiated and calls a reset on the PROC game<para/>
+    /// Modes created:
+    ///  - Attract
+    ///  - Service
+    ///  - Score Display
+    ///  - MachineSwitchHandler
+    ///  - Ball Save</summary>
     public override void GodotResourcesReady()
     {
-        base.GodotResourcesReady();
-
+        Logger.Log(LogLevel.Debug, nameof(GodotResourcesReady));
         _AttractMode = new AttractMode(this, 12, PinGodProcGame);
         _serviceMode = new ServiceMode(this, PinGodProcGame, priority: 10, defaultScene: "res://addons/netpinproc-servicemode/ServiceModePROC.tscn".GetBaseName());
         _scoreDisplay = new ScoreDisplayProcMode(this, (PinGodGameProc)PinGodProcGame, priority: 2);
         _machineSwitchHandlerMode = new MachineSwitchHandlerMode(this, (PinGodGameProc)PinGodProcGame);
         _ballSave = new BallSave(this, "shootAgain", "plungerLane") { AllowMultipleSaves = false, Priority = 25 };
+        
         SetupBallSearch();
+
         Reset();
     }
 
@@ -114,7 +130,6 @@ public class MyPinGodProcGameController : PinGodNetProcDataGameController
         base.GameStarted();
 
         Modes.Add(_scoreDisplay);
-
     }
 
     /// <summary>Use the godot call deferred to use this if invoking from Godot</summary>
@@ -152,10 +167,10 @@ public class MyPinGodProcGameController : PinGodNetProcDataGameController
         Modes.Add(_ballSave);
         Modes.Add(_ballSearch);
 
-        Logger.Log($"MODES RUNNING:" + Modes.Modes.Count);
+        Logger.Log(LogLevel.Info, $"MODES RUNNING:" + Modes.Modes.Count);
     }
 
-    /// <summary> Is this done in NetPinProc? </summary>
+    /// <summary>TODO: This should be moved to base NetPinProc and not done here</summary>
     private void SetupBallSearch()
     {
         var coils = Config.PRCoils.Where(x => x.Search > 0)

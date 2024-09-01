@@ -124,7 +124,7 @@ public abstract class PinGodProcMode : Mode //P-ROC Mode
 	/// <param name="scenePath">res://</param>
 	public virtual void LoadSceneIntoCanvas(string scenePath)
 	{
-		if (PinGodGameProc.ModesCanvasLayer != null)
+		if (PinGodGameProc.ModesCanvasLayer != null && CanvasLayer != null)
 		{
 			var res = GD.Load<PackedScene>(scenePath);
 			var inst = res.Instantiate();
@@ -132,6 +132,22 @@ public abstract class PinGodProcMode : Mode //P-ROC Mode
             PinGodGameProc.ModesCanvasLayer.AddChild(CanvasLayer);
 		}
 	}
+
+    /// <summary>Load a new scene into this modes canvas<para/>
+    /// For example if the mode was Attract it would appear above the default scene in "/Modes/AttractMode/Attract"<para/> 
+    /// /Modes/AttractMode/MyAddedScene</summary>
+    /// <param name="node"></param>
+    public virtual void LoadChildSceneIntoCanvas(Node node)
+    {
+        if (PinGodGameProc.ModesCanvasLayer != null && CanvasLayer == null)
+            CreateCanvasLayer(Name, Priority);
+
+        if (CanvasLayer != null)
+        {
+            CanvasLayer?.CallDeferred("add_child", node);
+            Logger.Debug($"{nameof(LoadChildSceneIntoCanvas)}: added {node.Name} to {Name}");
+        }            
+    }
 
     /// <summary>Mode started. This loads the default scene for this mode from the resources if <see cref="loadDefaultScene"/> is set<para/>
     /// If loading a scene then a CanvasLayer will be created under this modes names<para/>

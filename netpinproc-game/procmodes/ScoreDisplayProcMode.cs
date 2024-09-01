@@ -37,8 +37,7 @@ public class ScoreDisplayProcMode : PinGodProcMode
     }
 
     /// <summary>Cleans up, removes from canvas and frees this mode. <para/>
-    /// For this mode it would usually be when the game ends.<para/>
-    /// This will <see cref="PinGodProcMode.RemoveChildScene"/></summary>
+    /// For this mode it would usually be when the game ends.<para/></summary>
     public override void ModeStopped()
     {
         //clear up layers from the Modes Canvas

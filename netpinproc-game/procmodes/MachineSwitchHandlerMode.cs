@@ -9,7 +9,9 @@ using System.Linq;
 public class MachineSwitchHandlerMode : PinGodProcMode
 {    
     private string[] _doorSwitches;
+
     private PinGodGameProc _pinGodProc;
+
     /// <summary>Mode to run if coin door opened and enter pushed for service</summary>
     private ServiceMode _serviceMode = null;
 
@@ -18,7 +20,7 @@ public class MachineSwitchHandlerMode : PinGodProcMode
         string name = nameof(MachineSwitchHandlerMode),
         int priority = 80,
         string defaultScene = null,
-        bool loadDefaultScene = true) :
+        bool loadDefaultScene = false) :
         base(game, name, priority, pinGod, defaultScene, loadDefaultScene)
     {
         //PingodGame p-roc, use to get hold of the machine so we can add credits.
@@ -109,7 +111,7 @@ public class MachineSwitchHandlerMode : PinGodProcMode
     /// <param name="amt"></param>
     private void UpdateCredits(int amt = 0)
     {        
-        _pinGodProc?.CallDeferred("AddCredits", ((byte)amt));
+        _pinGodProc?.CallDeferred(nameof(_pinGodProc.AddCredits), ((byte)amt));
 
         _pinGodProc.NetProcGame.IncrementAudit("CREDITS", amt);
     }

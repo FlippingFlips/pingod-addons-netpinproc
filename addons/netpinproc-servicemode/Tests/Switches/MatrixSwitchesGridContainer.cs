@@ -3,7 +3,7 @@ using NetPinProc.Domain;
 using NetPinProc.Domain.MachineConfig;
 using System.Linq;
 
-/// <summary>This will go through all NetProcGame.Switches set in the game and generate a <see cref="MatrixItemPanel"/> <para/>
+/// <summary>This will go through all NetProcDataGame.Switches set in the game and generate a <see cref="MatrixItemPanel"/> <para/>
 /// This scene is assigned to a group named: switch_views<para/>
 /// OnSwitch is hooked up to this event and will UpdateSwitch for status in the UI<para />
 /// TODO: move some properties from SwitchFileConfig onto the actual switch in NetPinProcGame. ItemType for example to tell opto switches</summary>

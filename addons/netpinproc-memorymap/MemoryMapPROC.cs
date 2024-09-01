@@ -29,13 +29,13 @@ public class MemoryMapPROC : MemoryMap
     public void WriteProcStates() 
     {
         ////CHECK IF COIL STATES ARE CHANGING
-        //if (!Enumerable.SequenceEqual(_game._lastCoilStates, _coilBuffer))
+        //if (!Enumerable.SequenceEqual(NetProcDataGame._lastCoilStates, _coilBuffer))
         //{
         //    Logger.Debug("coil states changed");
         //}
 
         //CHECK IF LED STATES ARE CHANGING
-        //if (!Enumerable.SequenceEqual(_game._lastLedStates, _ledBuffer))
+        //if (!Enumerable.SequenceEqual(NetProcDataGame._lastLedStates, _ledBuffer))
         //{
         //    //Logger.Debug("led states changed");
         //}

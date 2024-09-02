@@ -27,6 +27,7 @@ Machine="*res://autoload/Machine.tscn"
 AudioManager="*res://addons/pingod-audio/Node/AudioManager.tscn"
 WindowActions="*res://autoload/WindowActions.tscn"
 Resources="*res://autoload/Resources.tscn"
+MemoryMap="*res://autoload/MemoryMap.tscn"
 
 [display]
 
@@ -42,7 +43,7 @@ project/assembly_name="PinGod-AddOns-NetPinProcGame"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/pingod-audio/plugin.cfg", "res://addons/pingod-game/plugin.cfg", "res://addons/pingod-machine/plugin.cfg", "res://addons/pingod-resources/plugin.cfg", "res://addons/pingod-windows/plugin.cfg")
+enabled=PackedStringArray("res://addons/pingod-audio/plugin.cfg", "res://addons/pingod-game/plugin.cfg", "res://addons/pingod-machine/plugin.cfg", "res://addons/pingod-memorymap-win/plugin.cfg", "res://addons/pingod-resources/plugin.cfg", "res://addons/pingod-windows/plugin.cfg")
 
 [input]
 

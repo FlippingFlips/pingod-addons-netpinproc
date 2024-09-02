@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using Godot;
 using System;
+using System.Xml.Linq;
 
 /// <summary>This game is a GODOT PinGodGame from the pingod-addons with a PinGodProcGameController and MachinePROC<para/></summary>
 public abstract partial class PinGodGameProc : PinGodGame
@@ -166,6 +167,10 @@ public abstract partial class PinGodGameProc : PinGodGame
         }
         else { Logger.WarningRich(nameof(PinGodGameProc), $"[color=yellow] no {Paths.ROOT_MAINSCENE} found.[/color]"); }
     }
+
+    /// <summary>Sets the /root to paused</summary>
+    public virtual void PauseGodot(bool pause = true) => GetNode("/root").GetTree().Paused = pause;
+    public virtual void Quit(int exitCode = 0) => GetTree().Quit(exitCode);
 
     public virtual void RemoveAttractMode() { }
 

@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cmykdd1cjihij" path="res://addons/pingod-assets/img/pinball.svg" id="1_u5koq"]
 [ext_resource type="Script" path="res://addons/netpinproc-servicemode/Tests/Coils/CoilsTestView.cs" id="1_ydged"]
 [ext_resource type="PackedScene" uid="uid://162qo7003siq" path="res://addons/netpinproc-scenes/Logos/multimorphic_logo.tscn" id="2_0armt"]
-[ext_resource type="PackedScene" uid="uid://by05wmo52xdlo" path="res://addons/netpinproc-scenes/playfield_texture_rect.tscn" id="4_ctqio"]
+[ext_resource type="PackedScene" uid="uid://by05wmo52xdlo" path="res://addons/netpinproc-scenes/Playfield/playfield_texture_rect.tscn" id="4_ctqio"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dfx4i"]
 bg_color = Color(0.258824, 0.321569, 0.396078, 1)

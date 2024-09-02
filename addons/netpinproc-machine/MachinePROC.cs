@@ -108,6 +108,7 @@ public partial class MachinePROC : MachineNode
     /// <param name="fromAction"></param>
     public override void SetSwitch(PinGod.Core.Switch @switch, byte value, bool fromAction = true)
     {
+        Logger.Debug("set PROC switch 3:" + @switch.Name);
         if (_pinGodGameProc != null)
         {
             //var sw = _switches[@switch.Name];
@@ -116,14 +117,22 @@ public partial class MachinePROC : MachineNode
         base.SetSwitch(@switch, value, fromAction);
     }
 
+    /// <summary>Adds a switch event on the fake PROC</summary>
+    /// <param name="gc"></param>
+    /// <param name="switch"></param>
+    /// <param name="state"></param>
+    /// <param name="fromAction"></param>
     public virtual void SetSwitch(IGameController gc, NetPinProc.Domain.Switch @switch, bool state, bool fromAction = true)
     {
+
+        Logger.Debug("set PROC switch 1:" + @switch.Name);
         if (_pinGodGameProc != null && PinGodGameProc.PinGodProcConfig.Simulated)
         {            
             var proc = gc?.PROC as IFakeProcDevice;
-            
+
             if (!@switch.IsState(state))
             {
+                Logger.Debug("SetSwitch: setting new state:" + @switch.Name);
                 var evtT = state ? EventType.SwitchClosedDebounced : EventType.SwitchOpenDebounced;
                 proc.AddSwitchEvent(@switch.Number, evtT);
                 RecordSwitch(@switch.Name, @switch);
@@ -137,10 +146,16 @@ public partial class MachinePROC : MachineNode
     /// <param name="fromAction"></param>
     public override void SetSwitch(string name, byte value, bool fromAction = true)
     {
+        Logger.Debug("set PROC switch 2:" + name);
         if (_pinGodGameProc != null)
         {
             SetSwitchFakeProc(_pinGodGameProc.NetProcGame, name, value > 0 ? true : false);
         }
+    }
+
+    public override void SetSwitch(int swNum, byte value, bool fromAction = true)
+    {
+        SetSwitchFakeProc(NetProcGame, (ushort)swNum, value > 0);
     }
 
     /// <summary>Override to do nothing, ball search handled by PROC</summary>

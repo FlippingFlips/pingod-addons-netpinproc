@@ -35,10 +35,10 @@ internal class PinGodProcLogger : ILoggerPROC
     {
         if (CanLog(logLevel))
         {
-            var ss = new object[logObjs.Length + 1];
-            logObjs[0] = $"{GetPrefix(logLevel)}";
-            logObjs.CopyTo(ss, 1);
-            GD.Print(logObjs);
+            var @params = new object[logObjs.Length + 1];
+            @params[0] = $"{GetPrefix(logLevel)}";
+            logObjs.CopyTo(@params, 1);
+            GD.Print(@params);
         }
     }
 

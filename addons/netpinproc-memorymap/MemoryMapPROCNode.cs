@@ -24,10 +24,11 @@ public partial class MemoryMapPROCNode : MemoryMapNode
 
 			if (this.IsEnabled)
 			{
-				var write = PinGodGameProc.PinGodProcConfig.MemoryMapWriteDelay;
-				var read = PinGodGameProc.PinGodProcConfig.MemoryMapReadDelay;
+				WriteDelay = PinGodGameProc.PinGodProcConfig.MemoryMapWriteDelay;
+				ReadDelay = PinGodGameProc.PinGodProcConfig.MemoryMapReadDelay;
 
-				mMap = new MemoryMapPROC(_pinGodProc.NetProcGame, this.MutexName, MapName, WriteDelay, ReadDelay, CoilTotal, LampTotal, LedTotal, SwitchTotal);
+				mMap = new MemoryMapPROC(_pinGodProc.NetProcGame, this.MutexName, MapName, WriteDelay, ReadDelay,
+					CoilTotal, LampTotal, LedTotal, SwitchTotal);
 			}				
 			else { Logger.WarningRich(nameof(MemoryMapPROC), ": [color=yellow]memory map disabled exiting memory mapping[/color]"); }
 		}
@@ -38,8 +39,8 @@ public partial class MemoryMapPROCNode : MemoryMapNode
 		}
 	}
 
-	internal void WriteStates()
+	public void WriteStates()
 	{
-		(mMap as MemoryMapPROC).WriteProcStates();
-	}
+		mMap.WriteStates();        
+    }
 }

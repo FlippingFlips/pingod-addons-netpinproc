@@ -16,7 +16,7 @@ You need visual pinball and the `PinGod.VP.Controller` COM object install to run
 2. Download and run the [pingod-controller-com](https://github.com/FlippingFlips/pingod-controller-com) setup from releases to install the COM controller `.dll`
 3. Copy the scripts from the setup to your VP Scripts directory
 4. Open the table in visual pinball and set the `GameDirectory` in the script and launch the game.
-5. Launching the game will load the `project.godot` alongside visual pinball. Make sure that you have the `MemoryMap` enabled in the game project.
+5. Launching the game will load the `project.godot` alongside visual pinball. **Make sure that you have the `MemoryMap` enabled in the game project.**
 
 ---
 ## Game Directory

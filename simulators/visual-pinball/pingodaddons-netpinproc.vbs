@@ -25,7 +25,7 @@ LoadPinGodVpController
 Sub LoadPinGodVpController
 	'On Error Resume Next
 		If ScriptEngineMajorVersion<5 Then MsgBox "VB Script Engine 5.0 or higher required"
-		ExecuteGlobal GetTextFile("PinGod.vbs")
+		ExecuteGlobal GetTextFile("PinGodNetProcGame.vbs")
 		If Err Then MsgBox "Unable to open " & VBSfile & ". Ensure that it is in the same folder as this table. " & vbNewLine & Err.Description
 		Set Controller=CreateObject("PinGod.VP.Controller")		
 		If Err Then MsgBox "Failed to initialize PinGod.VP controller, is it registered?" : Exit Sub		
@@ -82,13 +82,14 @@ Sub Table1_Init
 
 	LeftFlipper.TimerInterval = 500
 	LeftFlipper.TimerEnabled = 1
+
 End Sub
 'Game ready checker from flipper timer
 Sub LeftFlipper_Timer
 	Debug.Print "checking game state..."
 	LeftFlipper.TimerEnabled = 0		
 	if not Controller.GameRunning Then LeftFlipper.TimerEnabled = 1 : Exit Sub
-	InitGame
+	InitGame	
 End Sub
 ' ----------------------------------------------------------------------------------------
 ' GAME / VP init
@@ -147,6 +148,10 @@ Sub InitGame
 	' LOADING SCREEN
 	If Err Then MsgBox Err.Description
 	LoadingText.Visible = false ' Hide the overlay (loading screen)	
+	'Controller.Switch 27, 1
+'Controller.Switch 28, 1
+'Controller.Switch 29, 1
+'Controller.Switch 30, 1
 	On Error Goto 0		
 End Sub
 ' ----------------------------------------------------------------------------------------
@@ -185,6 +190,11 @@ SolCallback(31) = "FlippersEnabled" ' Flipper Relay (Hack) to enable flippers
 
 Sub AutoPlunger(Enabled)
   If Enabled Then PlungerIM.AutoFire : End If
+End Sub
+
+Sub Test(Enabled)
+    MsgBox "hello"
+    bsTrough.solOut
 End Sub
  ' ----------------------------------------------------------------------------------------
 ' FLIPPERS - THESE ARE ENABLED THROUGH A RELAY IN GAME

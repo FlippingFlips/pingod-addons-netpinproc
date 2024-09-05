@@ -34,7 +34,6 @@ public partial class WindowActionsPROC : WindowActionsNode
     public override void _Input(InputEvent @event)
     {        
         this.SetProcessInput(false);
-        GD.Print("in proc");
     }
 
     public override void _UnhandledKeyInput(InputEvent @event)
@@ -73,9 +72,12 @@ public partial class WindowActionsPROC : WindowActionsNode
         }
     }
 
-    /// <summary>SHOULD BE USED AFTER A MACHINE IS </summary>
+    /// <summary>SHOULD BE USED AFTER A MACHINE IS LOADED AS SINGLETON </summary>
     public override void _Ready()
     {
+        //override the switch window enabled from config
+        _switchWindowEnabled = PinGodGameProc.PinGodProcConfig.SwitchWindowEnabled;
+
         base._Ready();
 
         if(_machineNodePROC?.NetProcGame == null)

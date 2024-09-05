@@ -18,5 +18,4 @@ keyboardToPROCswitches = {
 191: "flipperLwR"
 }
 _gameWindowSwitches = PackedStringArray("sw0", "sw1", "sw3")
-_switchWindowEnabled = true
 _switchWindow = ExtResource("2_48fop")

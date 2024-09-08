@@ -8,8 +8,8 @@
 	</PropertyGroup>
 	
 	<ItemGroup>
-		<PackageReference Include="NetPinProc" Version="1.0.0.13" IncludeAssets="All" />
-		<PackageReference Include="NetPinProc.Game.Sqlite" Version="1.0.0.13" IncludeAssets="All" />
+		<PackageReference Include="NetPinProc" Version="1.0.0.15" IncludeAssets="All" />
+		<PackageReference Include="NetPinProc.Game.Sqlite" Version="1.0.0.15" IncludeAssets="All" />
 	</ItemGroup>
 
 	<ItemGroup>

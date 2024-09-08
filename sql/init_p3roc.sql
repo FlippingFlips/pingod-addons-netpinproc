@@ -3,160 +3,6 @@ BEGIN TRANSACTION;
 -- Table: Machine PDB = 7
 INSERT INTO Machine (Id, MachineType, NumBalls, DisplayMonitor) VALUES (1, 7, 4, 0);
 
--- Table: Coils
--- board 0
-INSERT INTO Coils (Number, Name, PulseTime, Bus, Polarity, Search, Tags) VALUES ('A0-B0-0', 'trough', 30, '', 0, 0, 'trough');
-INSERT INTO Coils (Number, Name, PulseTime, Bus, Polarity, Search, Tags) VALUES ('A0-B0-1', 'flipperLwRMain', 30, '', 0, 0, '');
-INSERT INTO Coils (Number, Name, PulseTime, Bus, Polarity, Search, Tags) VALUES ('A0-B0-2', 'flipperLwRHold', 30, '', 0, 0, '');
-INSERT INTO Coils (Number, Name, PulseTime, Bus, Polarity, Search, Tags) VALUES ('A0-B0-3', 'flipperLwLMain', 30, '', 0, 0, '');
-INSERT INTO Coils (Number, Name, PulseTime, Bus, Polarity, Search, Tags) VALUES ('A0-B0-4', 'flipperLwLHold', 30, '', 0, 0, '');
-INSERT INTO Coils (Number, Name, PulseTime, Bus, Polarity, Search, Tags) VALUES ('A0-B0-5', 'slingL', 30, '', 0, 20, 'sling');
-INSERT INTO Coils (Number, Name, PulseTime, Bus, Polarity, Search, Tags) VALUES ('A0-B0-6', 'slingR', 30, '', 0, 20, 'sling');
-INSERT INTO Coils (Number, Name, PulseTime, Bus, Polarity, Search, Tags) VALUES ('A0-B0-7', 'bumper0', 30, '', 0, 20, 'bumper');
--- board 1
-INSERT INTO Coils (Number, Name, PulseTime, Bus, Polarity, Search, Tags) VALUES ('A0-B0-8', 'bumper1', 30, '', 0, 20, 'bumper');
-INSERT INTO Coils (Number, Name, PulseTime, Bus, Polarity, Search, Tags) VALUES ('A0-B0-9', 'bumper2', 30, '', 0, 20, 'bumper');
-INSERT INTO Coils (Number, Name, PulseTime, Bus, Polarity, Search, Tags) VALUES ('A0-B0-11', 'saucerEject', 30, '', 0, 40, '');
-INSERT INTO Coils (Number, Name, PulseTime, Bus, Polarity, Search, Tags) VALUES ('A0-B0-12', 'autoPlunger', 30, '', 0, 0, '');
-INSERT INTO Coils (Number, Name, PulseTime, Bus, Polarity, Search, Tags) VALUES ('A0-B0-10', 'flippersRelay', 30, '', 0, 0, '');
-
--- Table: Leds
-INSERT INTO Leds (Number, Name, Bus, Polarity, Tags) VALUES 
-('A0-R0-G1-B2', 'start', '', 1,  'start'),
-('A0-R3-G4-B5', 'LED2', '', 1,  ''),
-('A0-R6-G7-B8', 'shootAgain', '', 1,  'shootAgain'),
-('A0-R9-G10-B11', 'LED4', '', 1,'targetBank'),
-('A0-R12-G13-B14', 'LED5', '', 1,'targetBank'),
-('A0-R15-G16-B17', 'LED6', '', 1,'targetBank'),
-('A0-R18-G19-B20', 'LED7', '', 1,'targetBank'),
-('A0-R21-G22-B23', 'LED8', '', 1,'');
-
---INSERT INTO WS281xLeds (Name, DisplayName,BoardId,[Index],First,Last,IsEnabled) VALUES ('SerialChain','SerialChain',0,0,0,4,1);
---INSERT INTO Steppers (Name, DisplayName,BoardId,IsStepper1,Speed,IsEnabled)VALUES ('Stepper','Stepper',0,1,140,1);
-
--- Table: Switches (Type = NO/NC)
-INSERT INTO Switches (Number, Name, Type, Tags, SearchReset, SearchStop, ItemType) VALUES 
-
--- board 0/A -- give all the door switches the door tag
-('00', 'coin1', 0, 'door', '', '', ''),
-('01', 'coin2', 0, 'door', '', '', ''),
-('02', 'coin3', 0, 'door', '', '',''),
-('03', 'coinDoor', 1, 'door', '', 'open',''),
-('04', 'enter', 0, 'door', '', '', ''),
-('05', 'down', 0, 'door', '', '', ''),
-('06', 'up', 0, 'door', '', '', ''),
-('07', 'exit', 0, 'door', '', '', ''),
--- board 0/B
-('08', 'start', 0, '', '', '',''),
-('09', 'tilt', 0, '', '', '',''),
-('10', 'slamTilt', 0, '', '', '',''),
-('11', 'not_used_11', 0, '', '', '',''),
-('12', 'not_used_12', 0, '', '', '',''),
-('13', 'not_used_13', 0, '', '', '',''),
-('14', 'not_used_14', 0, '', '', '',''),
-('15', 'not_used_15', 0, '', '', '', ''),
--- board 1/A
-('16', 'flipperLwL', 0, '', '', 'closed', 'flipper'),
-('17', 'not_used_17', 0, '', '', '', ''),
-('18', 'flipperLwR', 0, '', '', 'closed', 'flipper'),
-('19', 'not_used_19', 0, '', '', '', ''),
-('20', 'outlaneL', 0, '', '', 'closed', ''),
-('21', 'inlaneL', 0, '', '', 'closed', ''),
--- give bumper type to auto fire slings if flippers enabled
-('22', 'slingL', 0, '', '', 'closed',  'bumper'),
-('23', 'inlaneR', 0, '', '', 'closed', ''),
--- board 1/B
-('24', 'slingR', 0, '', '', 'closed', 'bumper'),
-('25', 'outlaneR', 0, '', '', 'closed', ''),
--- shooterLane switch used in game
-('26', 'plungerLane', 0, 'shooterLane', 'open', '', ''),
-('27', 'trough0', 0, 'trough', '', 'closed', ''),
-('28', 'trough1', 0, 'trough', '', 'closed', ''),
-('29', 'trough2', 0, 'trough', '', 'closed', ''),
-('30', 'trough3', 0, 'trough,troughEject', '', 'closed', ''),
-('31', 'mballSaucer', 0, '', '', 'closed', ''),
-('32', 'bumper0', 0, 'bumper', 'open', '', 'bumper'),
--- board 2/A
-('33', 'bumper1',0, 'bumper', 'open', '',  'bumper'),
-('34', 'bumper2', 0, 'bumper', 'open', '', 'bumper'),
-('35', 'saucer', 0, '', 'open', 'closed', ''),
-('36', 'target0', 0, 'targetBank', 'open', '', ''),
-('37', 'target1', 0, 'targetBank', 'open', '', ''),
-('38', 'target2', 0, 'targetBank', 'open', '', ''),
-('39', 'target3', 0, 'targetBank', 'open', '', ''),
-('40', 'not_used_40', 0, '', '', '', ''),
--- board 2/B
-('41', 'not_used_41', 0, '', '', '',''),
-('42', 'not_used_42', 0, '', '', '',''),
-('43', 'not_used_43', 0, '', '', '',''),
-('44', 'not_used_44', 0, '', '', '',''),
-('45', 'not_used_45', 0, '', '', '',''),
-('46', 'not_used_46', 0, '', '', '',''),
-('47', 'not_used_47', 0, '', '', '',''),
-('48', 'not_used_48', 0, '', '', '',''),
--- board 3/A
-('49', 'not_used_49', 0, '', '', '',''),
-('50', 'not_used_50', 0, '', '', '',''),
-('51', 'not_used_51', 0, '', '', '',''),
-('52', 'not_used_52', 0, '', '', '',''),
-('53', 'not_used_53', 0, '', '', '',''),
-('54', 'not_used_54', 0, '', '', '',''),
-('55', 'not_used_55', 0, '', '', '',''),
-('56', 'not_used_56', 0, '', '', '',''),
--- board 3/B
-('57', 'not_used_57', 0, '', '', '',''),
-('58', 'not_used_58', 0, '', '', '',''),
-('59', 'not_used_59', 0, '', '', '',''),
-('60', 'not_used_60', 0, '', '', '',''),
-('61', 'not_used_61', 0, '', '', '',''),
-('62', 'not_used_62', 0, '', '', '',''),
-('63', 'not_used_63', 0, '', '', '','');
-
--- PLAYERS
-INSERT INTO Players (Id, Initials, Name, [Default]) VALUES (1, 'NETPROC', 'Default', '1');
-
--- Option Types 0=Range, 1=Array, 2= Enum
-INSERT INTO Adjustments (Id, Name, Description, Options, OptionType, ValueDefault, Value, MenuName, SubMenuName) VALUES
-('ALLOW_RESTART', 'Allow Restart','Allow game restart from holding start.', 'NO,YES', 2, 1, 1, 'STANDARD_ADJ', 'GENERAL'),
-('ATTRACT_MUSIC', 'Attract Music','Allow music to play in attract', 'NO,YES', 2, 1, 1, 'STANDARD_ADJ', 'GENERAL'),
-('BALLS_PER_GAME', 'Balls Per Game','Number of balls per game 1-10', '1,10', 0, 3, 3, 'STANDARD_ADJ', 'GENERAL'),
-('BALL_SAVE_TIME', 'Ball Save Time','Ball saver time', '0,25', 0, 8, 8, 'STANDARD_ADJ', 'GENERAL'),
-('BALL_SEARCH_TIME', 'Ball Search Time','Timeout to search for balls and pulse coils', '8,30', 0, 10, 10, 'STANDARD_ADJ', 'GENERAL'),
-('IDLE_SHOOTER_TIMEOUT', 'Idle Shooter Timeout','Auto launch ball if idle in plunger lane, 0 disabled', '0,30,60,90,120,150', 1, 60, 60, 'STANDARD_ADJ', 'GENERAL'),
-('MASTER_VOL', 'Master Volume','','-30,0', 0, -6, -6, 'STANDARD_ADJ', 'AUDIO'),
-('MUSIC_VOL', 'Music Volume','','-30,0', 0, -6, -6, 'STANDARD_ADJ', 'AUDIO'),
-('VOICE_VOL', 'Voice Volume','','-30,0', 0, -6, -6, 'STANDARD_ADJ', 'AUDIO'),
-('FX_VOL', 'Sound FX Volume','','-30,0', 0, -6, -6, 'STANDARD_ADJ', 'AUDIO'),
-('MATCH_PERCENT', 'Match Percent','Match percent, 0 off', '0,20', 0, 5, 5, 'STANDARD_ADJ', 'GENERAL'),
-('DISP_W', 'Display Width','','100,1920', 0, 1920, 480, 'STANDARD_ADJ', 'DISPLAY'),
-('DISP_H', 'Display Height','','100,1080', 0, 1080, 270, 'STANDARD_ADJ', 'DISPLAY'),
-('DISP_X', 'Display X','','0,1920', 0, 0, 0, 'STANDARD_ADJ', 'DISPLAY'),
-('DISP_Y', 'Display Y','','0,1080', 0, 0, 0, 'STANDARD_ADJ', 'DISPLAY'),
-('DISP_MODE', 'Display Mode','Defaults to 0 = window','WIN,MIN,MAX,FS,FS_EXCLUSIVE', 2, 0, 0, 'STANDARD_ADJ', 'DISPLAY'),
-('DISP_CONT_SCALE_MODE', 'Content Scale Mode','','Disabled,CanvasItems,Viewport', 2, 1, 1, 'STANDARD_ADJ', 'DISPLAY'),
-('DISP_CONT_SCALE_ASPECT', 'Content Scale Aspect','','Ignore, Keep, KeepWidth, KeepHeight, Expand', 2, 0, 4, 'STANDARD_ADJ', 'DISPLAY'),
-('DISP_TOP', 'Display On Top','','OFF,ON', 2, 1, 1, 'STANDARD_ADJ', 'DISPLAY'),
-('TILT_WARNINGS', 'Tilt Warnings','Number of tilt warnings before tilt', '0,20', 0, 3, 3, 'STANDARD_ADJ', 'GENERAL');
---('XB_RESERVE', '0', 4, 'GENERAL', '[0, 1]', 'If enabled and in multiplayer the rounds continue with xb given at the end'),
--- todo: chase ball for ball search
---('XB_GAME_MAX', '-1', 4, 'EXTRA BALLS', '[-1,0,1,2,3,4,5,6]', 'Max extra balls, -1 unlimited'),
---('XB_PLAYER_MAX', '3', 4, 'EXTRA BALLS', '[-1,0,1,2,3,4,5,6]', 'Max extra balls PLAYER, -1 unlimited'),
-
---REPLAY
---SCORES
--- PRICING SETTINGS
--- GAME SETTINGS
--- COIL SETTINGS - flipper strength etc - use the actual pulse time rather than create new tables, they will be 1-255 anyway
--- LOG SETTINGS
---INSERT INTO Settings (Id, Value, Type) VALUES ('LOG_LEVEL_GAME', NULL, 'GAME');
---INSERT INTO Settings (Id, Value, Type) VALUES ('LOG_LEVEL_DISPLAY', '0', 'DISPLAY'); -- TraceLogType 0 == ALL
-
----- DEVELOPER SETTINGS
---INSERT INTO Settings (Id, Value, Type) VALUES ('PLAYBACK_ENABLED', '0', 'PLAYBACK');
---INSERT INTO Settings (Id, Value, Type) VALUES ('PLAYBACK_RECORDING_ID', NULL, 'PLAYBACK');
---INSERT INTO Settings (Id, Value, Type) VALUES ('RECORDING_ENABLED', '0', 'RECORDING');
---INSERT INTO Settings (Id, Value, Type) VALUES ('RECORDING_SET_PLAYBACK_ON_END', NULL, 'RECORDING');
-
 -- AUDITS (STANDARD)
 INSERT INTO Audits (Id, Value, Type, Description) VALUES
 ('CREDITS', 0, 0, 'Credits in machine'), 
@@ -169,7 +15,124 @@ INSERT INTO Audits (Id, Value, Type, Description) VALUES
 ('POWERED_ON_TIMES', 0, 0, 'Times machine powered on'),
 ('TOTAL_BALLS_PLAYED', 0, 0, 'Total balls played');
 
--- AUDITS (GAME) TODO: LOG SWITCHES, MODES, TIMES
+INSERT INTO Adjustments (Id, Name, MenuName, SubMenuName, Description, ValueDefault, Value, OptionType, Options) VALUES ('ALLOW_RESTART', 'Allow Restart', 'STANDARD_ADJ', 'GENERAL', 'Allow game restart from holding start.', 1, 1, 2, 'NO,YES');
+INSERT INTO Adjustments (Id, Name, MenuName, SubMenuName, Description, ValueDefault, Value, OptionType, Options) VALUES ('ATTRACT_MUSIC', 'Attract Music', 'STANDARD_ADJ', 'GENERAL', 'Allow music to play in attract', 1, 1, 2, 'NO,YES');
+INSERT INTO Adjustments (Id, Name, MenuName, SubMenuName, Description, ValueDefault, Value, OptionType, Options) VALUES ('BALLS_PER_GAME', 'Balls Per Game', 'STANDARD_ADJ', 'GENERAL', 'Number of balls per game 1-10', 3, 4, 0, '1,10');
+INSERT INTO Adjustments (Id, Name, MenuName, SubMenuName, Description, ValueDefault, Value, OptionType, Options) VALUES ('BALL_SAVE_TIME', 'Ball Save Time', 'STANDARD_ADJ', 'GENERAL', 'Ball saver time', 8, 8, 0, '0,25');
+INSERT INTO Adjustments (Id, Name, MenuName, SubMenuName, Description, ValueDefault, Value, OptionType, Options) VALUES ('BALL_SEARCH_TIME', 'Ball Search Time', 'STANDARD_ADJ', 'GENERAL', 'Timeout to search for balls and pulse coils', 10, 10, 0, '8,30');
+INSERT INTO Adjustments (Id, Name, MenuName, SubMenuName, Description, ValueDefault, Value, OptionType, Options) VALUES ('IDLE_SHOOTER_TIMEOUT', 'Idle Shooter Timeout', 'STANDARD_ADJ', 'GENERAL', 'Auto launch ball if idle in plunger lane, 0 disabled', 60, 60, 1, '0,30,60,90,120,150');
+INSERT INTO Adjustments (Id, Name, MenuName, SubMenuName, Description, ValueDefault, Value, OptionType, Options) VALUES ('MASTER_VOL', 'Master Volume', 'STANDARD_ADJ', 'AUDIO', '', -6, -6, 0, '-30,0');
+INSERT INTO Adjustments (Id, Name, MenuName, SubMenuName, Description, ValueDefault, Value, OptionType, Options) VALUES ('MUSIC_VOL', 'Music Volume', 'STANDARD_ADJ', 'AUDIO', '', -6, -6, 0, '-30,0');
+INSERT INTO Adjustments (Id, Name, MenuName, SubMenuName, Description, ValueDefault, Value, OptionType, Options) VALUES ('VOICE_VOL', 'Voice Volume', 'STANDARD_ADJ', 'AUDIO', '', -6, -6, 0, '-30,0');
+INSERT INTO Adjustments (Id, Name, MenuName, SubMenuName, Description, ValueDefault, Value, OptionType, Options) VALUES ('FX_VOL', 'Sound FX Volume', 'STANDARD_ADJ', 'AUDIO', '', -6, -6, 0, '-30,0');
+INSERT INTO Adjustments (Id, Name, MenuName, SubMenuName, Description, ValueDefault, Value, OptionType, Options) VALUES ('MATCH_PERCENT', 'Match Percent', 'STANDARD_ADJ', 'GENERAL', 'Match percent, 0 off', 5, 5, 0, '0,20');
+INSERT INTO Adjustments (Id, Name, MenuName, SubMenuName, Description, ValueDefault, Value, OptionType, Options) VALUES ('DISP_W', 'Display Width', 'STANDARD_ADJ', 'DISPLAY', '', 1920, 1920, 0, '100,1920');
+INSERT INTO Adjustments (Id, Name, MenuName, SubMenuName, Description, ValueDefault, Value, OptionType, Options) VALUES ('DISP_H', 'Display Height', 'STANDARD_ADJ', 'DISPLAY', '', 1080, 1009, 0, '100,1080');
+INSERT INTO Adjustments (Id, Name, MenuName, SubMenuName, Description, ValueDefault, Value, OptionType, Options) VALUES ('DISP_X', 'Display X', 'STANDARD_ADJ', 'DISPLAY', '', 0, 0, 0, '0,1920');
+INSERT INTO Adjustments (Id, Name, MenuName, SubMenuName, Description, ValueDefault, Value, OptionType, Options) VALUES ('DISP_Y', 'Display Y', 'STANDARD_ADJ', 'DISPLAY', '', 0, 23, 0, '0,1080');
+INSERT INTO Adjustments (Id, Name, MenuName, SubMenuName, Description, ValueDefault, Value, OptionType, Options) VALUES ('DISP_MODE', 'Display Mode', 'STANDARD_ADJ', 'DISPLAY', 'Defaults to 0 = window', 0, 2, 2, 'WIN,MIN,MAX,FS,FS_EXCLUSIVE');
+INSERT INTO Adjustments (Id, Name, MenuName, SubMenuName, Description, ValueDefault, Value, OptionType, Options) VALUES ('DISP_CONT_SCALE_MODE', 'Content Scale Mode', 'STANDARD_ADJ', 'DISPLAY', '', 1, 1, 2, 'Disabled,CanvasItems,Viewport');
+INSERT INTO Adjustments (Id, Name, MenuName, SubMenuName, Description, ValueDefault, Value, OptionType, Options) VALUES ('DISP_CONT_SCALE_ASPECT', 'Content Scale Aspect', 'STANDARD_ADJ', 'DISPLAY', '', 0, 4, 2, 'Ignore, Keep, KeepWidth, KeepHeight, Expand');
+INSERT INTO Adjustments (Id, Name, MenuName, SubMenuName, Description, ValueDefault, Value, OptionType, Options) VALUES ('DISP_TOP', 'Display On Top', 'STANDARD_ADJ', 'DISPLAY', '', 1, 1, 2, 'OFF,ON');
+INSERT INTO Adjustments (Id, Name, MenuName, SubMenuName, Description, ValueDefault, Value, OptionType, Options) VALUES ('TILT_WARNINGS', 'Tilt Warnings', 'STANDARD_ADJ', 'GENERAL', 'Number of tilt warnings before tilt', 3, 3, 0, '0,20');
+
+
+INSERT INTO Coils (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, PulseTime, Bus, Polarity, Tags, Search, ReturnWire, VoltageWire, Voltage, NumberPROC) VALUES ('A0-B0-0', NULL, NULL, NULL, 339.5956115722656, 175.4376983642578, NULL, 'trough', 30, '', 0, 'trough', 0, NULL, NULL, NULL, 0);
+INSERT INTO Coils (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, PulseTime, Bus, Polarity, Tags, Search, ReturnWire, VoltageWire, Voltage, NumberPROC) VALUES ('A0-B0-1', NULL, NULL, NULL, 366.9552917480469, 324.39581298828125, 'flipper', 'flipperLwRMain', 30, '', 0, '', 0, NULL, NULL, NULL, 1);
+INSERT INTO Coils (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, PulseTime, Bus, Polarity, Tags, Search, ReturnWire, VoltageWire, Voltage, NumberPROC) VALUES ('A0-B0-2', NULL, NULL, NULL, 336.5556945800781, 245.35679626464844, 'flipper', 'flipperLwRHold', 30, '', 0, '', 0, NULL, NULL, NULL, 2);
+INSERT INTO Coils (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, PulseTime, Bus, Polarity, Tags, Search, ReturnWire, VoltageWire, Voltage, NumberPROC) VALUES ('A0-B0-3', NULL, NULL, NULL, 272.71649169921875, 81.19886016845703, 'flipper', 'flipperLwLMain', 30, '', 0, '', 0, NULL, NULL, NULL, 3);
+INSERT INTO Coils (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, PulseTime, Bus, Polarity, Tags, Search, ReturnWire, VoltageWire, Voltage, NumberPROC) VALUES ('A0-B0-4', NULL, NULL, NULL, 75.11892700195312, 105.51860046386719, 'flipper', 'flipperLwLHold', 30, '', 0, '', 0, NULL, NULL, NULL, 4);
+INSERT INTO Coils (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, PulseTime, Bus, Polarity, Tags, Search, ReturnWire, VoltageWire, Voltage, NumberPROC) VALUES ('A0-B0-5', NULL, NULL, NULL, 245.35679626464844, 129.8383026123047, 'bumper', 'slingL', 30, '', 0, 'sling', 20, NULL, NULL, NULL, 5);
+INSERT INTO Coils (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, PulseTime, Bus, Polarity, Tags, Search, ReturnWire, VoltageWire, Voltage, NumberPROC) VALUES ('A0-B0-6', NULL, NULL, NULL, 148.0780029296875, 214.9571990966797, 'bumper', 'slingR', 30, '', 0, 'sling', 20, NULL, NULL, NULL, 6);
+INSERT INTO Coils (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, PulseTime, Bus, Polarity, Tags, Search, ReturnWire, VoltageWire, Voltage, NumberPROC) VALUES ('A0-B0-7', NULL, NULL, NULL, 157.19790649414062, 35.59943008422852, 'bumper', 'bumper0', 30, '', 0, 'bumper', 20, NULL, NULL, NULL, 7);
+INSERT INTO Coils (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, PulseTime, Bus, Polarity, Tags, Search, ReturnWire, VoltageWire, Voltage, NumberPROC) VALUES ('A0-B0-8', NULL, NULL, NULL, 172.397705078125, 135.91819763183594, 'bumper', 'bumper1', 30, '', 0, 'bumper', 20, NULL, NULL, NULL, 8);
+INSERT INTO Coils (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, PulseTime, Bus, Polarity, Tags, Search, ReturnWire, VoltageWire, Voltage, NumberPROC) VALUES ('A0-B0-9', NULL, NULL, NULL, 266.6365051269531, 415.5946960449219, 'bumper', 'bumper2', 30, '', 0, 'bumper', 20, NULL, NULL, NULL, 9);
+INSERT INTO Coils (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, PulseTime, Bus, Polarity, Tags, Search, ReturnWire, VoltageWire, Voltage, NumberPROC) VALUES ('A0-B0-11', NULL, NULL, NULL, 166.3177947998047, 406.47479248046875, NULL, 'saucerEject', 30, '', 0, '', 40, NULL, NULL, NULL, 10);
+INSERT INTO Coils (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, PulseTime, Bus, Polarity, Tags, Search, ReturnWire, VoltageWire, Voltage, NumberPROC) VALUES ('A0-B0-12', NULL, NULL, NULL, 132.87820434570312, 312.2359924316406, NULL, 'autoPlunger', 30, '', 0, '', 0, NULL, NULL, NULL, 11);
+INSERT INTO Coils (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, PulseTime, Bus, Polarity, Tags, Search, ReturnWire, VoltageWire, Voltage, NumberPROC) VALUES ('A0-B0-10', NULL, NULL, NULL, 61.61039733886719, 175.99630737304688, NULL, 'flippersRelay', 30, '', 0, '', 0, NULL, NULL, NULL, 12);
+
+-- Table: Leds
+INSERT INTO Leds (Number, Bus, Conn, DisplayName, ItemType, Location, Name, Polarity, Tags, XPos, YPos, NumberPROC) VALUES ('A0-R0-G1-B2', '0', NULL, NULL, NULL, NULL, 'start', 1, 'start',  245.0, 677.0, 0);
+INSERT INTO Leds (Number, Bus, Conn, DisplayName, ItemType, Location, Name, Polarity, Tags, XPos, YPos, NumberPROC) VALUES ('A0-R3-G4-B5', '0', NULL, NULL, NULL, NULL, 'LED22', 1, '', 224.9571990966797, 577.5927734375, 1);
+INSERT INTO Leds (Number, Bus, Conn, DisplayName, ItemType, Location, Name, Polarity, Tags, XPos, YPos, NumberPROC) VALUES ('A0-R6-G7-B8', '0', NULL, NULL, NULL, NULL, 'shootAgain', 1, 'shootAgain', 243.38009643554688, 930.8206787109375, 2);
+INSERT INTO Leds (Number, Bus, Conn, DisplayName, ItemType, Location, Name, Polarity, Tags, XPos, YPos, NumberPROC) VALUES ('A0-R9-G10-B11', '0', NULL, NULL, NULL, NULL, 'LED4', 1, 'targetBank', 225.93719482421875, 856.7293090820312, 3);
+INSERT INTO Leds (Number, Bus, Conn, DisplayName, ItemType, Location, Name, Polarity, Tags, XPos, YPos, NumberPROC) VALUES ('A0-R12-G13-B14', '0', NULL, NULL, NULL, NULL, 'LED5', 1, 'targetBank', 379.99530029296875, 571.5128784179688, 4);
+INSERT INTO Leds (Number, Bus, Conn, DisplayName, ItemType, Location, Name, Polarity, Tags, XPos, YPos, NumberPROC) VALUES ('A0-R15-G16-B17', '0', NULL, NULL, NULL, NULL, 'LED6', 1, 'targetBank', 252.31680297851562, 243.19700622558594, 5);
+INSERT INTO Leds (Number, Bus, Conn, DisplayName, ItemType, Location, Name, Polarity, Tags, XPos, YPos, NumberPROC) VALUES ('A0-R18-G19-B20', '0', NULL, NULL, NULL, NULL, 'LED7', 1, 'targetBank',  260.0, 310.0000915527344, 6);
+
+-- Table: Servos
+INSERT INTO Servos (Name, DisplayName, Conn, Location, XPos, YPos, ItemType, "Index", BoardId, MinValue, IsEnabled, Voltage) VALUES ('test', NULL, NULL, NULL, -10.0, -10.0, NULL, 0, 0, 0, 1, NULL);
+
+-- Table: Steppers
+INSERT INTO Steppers (Name, DisplayName, Conn, Location, XPos, YPos, ItemType, IsStepper1, BoardId, Speed, IsEnabled, StopSwitch, Voltage) VALUES ('eeee', NULL, NULL, NULL, -10.0, -10.0, NULL, 1, 0, 0, 1, NULL, 12);
+
+-- Table: Switches
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('00', 'Coin 1', NULL, NULL, 175.51266479492188, 1028.6923828125, '', 'coin1', 0, 'door', NULL, '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('01', NULL, NULL, NULL, 200.5173797607422, 1028.6920166015625, '', 'coin2', 0, 'door', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('02', NULL, NULL, NULL, 225.41265869140625, 1028.6920166015625, '', 'coin3', 0, 'door', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('03', NULL, NULL, NULL, 252.57479858398438, 1028.6920166015625, '', 'coinDoor', 1, 'door', '', 'open', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('04', NULL, NULL, NULL, 413.79315185546875, 1028.6920166015625, '', 'enter', 0, 'door', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('05', NULL, NULL, NULL, 357.90411376953125, 1028.6920166015625, '', 'down', 0, 'door', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('06', NULL, NULL, NULL, 386.9234313964844, 1028.6920166015625, '', 'up', 0, 'door', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('07', NULL, NULL, NULL, 328.7204284667969, 1028.6920166015625, '', 'exit', 0, 'door', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('08', NULL, NULL, NULL, 260.09832763671875, 997.5084228515625, '', 'start', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('09', NULL, NULL, NULL, 26.74801635742188, 943.9216918945312, '', 'tilt', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('10', NULL, NULL, NULL, 25.79435348510742, 915.8244018554688, '', 'slamTilt', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('11', NULL, NULL, NULL, -60.3790283203125, -47.96297836303711, '', 'not_used_11', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('12', NULL, NULL, NULL, -30.0, -19.99993515014648, '', 'not_used_12', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('13', NULL, NULL, NULL, -30.0, -19.99993515014648, '', 'not_used_13', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('14', NULL, NULL, NULL, -30.0, -19.99993515014648, '', 'not_used_14', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('15', NULL, NULL, NULL, -30.0, -19.99993515014648, '', 'not_used_15', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('16', NULL, NULL, NULL, 131.88339233398438, 881.89453125, 'flipper', 'flipperLwL', 0, '', '', 'closed', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('17', NULL, NULL, NULL, -60.09408569335938, 22.99163436889648, '', 'not_used_17', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('18', NULL, NULL, NULL, 300.4634704589844, 881.89404296875, 'flipper', 'flipperLwR', 0, '', '', 'closed', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('19', NULL, NULL, NULL, -130.9315185546875, -21.76126480102539, '', 'not_used_19', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('20', NULL, NULL, NULL, 4.29857540130615, 752.4564208984375, '', 'outlaneL', 0, '', '', 'closed', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('21', NULL, NULL, NULL, 51.58928680419922, 752.4564208984375, '', 'inlaneL', 0, '', '', 'closed', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('22', NULL, NULL, NULL, 100.92154693603516, 730.960693359375, 'bumper', 'slingL', 0, '', '', 'closed', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('23', NULL, NULL, NULL, 378.3251037597656, 752.4560546875, '', 'inlaneR', 0, '', '', 'closed', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('24', NULL, NULL, NULL, 334.2587585449219, 730.9610595703125, 'bumper', 'slingR', 0, '', '', 'closed', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('25', NULL, NULL, NULL, 423.35821533203125, 752.4563598632812, '', 'outlaneR', 0, 'early', '', 'closed', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('26', NULL, NULL, NULL, 466.5728759765625, 929.0701904296875, '', 'plungerLane', 0, 'shooterLane', 'open', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('27', NULL, NULL, NULL, 360.1076965332031, 962.4468383789062, '', 'trough0', 0, 'trough', '', 'closed', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('28', NULL, NULL, NULL, 384.1982421875, 944.55126953125, '', 'trough1', 0, 'trough', '', 'closed', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('29', NULL, NULL, NULL, 409.8088073730469, 921.33642578125, '', 'trough2', 0, 'trough', '', 'closed', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('30', NULL, NULL, NULL, 434.1794738769531, 900.7139282226562, '', 'trough3', 0, 'trough,troughEject', '', 'closed', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('31', NULL, NULL, NULL, 9.33534812927246, 423.2546691894531, '', 'mballSaucer', 0, '', '', 'closed', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('32', NULL, NULL, NULL, 308.4136657714844, 184.66238403320312, 'bumper', 'bumper0', 0, 'bumper', 'open', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('33', NULL, NULL, NULL, 191.54644775390625, 181.40640258789062, 'bumper', 'bumper1', 0, 'bumper', 'open', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('34', NULL, NULL, NULL, 232.4145965576172, 271.1300354003906, 'bumper', 'bumper2', 0, 'bumper', 'open', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('35', NULL, NULL, NULL, 8.29219818115234, 366.35955810546875, '', 'saucer', 0, '', 'open', 'closed', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('36', NULL, NULL, NULL, 7.24365615844727, 486.8254089355469, '', 'target0', 0, 'targetBank', 'open', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('37', NULL, NULL, NULL, 7.24365425109863, 525.517822265625, '', 'target1', 0, 'targetBank', 'open', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('38', NULL, NULL, NULL, 7.2436637878418, 559.9110717773438, '', 'target2', 0, 'targetBank', 'open', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('39', NULL, NULL, NULL, 7.24366760253906, 602.9027099609375, '', 'target3', 0, 'targetBank', 'open', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('40', NULL, NULL, NULL, -87.93997192382812, -43.25706100463867, '', 'not_used_40', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('41', NULL, NULL, NULL, -50.0, -19.99993515014648, '', 'not_used_41', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('42', NULL, NULL, NULL, -50.0, -19.99993515014648, '', 'not_used_42', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('43', NULL, NULL, NULL, -50.0, -19.99993515014648, '', 'not_used_43', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('44', NULL, NULL, NULL, -50.0, -19.99993515014648, '', 'not_used_44', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('45', NULL, NULL, NULL, -50.0, -19.99993515014648, '', 'not_used_45', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('46', NULL, NULL, NULL, -50.0, -19.99993515014648, '', 'not_used_46', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('47', NULL, NULL, NULL, -161.02560424804688, -13.16292095184326, '', 'not_used_47', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('48', NULL, NULL, NULL, -55.794921875, -19.99995231628418, '', 'not_used_48', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('49', NULL, NULL, NULL, -150.3763427734375, -7.10247611999512, '', 'not_used_49', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('50', NULL, NULL, NULL, -50.0, -19.99993515014648, '', 'not_used_50', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('51', NULL, NULL, NULL, -30.0, -62.99150466918945, '', 'not_used_51', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('52', NULL, NULL, NULL, -75.04251098632812, -0.26547145843506, '', 'not_used_52', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('53', NULL, NULL, NULL, -53.54672241210938, -21.76126098632813, '', 'not_used_53', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('54', NULL, NULL, NULL, -30.0, -41.60379028320313, '', 'not_used_54', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('55', NULL, NULL, NULL, -140.19049072265625, -29.65658378601074, '', 'not_used_55', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('56', NULL, NULL, NULL, -94.48733520507812, -32.89739608764648, '', 'not_used_56', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('57', NULL, NULL, NULL, -30.0, -28.59827041625977, '', 'not_used_57', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('58', NULL, NULL, NULL, -195.41885375976562, -17.46212387084961, '', 'not_used_58', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('59', NULL, NULL, NULL, -50.0, -19.99993515014648, '', 'not_used_59', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('60', NULL, NULL, NULL, -50.0, -19.99993515014648, '', 'not_used_60', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('61', NULL, NULL, NULL, -50.0, 7.96310615539551, '', 'not_used_61', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('62', NULL, NULL, NULL, -50.0, -19.99993515014648, '', 'not_used_62', 0, '', '', '', NULL, NULL);
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('63', 'seeeee', NULL, NULL, -61.83779907226563, -21.27445220947266, NULL, 'not_used_63', 0, NULL, 'open', NULL, '', '');
+INSERT INTO Switches (Number, DisplayName, Conn, Location, XPos, YPos, ItemType, Name, Type, Tags, SearchReset, SearchStop, InputWire, GroundWire) VALUES ('64', NULL, NULL, NULL, -30.0, -10.0, NULL, 'test', 0, NULL, NULL, NULL, 'YEL', 'BLK');
+
 
 
 COMMIT TRANSACTION;

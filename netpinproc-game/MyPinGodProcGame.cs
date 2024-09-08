@@ -10,11 +10,12 @@ public partial class MyPinGodProcGame : PinGodGameProc
     {
         if (NetProcGame == null)
         {
-            var pinGodLogger = new PinGodProcLogger() { LogLevel = (LogLevel)PinGodProcConfig.LogLevel, LogPrefix = "[PROC]", TimeStamp = true};
+            var pinGodLogger = new PinGodProcLogger() { LogLevel = (LogLevel)PinGodOverrideConfig.LogLevel, LogPrefix = "[PROC]", TimeStamp = true};
             NetProcGame = new MyPinGodProcGameController(
                 MachineType.PDB, this,
-                PinGodProcConfig.DeleteDbOnInit,
-                pinGodLogger, PinGodProcConfig.Simulated);
+                ((PinGodProcGameConfigOverride)PinGodOverrideConfig).DeleteDbOnInit,
+                pinGodLogger,
+                ((PinGodProcGameConfigOverride)PinGodOverrideConfig).Simulated);
         }
         else
             Logger.Warning("game has already been created...");

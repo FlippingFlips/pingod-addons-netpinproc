@@ -40,6 +40,10 @@ public class MemoryMapPROC : MemoryMap
         //    //Logger.Debug("led states changed");
         //}
 
+        if (_game?._lastCoilStates == null) return;
+        if (_game?._lastLampStates == null) return;
+        if (_game?._lastLedStates == null) return;
+
         //get states saved from the game proc game loop. RunLoop
         _game._lastCoilStates.CopyTo(_coilBuffer, 0);
         _game._lastLampStates.CopyTo(_lampBuffer, 0);
@@ -56,8 +60,7 @@ public class MemoryMapPROC : MemoryMap
     /// </summary>
     public override void WriteStates()
     {
-        //base.WriteStates();
-        return;
+        WriteProcStates();
     }
 
     protected override void ReadStates()

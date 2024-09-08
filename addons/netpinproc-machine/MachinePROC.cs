@@ -4,6 +4,7 @@ using NetPinProc.Domain;
 using NetPinProc.Domain.PinProc;
 using PinGod.Core;
 using System;
+using System.Linq;
 
 /// <summary>
 /// This script is loaded with the `res://autoload/Machine.tscn` which inherits a PinGod-MachineNode. <para/>
@@ -11,8 +12,8 @@ using System;
 /// EnterTree initializes a database, gets machine config
 /// </summary>
 public partial class MachinePROC : MachineNode
-{           
-	public PinGodGameProc _pinGodGameProc;
+{
+    public PinGodGameProc _pinGodGameProc;
 
     public IGameController NetProcGame => _pinGodGameProc?.NetProcGame;
 
@@ -28,10 +29,10 @@ public partial class MachinePROC : MachineNode
 
     /// <summary>Base saves the database and Dispose of the connection <see cref="MachineNode._ExitTree"/></summary>
     public override void _ExitTree()
-	{
-		Logger.Info(nameof(MachinePROC), ":", nameof(_ExitTree));
-		base._ExitTree();
-	}
+    {
+        Logger.Info(nameof(MachinePROC), ":", nameof(_ExitTree));
+        base._ExitTree();
+    }
 
     /// <summary>Process playback events. Turns off if playback is switched off.</summary>
     /// <param name="delta"></param>
@@ -72,21 +73,37 @@ public partial class MachinePROC : MachineNode
     /// Gets a PinGodGame
     /// </summary>
     public override void _Ready()
-	{
-		base._Ready();		
-	}
-	#endregion
+    {
+        base._Ready();
 
-	/// <summary>
-	/// Clear any items from the machines collections 
-	/// </summary>
-	public void ClearMachineItems()
-	{
-		_coils.Clear();
-		_lamps.Clear();
-		_leds.Clear();
-		_switches.Clear();
-	}
+        if (_pinGodGameProc.NetProcGame != null)
+        {
+            //create a machine json for the controls
+            MachineProcJson = new MachineProcJson()
+            {
+                PRSwitches = _pinGodGameProc.NetProcGame.Config.PRSwitches.Select(x => new PinGod.Core.Switch
+                {
+                    Name = x.Name,
+                    SwitchType = (SwitchType)x.Type,
+                    Num = uint.Parse(x.Number),
+                    XPos = (float?)x.XPos,
+                    YPos = (float?)x.YPos,
+                }),
+            };
+        }
+    }
+    #endregion
+
+    /// <summary>
+    /// Clear any items from the machines collections 
+    /// </summary>
+    public void ClearMachineItems()
+    {
+        _coils.Clear();
+        _lamps.Clear();
+        _leds.Clear();
+        _switches.Clear();
+    }
 
     /// <summary>Sets a Fake PROC switch</summary>
     /// <param name="name"></param>
@@ -96,7 +113,7 @@ public partial class MachinePROC : MachineNode
     {
         Logger.Info("MACHINE_PROC: Switch:" + num);
         //base.OnSwitchCommand(name, index, value);
-        if (_pinGodGameProc != null && PinGodGameProc.PinGodProcConfig.Simulated)
+        if (_pinGodGameProc != null && ((PinGodProcGameConfigOverride)PinGod.Game.PinGodGame.PinGodOverrideConfig).Simulated)
         {
             SetSwitchFakeProc(_pinGodGameProc.NetProcGame, (ushort)num, value > 0 ? true : false);
         }
@@ -126,8 +143,8 @@ public partial class MachinePROC : MachineNode
     {
 
         Logger.Debug("set PROC switch 1:" + @switch.Name);
-        if (_pinGodGameProc != null && PinGodGameProc.PinGodProcConfig.Simulated)
-        {            
+        if (_pinGodGameProc != null && ((PinGodProcGameConfigOverride)PinGod.Game.PinGodGame.PinGodOverrideConfig).Simulated)
+        {
             var proc = gc?.PROC as IFakeProcDevice;
 
             if (!@switch.IsState(state))
@@ -186,7 +203,7 @@ public partial class MachinePROC : MachineNode
         string name,
         bool enabled)
     {
-        if (_pinGodGameProc != null && PinGodGameProc.PinGodProcConfig.Simulated)
+        if (_pinGodGameProc != null && ((PinGodProcGameConfigOverride)PinGod.Game.PinGodGame.PinGodOverrideConfig).Simulated)
         {
             var proc = gc?.PROC as IFakeProcDevice;
             var sw = gc.Switches[name];
@@ -226,23 +243,23 @@ public partial class MachinePROC : MachineNode
         Dictionary<string, byte> lamps,
         Dictionary<string, byte> leds)
     {
-		base.AddCustomMachineItems(coils, switches, lamps, leds);
-		Logger.Info(nameof(MachinePROC), ": P-ROC overriding ", nameof(AddCustomMachineItems));
-	}
+        //base.AddCustomMachineItems(coils, switches, lamps, leds);
+        Logger.Info(nameof(MachinePROC), ": P-ROC skipping ", nameof(AddCustomMachineItems));        
+    }
 
-	/// <summary>Records a switch if the game is recording: TODO: does nothing</summary>
-	/// <param name="name"></param>
-	/// <param name="sw"></param>
-	private void RecordSwitch(string name, NetPinProc.Domain.Switch sw)
-	{		
-		//TODO: recording
-		//if (_recordPlayback == RecordPlaybackOption.Record)
-		//{						
-		//	byte state = sw.StateString() == "closed" ? (byte)0 : (byte)1;
+    /// <summary>Records a switch if the game is recording: TODO: does nothing</summary>
+    /// <param name="name"></param>
+    /// <param name="sw"></param>
+    private void RecordSwitch(string name, NetPinProc.Domain.Switch sw)
+    {
+        //TODO: recording
+        //if (_recordPlayback == RecordPlaybackOption.Record)
+        //{						
+        //	byte state = sw.StateString() == "closed" ? (byte)0 : (byte)1;
 
-		//	_recordFile.RecordSwitchEvent(name, state, _machineLoadTime);
+        //	_recordFile.RecordSwitchEvent(name, state, _machineLoadTime);
 
-		//	Logger.Verbose($"recorded switch: {name} | {state}");
-		//}
-	}
+        //	Logger.Verbose($"recorded switch: {name} | {state}");
+        //}
+    }
 }

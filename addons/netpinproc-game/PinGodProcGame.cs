@@ -26,29 +26,25 @@ public abstract partial class PinGodGameProc : PinGodGame
     /// <summary>To cancel the PROC loop</summary>
     private CancellationTokenSource tokenSource;
 
-	/// <summary>Developer config</summary>
-	public static PinGodGameConfigOverride PinGodProcConfig { get; private set; } = new();
-
 	public bool GameReady { get; private set; }
 
 	#region Godot Overrides
 
 	public override void _EnterTree()
 	{
-		LoadLocalProcConfig();
-
-		Logger.LogLevel = (PinGod.Base.LogLevel)((int)PinGodProcConfig.LogLevel);
-
-        //WindowActionsNode._switchWindowEnabled = PinGodProcConfig.SwitchWindowEnabled;
+        //create a config with extra options for P-ROC
+        PinGodOverrideConfig = new PinGodProcGameConfigOverride();
 
         base._EnterTree();
-	}
+
+        Logger.LogLevel = (PinGod.Base.LogLevel)((int)PinGodOverrideConfig.LogLevel);
+    }
 
     /// <summary>Quit the P-ROC game loop and call ExitGame on the PGProcGame</summary>
     public override void _ExitTree()
     {
         //set display size + pos to database
-        WindowSaveSettings();
+        WindowSaveSettings();        
 
         NetProcGame?.ExitGame();
 
@@ -96,7 +92,8 @@ public abstract partial class PinGodGameProc : PinGodGame
 
                 if (NetProcGame == null)
                 {
-                    throw new NullReferenceException("P-ROC game couldn't be created. Simulated: " + PinGodProcConfig.Simulated);
+                    throw new NullReferenceException("P-ROC game couldn't be created. Simulated: " + 
+                        ((PinGodProcGameConfigOverride)PinGodOverrideConfig).Simulated);
                 }
 
                 //SET MACHINE ITEMS FROM PROC TO PINGOD            
@@ -167,6 +164,10 @@ public abstract partial class PinGodGameProc : PinGodGame
         else { Logger.WarningRich(nameof(PinGodGameProc), $"[color=yellow] no {Paths.ROOT_MAINSCENE} found.[/color]"); }
     }
 
+    /// <summary>Sets the /root to paused</summary>
+    public virtual void PauseGodot(bool pause = true) => GetNode("/root").GetTree().Paused = pause;
+    public virtual void Quit(int exitCode = 0) => GetTree().Quit(exitCode);
+
     public virtual void RemoveAttractMode() { }
 
     /// <summary> Removes a mode from the PROC modes </summary>
@@ -210,48 +211,8 @@ public abstract partial class PinGodGameProc : PinGodGame
         else { Logger.Warning($"{sceneName} wasn't found in the tree to remove"); }
     }
 
-    /// <summary>Create a P-ROC config file for config that cannot be in the database. <para/>
-    /// This way we can easy make changes to it for simulated and delays in the directory while developing from Godot or filesystem</summary>
-    private void LoadLocalProcConfig()
-    {
-        var cfgPath = $"res://{ProjectSettings.GetSetting("application/config/name")}.cfg";
-        var config = new ConfigFile();
-        Error err = config.Load(cfgPath);
-        if (err != Error.Ok)
-        {
-            //create config
-            config.SetValue("DEV", "simulated", PinGodProcConfig.Simulated);
-            config.SetValue("DEV", "delete_db_on_init", PinGodProcConfig.DeleteDbOnInit);
-            config.SetValue("DEV", "ignore_db_display", PinGodProcConfig.IgnoreDbDisplay);
-            config.SetValue("PROC", "delay", PinGodProcConfig.Delay);
-            config.SetValue("DEV", "log_level", (int)PinGodProcConfig.LogLevel);
-            config.SetValue("DEV", "switch_window", PinGodProcConfig.SwitchWindowEnabled);
-            config.SetValue("MEMORYMAP", "enabled", PinGodProcConfig.MemoryMapEnabled);
-            config.SetValue("MEMORYMAP", "write", PinGodProcConfig.MemoryMapWriteDelay);
-            config.SetValue("MEMORYMAP", "read", PinGodProcConfig.MemoryMapReadDelay);
-
-            config.Save(cfgPath);
-        }
-        else
-        {
-            PinGodProcConfig.Delay = (byte)config.GetValue("PROC", "delay");
-            PinGodProcConfig.IgnoreDbDisplay = (bool)config.GetValue("DEV", "ignore_db_display");
-            PinGodProcConfig.DeleteDbOnInit = (bool)config.GetValue("DEV", "delete_db_on_init");
-            PinGodProcConfig.Simulated = (bool)config.GetValue("DEV", "simulated");
-            PinGodProcConfig.LogLevel = (PinGod.Base.LogLevel)((int)config.GetValue("DEV", "log_level"));
-            PinGodProcConfig.SwitchWindowEnabled = (bool)config.GetValue("DEV", "switch_window");
-
-            PinGodProcConfig.MemoryMapEnabled = (bool)config.GetValue("MEMORYMAP", "enabled");
-            PinGodProcConfig.MemoryMapWriteDelay = (int)config.GetValue("MEMORYMAP", "write");
-            PinGodProcConfig.MemoryMapReadDelay = (int)config.GetValue("MEMORYMAP", "read");
-        }
-
-        GD.Print("log level: " + PinGodProcConfig.LogLevel);
-    }
-
-	/// <summary>
-	/// Adds machine items from <see cref="NetProcGame"/> into this Machine node <para/>
-	/// TODO: perhaps this machine class overrides the base and uses the <see cref="NetProcGame"/> instead
+	/// <summary>Adds machine items from <see cref="NetProcGame"/> into this Machine node <para/>
+	/// TODO: perhaps this machine class overrides the base and uses the <see cref="NetProcGame"/> instead <para/>
 	/// </summary>
     /// 
 	private void SetupPinGodotFromProcGame()
@@ -278,7 +239,7 @@ public abstract partial class PinGodGameProc : PinGodGame
 		if (_procGameLoop?.Status == TaskStatus.Running) { return; }
 
         //Setup simulated memory mapping?
-		if (PinGodProcConfig.MemoryMapEnabled && PinGodProcConfig.Simulated)
+		if (PinGodOverrideConfig.MemoryMapEnabled && ((PinGodProcGameConfigOverride)PinGodOverrideConfig).Simulated)
 		{
 			NetProcGame._memMap = GetNodeOrNull<MemoryMapPROCNode>("/root/MemoryMap");			
 
@@ -299,7 +260,7 @@ public abstract partial class PinGodGameProc : PinGodGame
 			Logger.Info(nameof(PinGodGameProc), ":running game loop");
 
 			//run proc game loop delay 1 save CPU //TODO: maybe this run loop needs to re-throw exception if any caught
-			NetProcGame.RunLoop(PinGodProcConfig.Delay, tokenSource);
+			NetProcGame.RunLoop(((PinGodProcGameConfigOverride)PinGodOverrideConfig).Delay, tokenSource);
 
 			//means the proc loop threw exception
 			if (tokenSource.IsCancellationRequested)
@@ -327,15 +288,15 @@ public abstract partial class PinGodGameProc : PinGodGame
 	{
 		if (NetProcGame == null) return;
 		
-		if (PinGodProcConfig.IgnoreDbDisplay) return;        
+		if (((PinGodProcGameConfigOverride)PinGodOverrideConfig).IgnoreDbDisplay) return;        
 
 		DisplayServer.WindowSetMode((DisplayServer.WindowMode)NetProcGame.GetAdjustment("DISP_MODE"));
-		Display.SetContentScale(GetTree().Root, (Window.ContentScaleModeEnum)NetProcGame.GetAdjustment("DISP_CONT_SCALE_MODE"));
-		Display.SetAspectOption(GetTree().Root, (Window.ContentScaleAspectEnum)NetProcGame.GetAdjustment("DISP_CONT_SCALE_ASPECT"));
-		//get display size + pos from database values
-		Display.SetSize(NetProcGame.GetAdjustment("DISP_W"), NetProcGame.GetAdjustment("DISP_H"));
-		Display.SetPosition(NetProcGame.GetAdjustment("DISP_X"), NetProcGame.GetAdjustment("DISP_Y"));
-		Display.SetAlwaysOnTop(NetProcGame.GetAdjustment("DISP_TOP") > 0 ? true : false);
+		DisplayExtensions.SetContentScale(GetTree().Root, (Window.ContentScaleModeEnum)NetProcGame.GetAdjustment("DISP_CONT_SCALE_MODE"));
+        DisplayExtensions.SetAspectOption(GetTree().Root, (Window.ContentScaleAspectEnum)NetProcGame.GetAdjustment("DISP_CONT_SCALE_ASPECT"));
+        //get display size + pos from database values
+        DisplayExtensions.SetSize(NetProcGame.GetAdjustment("DISP_W"), NetProcGame.GetAdjustment("DISP_H"));
+        DisplayExtensions.SetPosition(NetProcGame.GetAdjustment("DISP_X"), NetProcGame.GetAdjustment("DISP_Y"));
+        DisplayExtensions.SetAlwaysOnTop(NetProcGame.GetAdjustment("DISP_TOP") > 0 ? true : false);
 	}
 
 	/// <summary>
@@ -345,7 +306,7 @@ public abstract partial class PinGodGameProc : PinGodGame
 	{
 		if (NetProcGame == null) return;
 		
-		if (PinGodProcConfig.IgnoreDbDisplay) return;		
+		if (((PinGodProcGameConfigOverride)PinGodOverrideConfig).IgnoreDbDisplay) return;		
 
 		var winSize = DisplayServer.WindowGetSize(0);
 		var winPos = DisplayServer.WindowGetPosition(0);
@@ -353,7 +314,7 @@ public abstract partial class PinGodGameProc : PinGodGame
 		NetProcGame.SetAdjustment("DISP_X", winPos.X); NetProcGame.SetAdjustment("DISP_Y", winPos.Y);
 		NetProcGame.SetAdjustment("DISP_TOP", DisplayServer.WindowGetFlag(DisplayServer.WindowFlags.AlwaysOnTop) ? 1 : 0);
 		NetProcGame.SetAdjustment("DISP_MODE", (int)DisplayServer.WindowGetMode());
-		NetProcGame.SetAdjustment("DISP_CONT_SCALE_MODE", (int)Display.GetContentScale(GetTree().Root));
-		NetProcGame.SetAdjustment("DISP_CONT_SCALE_ASPECT", (int)Display.GetAspectOption(GetTree().Root));
+		NetProcGame.SetAdjustment("DISP_CONT_SCALE_MODE", (int)DisplayExtensions.GetContentScale(GetTree().Root));
+		NetProcGame.SetAdjustment("DISP_CONT_SCALE_ASPECT", (int)DisplayExtensions.GetAspectOption(GetTree().Root));
 	}
 }

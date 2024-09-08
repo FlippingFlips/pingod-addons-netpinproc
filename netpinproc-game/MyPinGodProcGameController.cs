@@ -85,7 +85,8 @@ public class MyPinGodProcGameController : PinGodNetProcDataGameController
         _myMode = new MyMode(this, 10, PinGodProcGame);
         Modes.Add(_myMode);
         _scoreDisplay?.UpdateScores();
-        _ballSave.Start(now: false);
+
+        //_ballSave.Start(now: false);
     }
 
     public override void ShootAgain()
@@ -132,6 +133,11 @@ public class MyPinGodProcGameController : PinGodNetProcDataGameController
         Modes.Add(_scoreDisplay);
     }
 
+    public override void OnBallDrainedTrough()
+    {
+        base.OnBallDrainedTrough();
+    }
+
     /// <summary>Use the godot call deferred to use this if invoking from Godot</summary>
     /// <param name="modeName"></param>
     public override void RemoveMode(string modeName)
@@ -155,7 +161,7 @@ public class MyPinGodProcGameController : PinGodNetProcDataGameController
     {
         base.Reset();
 
-        //_troughMode.EnableBallSave(true);        
+        //Trough.EnableBallSave(true);        
 
         //link the trough to ball save
         Trough.BallSaveCallback = new AnonDelayedHandler(_ballSave.LaunchCallback);

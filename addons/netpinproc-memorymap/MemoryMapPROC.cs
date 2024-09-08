@@ -9,14 +9,14 @@ public class MemoryMapPROC : MemoryMap
 {
     private PinGodNetProcDataGameController _game;
 
-    byte[] _coilBuffer;    
+    byte[] _coilBuffer;
     byte[] _lampBuffer;
     int[] _ledBuffer;
 
     public MemoryMapPROC(IGameController game, string mutexName = "pingod_vp_mutex", string mapName = "pingod_vp",
                     int writeStates = -1, int readStates = -1,
             byte coilCount = 32, byte lampCount = 64, byte ledCount = 64, byte switchCount = 64,
-            byte? vpCommandSwitch = null) : base (mutexName, mapName, writeStates, readStates, coilCount, lampCount, ledCount, switchCount, vpCommandSwitch)
+            byte? vpCommandSwitch = null) : base(mutexName, mapName, writeStates, readStates, coilCount, lampCount, ledCount, switchCount, vpCommandSwitch)
     {
         _game = game as PinGodNetProcDataGameController;
 
@@ -26,7 +26,7 @@ public class MemoryMapPROC : MemoryMap
     }
 
     /// <summary> Writes states from the P-ROC </summary>
-    public void WriteProcStates() 
+    public void WriteProcStates()
     {
         ////CHECK IF COIL STATES ARE CHANGING
         //if (!Enumerable.SequenceEqual(NetProcDataGame._lastCoilStates, _coilBuffer))
@@ -40,6 +40,10 @@ public class MemoryMapPROC : MemoryMap
         //    //Logger.Debug("led states changed");
         //}
 
+        if (_game?._lastCoilStates == null) return;
+        if (_game?._lastLampStates == null) return;
+        if (_game?._lastLedStates == null) return;
+
         //get states saved from the game proc game loop. RunLoop
         _game._lastCoilStates.CopyTo(_coilBuffer, 0);
         _game._lastLampStates.CopyTo(_lampBuffer, 0);
@@ -48,7 +52,7 @@ public class MemoryMapPROC : MemoryMap
         //write the states to memory
         viewAccessor.WriteArray(1, _coilBuffer, 0, _coilBuffer.Length);
         viewAccessor.WriteArray(_offsetLamps, _lampBuffer, 0, _lampBuffer.Length);
-        viewAccessor.WriteArray(_offsetLeds, _ledBuffer, 0, _ledBuffer.Length);        
+        viewAccessor.WriteArray(_offsetLeds, _ledBuffer, 0, _ledBuffer.Length);
     }
 
     /// <summary>
@@ -56,8 +60,7 @@ public class MemoryMapPROC : MemoryMap
     /// </summary>
     public override void WriteStates()
     {
-        //base.WriteStates();
-        return;
+        WriteProcStates();
     }
 
     protected override void ReadStates()
@@ -70,15 +73,15 @@ public class MemoryMapPROC : MemoryMap
         switch ((GameSyncState)gameState)
         {
             //Stop the memory map tasks and quit the game window tree
-            case GameSyncState.quit: 
+            case GameSyncState.quit:
                 Stop();
-                _game.PinGodProcGame.GetTree().Quit(0);
+                _game.PinGodProcGame.CallDeferred(nameof(PinGodGameProc.Quit), 0);
                 return;
             case GameSyncState.pause: //pause / resume on a toggle, not held down
-                _game.PinGodProcGame.GetNode("/root").GetTree().Paused = true;
+                _game.PinGodProcGame.CallDeferred(nameof(PinGodGameProc.PauseGodot), true);
                 break;
             case GameSyncState.resume:
-                _game.PinGodProcGame.GetNode("/root").GetTree().Paused = false;
+                _game.PinGodProcGame.CallDeferred(nameof(PinGodGameProc.PauseGodot), false);
                 break;
             case GameSyncState.reset:
                 var ev = new InputEventAction() { Action = "", Pressed = true };
@@ -88,6 +91,6 @@ public class MemoryMapPROC : MemoryMap
                 break;
             default:
                 break;
-        }        
+        }
     }
 }

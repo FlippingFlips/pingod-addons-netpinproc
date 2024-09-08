@@ -34,7 +34,6 @@ public partial class WindowActionsPROC : WindowActionsNode
     public override void _Input(InputEvent @event)
     {        
         this.SetProcessInput(false);
-        GD.Print("in proc");
     }
 
     public override void _UnhandledKeyInput(InputEvent @event)
@@ -44,9 +43,9 @@ public partial class WindowActionsPROC : WindowActionsNode
         if (_standardInputHandlingOn)
         {
             //quits the game. ESC
-            if (InputMap.HasAction("ui_cancel"))
+            if (InputMap.HasAction("quit"))
             {
-                if (@event.IsActionPressed("ui_cancel"))
+                if (@event.IsActionPressed("quit"))
                 {
                     Quit();
                 }
@@ -64,7 +63,7 @@ public partial class WindowActionsPROC : WindowActionsNode
         if (_sendPingodMachineSwitches && _machineNodePROC != null)
         {
             var key = ((int)(@event as InputEventKey).Keycode);
-            if (_procKeySwitches.ContainsKey(key))
+            if (_procKeySwitches?.ContainsKey(key) ?? false)
             {
                 var pressed = @event.IsPressed();
 
@@ -73,9 +72,12 @@ public partial class WindowActionsPROC : WindowActionsNode
         }
     }
 
-    /// <summary>SHOULD BE USED AFTER A MACHINE IS </summary>
+    /// <summary>SHOULD BE USED AFTER A MACHINE IS LOADED AS SINGLETON </summary>
     public override void _Ready()
     {
+        //override the switch window enabled from config
+        _toolsWindowEnabled = PinGodGameProc.PinGodOverrideConfig.ToolsPaneEnabled;
+
         base._Ready();
 
         if(_machineNodePROC?.NetProcGame == null)

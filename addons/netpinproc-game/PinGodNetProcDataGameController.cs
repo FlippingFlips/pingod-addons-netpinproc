@@ -66,6 +66,12 @@ public abstract class PinGodNetProcDataGameController : NetProcDataGameControlle
     /// <summary>Runs perform search on the PROC <see cref="_ballSearch"/> mode</summary>
     public virtual void BallSearch() => _ballSearch?.Enable();
 
+    public override void OnBallDrainedTrough()
+    {
+        this.Logger.Log(nameof(OnBallDrainedTrough), LogLevel.Debug);
+        base.OnBallDrainedTrough();
+    }
+
     public override void BallStarting()
     {
         base.BallStarting();
@@ -125,11 +131,16 @@ public abstract class PinGodNetProcDataGameController : NetProcDataGameControlle
         byte[] arr = new byte[_memMap.CoilCount()];
         foreach (var item in drivers)
         {
-            var num = (byte)(item.Number - 40);
+            //PDB index of 1st board/bank is 5. 5 * 8 + driver number = 40 == 0
+            byte num = (byte)item.Number;
+            if(this.Config.PRGame.MachineType == MachineType.PDB)
+                num = (byte)(item.Number - 40);
+
             if (num * 2 <= arr.Length)
             {
                 arr[num * 2] = num;
-                arr[num * 2 + 1] = ((IVirtualDriver)item).GetCurrentState() ? (byte)1 : (byte)0;
+                var state = ((IVirtualDriver)item).GetCurrentState() ? (byte)1 : (byte)0;
+                arr[num * 2 + 1] = state;
             }
         }
         return arr;
@@ -186,7 +197,6 @@ public abstract class PinGodNetProcDataGameController : NetProcDataGameControlle
                 }
 
                 this.Tick();
-
 
                 //PinGod changed states. Used by memory mapping
                 if (_isSimulated)
